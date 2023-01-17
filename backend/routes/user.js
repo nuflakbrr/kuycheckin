@@ -143,3 +143,5 @@ app.post('/resepsionis', async (req, res) => {
   })
   .catch(error => res.json({ message: error.message }))
 });
+
+module.exports = app;
