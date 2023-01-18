@@ -21,9 +21,9 @@ app.use(express.json());
  * @apiDescription Get all users data
  */
 app.get('/', auth, async (req, res) => {
-    await user.findAll()
-    .then(result => res.json({ data: result }))
-    .catch(error => res.json({ message: error.message }))
+  await user.findAll()
+  .then(result => res.json({ data: result }))
+  .catch(error => res.json({ message: error.message }))
 });
 
 /**
