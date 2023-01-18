@@ -1,10 +1,13 @@
 const express = require('express');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
+const path = require('path');
+const fs = require('fs');
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const auth = require('../middleware/auth');
 const user = require('../models/index').user;
+const upload = require('../middleware/image');
 
 const app = express();
 
@@ -43,10 +46,10 @@ app.get('/:id', auth, async (req, res) => {
  * @apiGroup User
  * @apiDescription Insert user data
  */
-app.post('/', async (req, res) => {
+app.post('/', upload.uploadImage.single(`foto`), async (req, res) => {
   let data = {
     nama_user: req.body.nama_user,
-    foto: req.body.foto,
+    foto: req.file.filename,
     email: req.body.email,
     password: md5(req.body.password),
     role: req.body.role
@@ -64,13 +67,22 @@ app.post('/', async (req, res) => {
  * @apiDescription Update user data
  */
 app.put('/', auth, async (req, res) => {
-  let params = { id_user: res.body.id_user }
+  let params = { id_user: req.body.id_user }
   let data = {
-    nama_user: res.body.nama_user,
-    foto: res.body.foto,
-    email: res.body.email,
-    password: md5(res.body.password),
-    role: res.body.role
+    nama_user: req.body.nama_user,
+    email: req.body.email,
+    password: md5(req.body.password),
+    role: req.body.role
+  }
+
+  if(req.file) {
+    let oldImg = await user.findOne({ where: params });
+    let oldImgName = oldImg.foto;
+
+    let loc = path.join(__dirname, '../resources/usr/', oldImgName);
+    fs.unlink(loc, (err) => console.log(err));
+
+    data.foto = req.file.filename;
   }
 
   await user.update(data, { where: params })
@@ -86,6 +98,13 @@ app.put('/', auth, async (req, res) => {
  */
 app.delete('/:id', auth, async (req, res) => {
   let params = { id_user: req.params.id }
+
+  let delImg = await user.findOne({ where: params });
+  if(delImg) {
+    let delImgName = delImg.foto;
+    let loc = path.join(__dirname, '../resources/usr/', delImgName);
+    fs.unlink(loc, (err) => console.log(err));
+  }
 
   await user.destroy({ where: params })
   .then(result => res.json({ success: 1, message: "Data has been deleted" }))
