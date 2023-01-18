@@ -66,7 +66,7 @@ app.post('/', upload.uploadImage.single(`foto`), async (req, res) => {
  * @apiGroup User
  * @apiDescription Update user data
  */
-app.put('/', auth, async (req, res) => {
+app.put('/', upload.uploadImage.single(`foto`), auth, async (req, res) => {
   let params = { id_user: req.body.id_user }
   let data = {
     nama_user: req.body.nama_user,
@@ -79,14 +79,14 @@ app.put('/', auth, async (req, res) => {
     let oldImg = await user.findOne({ where: params });
     let oldImgName = oldImg.foto;
 
-    let loc = path.join(__dirname, '../resources/usr/', oldImgName);
+    let loc = path.join(__dirname, '../resource/usr/', oldImgName);
     fs.unlink(loc, (err) => console.log(err));
 
     data.foto = req.file.filename;
   }
 
   await user.update(data, { where: params })
-  .then(result => res.json({ success: 1, message: "Data has been updated", data: result }))
+  .then(result => res.json({ success: 1, message: "Data has been updated" }))
   .catch(error => res.json({ message: error.message }))
 });
 
@@ -102,7 +102,7 @@ app.delete('/:id', auth, async (req, res) => {
   let delImg = await user.findOne({ where: params });
   if(delImg) {
     let delImgName = delImg.foto;
-    let loc = path.join(__dirname, '../resources/usr/', delImgName);
+    let loc = path.join(__dirname, '../resource/usr/', delImgName);
     fs.unlink(loc, (err) => console.log(err));
   }
 
@@ -126,7 +126,7 @@ app.post('/admin', async (req, res) => {
 
   await user.findOne({ where: params })
   .then(result => {
-    if(result > 0) {
+    if(result) {
       let payload = JSON.stringify(result);
       let token = jwt.sign(payload, SECRET_KEY);
       res.json({ success: 1, message: "Login success, welcome back!", token: token })
@@ -152,7 +152,7 @@ app.post('/resepsionis', async (req, res) => {
 
   await user.findOne({ where: params })
   .then(result => {
-    if(result > 0) {
+    if(result) {
       let payload = JSON.stringify(result);
       let token = jwt.sign(payload, SECRET_KEY);
       res.json({ success: 1, message: "Login success, welcome back!", token: token })
