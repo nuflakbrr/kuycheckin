@@ -11,8 +11,8 @@ const storage = multer.diskStorage({
     cb(null, folder);
   },
   filename: (req, file, cb) => {
-    cb(null, `usr_img-${Date.now()}${path.extname(file.originalname)}`);
+    cb(null, `img-${Date.now()}${path.extname(file.originalname)}`);
   }
 });
 
-exports.uploadImage = multer({ storage: storage });
+exports.uploadImage = multer({ storage });
