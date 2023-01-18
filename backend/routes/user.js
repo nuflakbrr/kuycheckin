@@ -7,7 +7,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 const auth = require('../middleware/auth');
 const user = require('../models/index').user;
-const upload = require('../middleware/image');
+const upload = require('../middleware/imageUser');
 
 const app = express();
 
