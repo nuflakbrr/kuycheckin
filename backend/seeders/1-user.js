@@ -21,14 +21,6 @@ module.exports = {
       password: md5('admin'),
       role: 'admin',
     }], {});
-    
-    await queryInterface.bulkInsert('user', [{
-      nama_user: 'resepsionis_hadi',
-      foto: null,
-      email: 'resepsionis_hadi@wikusamahotel.com',
-      password: md5('resepsionis'),
-      role: 'resepsionis',
-    }], {});
   },
 
   async down (queryInterface, Sequelize) {
