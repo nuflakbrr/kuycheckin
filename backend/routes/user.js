@@ -46,7 +46,7 @@ app.get('/:id', auth, async (req, res) => {
  * @apiGroup User
  * @apiDescription Insert user data
  */
-app.post('/', upload.uploadImage.single(`foto`), async (req, res) => {
+app.post('/', upload.uploadImage.single('foto'), async (req, res) => {
   let data = {
     nama_user: req.body.nama_user,
     foto: req.file.filename,
@@ -66,7 +66,7 @@ app.post('/', upload.uploadImage.single(`foto`), async (req, res) => {
  * @apiGroup User
  * @apiDescription Update user data
  */
-app.put('/', upload.uploadImage.single(`foto`), auth, async (req, res) => {
+app.put('/', upload.uploadImage.single('foto'), auth, async (req, res) => {
   let params = { id_user: req.body.id_user }
   let data = {
     nama_user: req.body.nama_user,
