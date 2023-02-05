@@ -11,9 +11,6 @@ const user = require('../models/index').user;
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
 /**
  * @apiRoutes {get} /hotel/user/
  * @apiName GetAllUsers
