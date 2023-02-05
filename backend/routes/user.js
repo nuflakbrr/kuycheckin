@@ -71,6 +71,8 @@ app.post('/', uploadUser.single('foto'), async (req, res) => {
  * @apiDescription Update user data
  */
 app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
+  if(!req.file) return res.json({ message: "No file uploaded" })
+
   let params = { id_user: req.body.id_user }
   let data = {
     nama_user: req.body.nama_user,
@@ -83,10 +85,11 @@ app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
     let oldImg = await user.findOne({ where: params });
     let oldImgName = oldImg.foto;
 
-    let loc = path.join(__dirname, '../resource/usr/', oldImgName);
+    let loc = path.join(__dirname, '../public/usr/', oldImgName);
     fs.unlink(loc, (err) => console.log(err));
 
-    data.foto = req.file.filename;
+    let finalImageURL = req.protocol + '://' + req.get('host') + '/usr/' + req.file.filename;
+    data.foto = finalImageURL;
   }
 
   await user.update(data, { where: params })
@@ -106,7 +109,7 @@ app.delete('/:id', auth, async (req, res) => {
   let delImg = await user.findOne({ where: params });
   if(delImg) {
     let delImgName = delImg.foto;
-    let loc = path.join(__dirname, '../resource/usr/', delImgName);
+    let loc = path.join(__dirname, '../public/usr/', delImgName);
     fs.unlink(loc, (err) => console.log(err));
   }
 
