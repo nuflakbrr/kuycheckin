@@ -1,10 +1,10 @@
-# Folder Structure Rules
+# Aturan Struktur Folder
 
 ## Common
-Contains small components, such as: buttons, dropdowns, etc.
+Berisikan komponen-komponen kecil, seperti: tombol, dropdown, dll.
 
 ## Mixins
-Contains components whose contents are a combination of small components from the Common folder. Like: navbar (which contains some common things like buttons, dropdowns, etc.)
+Berisikan komponen-komponen yang merupakan gabungan dari komponen-komponen kecil dari folder `Common`. Seperti: navbar (yang berisi beberapa hal umum seperti tombol, dropdown, dll).
 
 ## Containers
-Contains a combination of mixins + common that form 1 page. 1 page 1 containers to keep it neat.
+Berisikan kombinasi folder `Mixins` dan `Common` yang membentuk 1 halaman. 1 halaman 1 folder `Containers` agar tetap rapi.
