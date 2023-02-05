@@ -7,6 +7,6 @@ npm-debug.log*
 # local env files
 .env
 
-# resource
-/resource/img/*
-/resource/usr/*
+# public
+/public/img/*
+/public/usr/*
