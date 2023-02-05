@@ -6,8 +6,8 @@ const fs = require('fs');
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const auth = require('../middleware/auth');
+const { uploadUser } = require('../middleware/uploadImage');
 const user = require('../models/index').user;
-const upload = require('../middleware/imageUser');
 
 const app = express();
 
@@ -46,10 +46,14 @@ app.get('/:id', auth, async (req, res) => {
  * @apiGroup User
  * @apiDescription Insert user data
  */
-app.post('/', upload.uploadImage.single('foto'), async (req, res) => {
+app.post('/', uploadUser.single('foto'), async (req, res) => {
+  if(!req.file) return res.json({ message: "No file uploaded" })
+
+  let finalImageURL = req.protocol + '://' + req.get('host') + '/usr/' + req.file.filename;
+
   let data = {
     nama_user: req.body.nama_user,
-    foto: req.file.filename,
+    foto: finalImageURL,
     email: req.body.email,
     password: md5(req.body.password),
     role: req.body.role
@@ -66,7 +70,7 @@ app.post('/', upload.uploadImage.single('foto'), async (req, res) => {
  * @apiGroup User
  * @apiDescription Update user data
  */
-app.put('/', upload.uploadImage.single('foto'), auth, async (req, res) => {
+app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
   let params = { id_user: req.body.id_user }
   let data = {
     nama_user: req.body.nama_user,
