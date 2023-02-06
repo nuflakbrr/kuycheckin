@@ -165,7 +165,7 @@ const Footer: FC = () => {
         </div>
 
         <div className="text-gray-400 text-sm text-center border-t border-gray-800 py-8">
-          © {year} - PT <i>Nama PT Klinik</i>. All rights reserved.
+          © {year} - PT Wikusama Hotel Tbk. All rights reserved.
         </div>
       </footer>
     </div>
