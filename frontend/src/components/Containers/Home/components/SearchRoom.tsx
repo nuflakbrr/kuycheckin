@@ -74,17 +74,9 @@ const SearchRoomSection: FC = () => {
 
                 <div>
                   <button className="inline-flex items-center bg-primary hover:bg-primarydark active:bg-primary focus-visible:ring ring-primary text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-5 py-3">
-                    <FaSearch className="mr-2" />
+                    <FaSearch className="mr-2 mt-1 text-sm" />
                     Cari Kamar
                   </button>
-                  {/* <Button
-                className={
-                  'bg-blue-700 text-white px-3 flex items-center gap-4 '
-                }
-              >
-                <BiSearch />
-                <span>Cari</span>
-              </Button> */}
                 </div>
               </div>
             </div>
