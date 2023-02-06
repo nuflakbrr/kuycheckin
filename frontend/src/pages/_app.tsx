@@ -4,10 +4,7 @@ import Head from 'next/head';
 
 import Navbar from '../components/Common/Navbar/Navbar';
 import Footer from '../components/Common/Footer';
-/**
- * Un-comment ScrollToTop to active scroll to top button
- * import ScrollToTop from '../components/ScrollToTop';
- */
+import ScrollToTop from '../components/ScrollToTop';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -24,6 +21,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
 
       <Navbar />
+
+      <ScrollToTop />
 
       <Component {...pageProps} />
 
