@@ -16,7 +16,7 @@ const TopSection: FC = () => {
                 Wikusama Hotel
               </h1>
 
-              <p className="lg:w-4/5 text-gray-500 xl:text-lg leading-relaxed mb-8 md:mb-12">
+              <p className="lg:w-4/5 text-gray-500 xl:text-lg text-justify leading-relaxed mb-8 md:mb-12">
                 Berdiri sejak 2020, Wikusama Hotel adalah hotel bintang 5 yang
                 terletak di kota Malang, Jawa Timur. Hotel ini memiliki 400
                 kamar yang dilengkapi dengan fasilitas terbaik di kelasnya.
@@ -30,9 +30,9 @@ const TopSection: FC = () => {
                   Mulai Eksplorasi
                 </a>
 
-                <Link href="/register" legacyBehavior>
+                <Link href="/search-room" legacyBehavior>
                   <a className="inline-block bg-gray-200 hover:bg-gray-300 focus-visible:ring ring-primary text-gray-500 active:text-gray-700 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-5 py-3">
-                    Daftar
+                    Cari Kamar
                   </a>
                 </Link>
               </div>
@@ -40,7 +40,7 @@ const TopSection: FC = () => {
 
             <div className="mb-10 lg:mb-0 w-full px-4 lg:w-1/2">
               <img
-                src="/assets/svg/undraw_doctor.svg"
+                src="/assets/svg/undraw_travel_booking.svg"
                 loading="lazy"
                 alt="Hero Illustration"
                 className="w-full h-full object-cover object-center"

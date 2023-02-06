@@ -2,6 +2,17 @@ import { FC } from 'react';
 import Head from 'next/head';
 
 import TopSection from './components/Top';
+import SearchRoomSection from './components/SearchRoom';
+import AboutSection from './components/About';
+import FacilitiesSection from './components/Facilities';
+import CallToAction from '../../CallToAction';
+import FAQ from './components/FAQ';
+
+/**
+ * To Do List
+ *
+ * 1. Recomendation Section
+ */
 
 const ContainerHome: FC = () => {
   return (
@@ -41,6 +52,11 @@ const ContainerHome: FC = () => {
 
       <main className="pt-20">
         <TopSection />
+        <SearchRoomSection />
+        <AboutSection />
+        <FacilitiesSection />
+        <CallToAction />
+        <FAQ />
       </main>
     </>
   );

@@ -62,7 +62,6 @@ const ContainerFacilities: FC = () => {
 
               <div className="w-full px-4">
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 xl:gap-8">
-                  {/* image start */}
                   <a
                     href="#"
                     className="group h-48 md:h-80 flex items-end bg-gray-100 overflow-hidden rounded-lg shadow-lg relative"
@@ -77,12 +76,10 @@ const ContainerFacilities: FC = () => {
                     <div className="bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50 absolute inset-0 pointer-events-none"></div>
 
                     <span className="inline-block text-white text-sm md:text-lg relative ml-4 md:ml-5 mb-3">
-                      Kamar
+                      Ruang Kamar Eksklusif
                     </span>
                   </a>
-                  {/* image end */}
 
-                  {/* image start */}
                   <a
                     href="#"
                     className="group h-48 md:h-80 md:col-span-2 flex items-end bg-gray-100 overflow-hidden rounded-lg shadow-lg relative"
@@ -96,12 +93,10 @@ const ContainerFacilities: FC = () => {
                     <div className="bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50 absolute inset-0 pointer-events-none"></div>
 
                     <span className="inline-block text-white text-sm md:text-lg relative ml-4 md:ml-5 mb-3">
-                      Gym
+                      Ruang Gym
                     </span>
                   </a>
-                  {/* image end */}
 
-                  {/* image start */}
                   <a
                     href="#"
                     className="group h-48 md:h-80 md:col-span-2 flex items-end bg-gray-100 overflow-hidden rounded-lg shadow-lg relative"
@@ -115,12 +110,10 @@ const ContainerFacilities: FC = () => {
                     <div className="bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50 absolute inset-0 pointer-events-none"></div>
 
                     <span className="inline-block text-white text-sm md:text-lg relative ml-4 md:ml-5 mb-3">
-                      Dev
+                      Kolam Renang
                     </span>
                   </a>
-                  {/* image end */}
 
-                  {/* image start */}
                   <a
                     href="#"
                     className="group h-48 md:h-80 flex items-end bg-gray-100 overflow-hidden rounded-lg shadow-lg relative"
@@ -135,10 +128,9 @@ const ContainerFacilities: FC = () => {
                     <div className="bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50 absolute inset-0 pointer-events-none"></div>
 
                     <span className="inline-block text-white text-sm md:text-lg relative ml-4 md:ml-5 mb-3">
-                      Retro
+                      Ruang Makan
                     </span>
                   </a>
-                  {/* image end */}
                 </div>
               </div>
             </div>

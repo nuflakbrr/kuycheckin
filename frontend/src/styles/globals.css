@@ -5,3 +5,10 @@
 html {
   scroll-behavior: smooth;
 }
+
+.swiper-button {
+  @apply cursor-pointer;
+}
+.swiper-button svg {
+  @apply w-6 h-6 text-primary;
+}
