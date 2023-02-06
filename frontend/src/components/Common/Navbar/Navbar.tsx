@@ -1,6 +1,5 @@
 import { FC, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { FaBuilding } from 'react-icons/fa';
 import Link from 'next/link';
 
 import styles from './Navbar.module.css';
@@ -66,7 +65,11 @@ const Navbar: FC = () => {
                   className="inline-flex items-center gap-2 font-primary font-bold text-xl lg:text-2xl py-6"
                   aria-label="logo"
                 >
-                  <FaBuilding className="text-primary" />
+                  <img
+                    src="/apple-touch-icon.png"
+                    alt="Brand Logo"
+                    className="w-8 h-8 object-cover object-center"
+                  />
                   Wikusama Hotel
                 </a>
               </Link>

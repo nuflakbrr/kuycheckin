@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { FaBuilding } from 'react-icons/fa';
 import Link from 'next/link';
 
 import {
@@ -53,7 +52,11 @@ const Footer: FC = () => {
                   className="inline-flex items-center text-gray-100 font-primary text-xl md:text-2xl font-bold gap-2"
                   aria-label="logo"
                 >
-                  <FaBuilding className="text-primary" />
+                  <img
+                    src="/apple-touch-icon.png"
+                    alt="Brand Logo"
+                    className="w-8 h-8 object-cover object-center"
+                  />
                   Wikusama Hotel
                 </a>
               </Link>
