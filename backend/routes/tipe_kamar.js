@@ -133,7 +133,7 @@ app.delete('/:id', auth, async (req, res) => {
   // }
 
   await tipe_kamar.destroy({ where: params })
-  .then(result => res.json({ message: 'Data has been deleted' }))
+  .then(result => res.json({ success: 1, message: "Data has been deleted" }))
   .catch(error => res.json({ message: error.message }))
 });
 
