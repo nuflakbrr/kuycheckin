@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import Link from 'next/link';
 
 const TopSection: FC = () => {
   return (
@@ -30,11 +29,12 @@ const TopSection: FC = () => {
                   Mulai Eksplorasi
                 </a>
 
-                <Link href="/search-room" legacyBehavior>
-                  <a className="inline-block bg-gray-200 hover:bg-gray-300 focus-visible:ring ring-primary text-gray-500 active:text-gray-700 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-5 py-3">
-                    Cari Kamar
-                  </a>
-                </Link>
+                <a
+                  href="#search-room"
+                  className="inline-block bg-gray-200 hover:bg-gray-300 focus-visible:ring ring-primary text-gray-500 active:text-gray-700 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-5 py-3"
+                >
+                  Cari Kamar
+                </a>
               </div>
             </div>
 

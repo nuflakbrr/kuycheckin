@@ -4,7 +4,7 @@ import { FaHotel, FaAngleRight, FaSearch } from 'react-icons/fa';
 
 const SearchRoomSection: FC = () => {
   return (
-    <section className="py-10 lg:pt-24">
+    <section className="py-10 lg:pt-24" id="search-room">
       <div className="max-w-7xl mx-auto">
         <div className="container">
           <div className="w-full px-4">
