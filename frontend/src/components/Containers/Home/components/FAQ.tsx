@@ -41,12 +41,19 @@ const FAQ: FC = () => {
                     </summary>
 
                     <p className="px-2 text-justify">
-                      Anda dapat mengirim email kepada kami di
-                      cs@wikusamahotel.com atau langsung menghubungi Hotel untuk
-                      setiap permohonan khusus setelah pemesanan hotel Anda
-                      dikonfirmasi. Setiap permohonan khusus tergantung pada
-                      ketersediaan kamar hotel saat check-in. Tidak ada jaminan
-                      yang bisa diberikan.
+                      Anda dapat mengirim email kepada kami di{' '}
+                      <a
+                        href="mailto:cs@wikusama.com"
+                        target={'_blank'}
+                        rel="noreferrer"
+                        className="text-blue-500 hover:text-blue-600"
+                      >
+                        cs@wikusamahotel.com
+                      </a>{' '}
+                      atau langsung menghubungi Hotel untuk setiap permohonan
+                      khusus setelah pemesanan hotel Anda dikonfirmasi. Setiap
+                      permohonan khusus tergantung pada ketersediaan kamar hotel
+                      saat check-in. Tidak ada jaminan yang bisa diberikan.
                     </p>
                   </details>
                 </div>
@@ -59,7 +66,15 @@ const FAQ: FC = () => {
 
                     <p className="px-2 text-justify">
                       Silakan hubungi hotline Penjualan kami di +6281234567890
-                      atau Anda bisa kirim email ke sales@wikusamahotel.com
+                      atau Anda bisa kirim email ke{' '}
+                      <a
+                        href="mailto:sales@wikusama.com"
+                        target={'_blank'}
+                        rel="noreferrer"
+                        className="text-blue-500 hover:text-blue-600"
+                      >
+                        sales@wikusamahotel.com
+                      </a>
                     </p>
                   </details>
                 </div>
