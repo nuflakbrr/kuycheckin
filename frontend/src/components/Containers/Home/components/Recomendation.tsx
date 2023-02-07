@@ -10,15 +10,19 @@ const RecomendationSection: FC = () => {
     <section className="py-10 lg:pt-24">
       <div className="max-w-7xl mx-auto">
         <div className="container">
-          <div className="w-full px-4">
-            <h1 className="max-w-sm lg:max-w-none font-primary font-semibold text-2xl lg:text-3xl mb-10">
-              Rekomendasi Kamar Untuk Anda
-            </h1>
+          <div className="flex items-center justify-between">
+            <div className="w-full px-4">
+              <h1 className="max-w-sm lg:max-w-none font-primary font-semibold text-2xl lg:text-3xl mb-10">
+                Rekomendasi Kamar Untuk Anda
+              </h1>
+            </div>
 
-            <div className="relative max-w-[80px] my-8 -ml-4">
-              <div className="swiper-button">
-                <FaAngleLeft className="swiper-button-prev" />
-                <FaAngleRight className="swiper-button-next" />
+            <div className="w-28 px-4">
+              <div className="relative max-w-[80px] mb-3">
+                <div className="swiper-button">
+                  <FaAngleLeft className="swiper-button-prev" />
+                  <FaAngleRight className="swiper-button-next" />
+                </div>
               </div>
             </div>
           </div>
