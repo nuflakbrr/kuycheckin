@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* For Firefox */
+::-moz-selection {
+  color: white;
+  background: #01a3a4;
+}
+
+::selection {
+  color: white;
+  background: #01a3a4;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -11,4 +22,38 @@ html {
 }
 .swiper-button svg {
   @apply w-6 h-6 text-primary;
+}
+
+.swiper-container {
+  @apply w-full h-full;
+}
+
+@media screen and (max-width: 576px) {
+  .swiper-container {
+    @apply w-[576px]
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .swiper-container {
+    @apply w-[768px]
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .swiper-container {
+    @apply w-[992px]
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .swiper-container {
+    @apply w-[1200px]
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .swiper-container {
+    @apply w-[1400px]
+  }
 }

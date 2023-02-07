@@ -58,14 +58,15 @@ const ContainerFAQ: FC = () => {
                     <div className="mb-0 md:mb-2">
                       <details className="mb-4">
                         <summary className="font-semibold bg-gray-200 rounded-md py-2 px-4 cursor-pointer">
-                          How Long is this site live?
+                          Bagaimana Saya bisa memesan kamar hotel?
                         </summary>
 
                         <p className="px-2 text-justify">
-                          Laboris qui labore cillum culpa in sunt quis sint
-                          veniam. Dolore ex aute deserunt esse ipsum elit
-                          aliqua. Aute quis minim velit nostrud pariatur culpa
-                          magna in aute.
+                          Proses pemesanan kamar di Wikusama Hotel mudah dan
+                          dengan sekali klik saja. Pilih tujuan Anda, masukkan
+                          tanggal check-in dan check-out. Lalu klik &quot;Cari
+                          sekarang!&quot; dan daftar pilihan Anda akan
+                          ditampilkan.
                         </p>
                       </details>
                     </div>
@@ -73,14 +74,16 @@ const ContainerFAQ: FC = () => {
                     <div className="mb-0 md:mb-2">
                       <details className="mb-4">
                         <summary className="font-semibold bg-gray-200 rounded-md py-2 px-4 cursor-pointer">
-                          How Long is this site live?
+                          Bagaimana Saya bisa mengajukan pemohonan khusus?
                         </summary>
 
                         <p className="px-2 text-justify">
-                          Laboris qui labore cillum culpa in sunt quis sint
-                          veniam. Dolore ex aute deserunt esse ipsum elit
-                          aliqua. Aute quis minim velit nostrud pariatur culpa
-                          magna in aute.
+                          Anda dapat mengirim email kepada kami di
+                          cs@wikusamahotel.com atau langsung menghubungi Hotel
+                          untuk setiap permohonan khusus setelah pemesanan hotel
+                          Anda dikonfirmasi. Setiap permohonan khusus tergantung
+                          pada ketersediaan kamar hotel saat check-in. Tidak ada
+                          jaminan yang bisa diberikan.
                         </p>
                       </details>
                     </div>
@@ -88,14 +91,13 @@ const ContainerFAQ: FC = () => {
                     <div className="mb-0 md:mb-2">
                       <details className="mb-4">
                         <summary className="font-semibold bg-gray-200 rounded-md py-2 px-4 cursor-pointer">
-                          How Long is this site live?
+                          Bisakah saya memesan hotel melalui telepon atau email?
                         </summary>
 
                         <p className="px-2 text-justify">
-                          Laboris qui labore cillum culpa in sunt quis sint
-                          veniam. Dolore ex aute deserunt esse ipsum elit
-                          aliqua. Aute quis minim velit nostrud pariatur culpa
-                          magna in aute.
+                          Silakan hubungi hotline Penjualan kami di
+                          +6281234567890 atau Anda bisa kirim email ke
+                          sales@wikusamahotel.com
                         </p>
                       </details>
                     </div>
@@ -103,14 +105,16 @@ const ContainerFAQ: FC = () => {
                     <div className="mb-0 md:mb-0">
                       <details className="">
                         <summary className="font-semibold bg-gray-200 rounded-md py-2 px-4 cursor-pointer">
-                          How Long is this site live?
+                          Berapa banyak tamu yang diizinkan untuk satu kamar
+                          hotel?
                         </summary>
 
                         <p className="px-2 text-justify">
-                          Laboris qui labore cillum culpa in sunt quis sint
-                          veniam. Dolore ex aute deserunt esse ipsum elit
-                          aliqua. Aute quis minim velit nostrud pariatur culpa
-                          magna in aute.
+                          Kapasitas hunian kamar hotel tergantung pada jenis
+                          kamarnya. Hotel mungkin akan membebankan biaya
+                          tambahan untuk tamu tambahan. Tanyakan kepada hotel
+                          yang bersangkutan atau hubungi kami untuk mendapatkan
+                          bantuan.
                         </p>
                       </details>
                     </div>

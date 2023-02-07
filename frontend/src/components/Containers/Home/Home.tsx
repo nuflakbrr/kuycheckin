@@ -3,6 +3,7 @@ import Head from 'next/head';
 
 import TopSection from './components/Top';
 import SearchRoomSection from './components/SearchRoom';
+import RecomendationSection from './components/Recomendation';
 import AboutSection from './components/About';
 import FacilitiesSection from './components/Facilities';
 import CallToAction from '../../CallToAction';
@@ -53,6 +54,7 @@ const ContainerHome: FC = () => {
       <main className="pt-20">
         <TopSection />
         <SearchRoomSection />
+        <RecomendationSection />
         <AboutSection />
         <FacilitiesSection />
         <CallToAction />
