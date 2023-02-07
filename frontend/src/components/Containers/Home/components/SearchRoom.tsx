@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { FC } from 'react';
+import Link from 'next/link';
 import { FaHotel, FaAngleRight, FaSearch } from 'react-icons/fa';
 
 const SearchRoomSection: FC = () => {
