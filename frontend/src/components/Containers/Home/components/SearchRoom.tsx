@@ -67,7 +67,7 @@ const SearchRoomSection: FC = () => {
                     <div className="w-3 h-3 bg-orange-500 rounded-full" />
                   </div>
 
-                  <p className="w-[80%] lg:w-full">
+                  <p className="w-60 lg:w-full">
                     Hubungi Layanan Pelanggan Untuk Keperluan Bantuan
                   </p>
                 </div>
