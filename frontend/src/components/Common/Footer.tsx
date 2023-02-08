@@ -14,7 +14,7 @@ const Footer: FC = () => {
   const primaryLink = [
     { title: 'Beranda', url: '/' },
     { title: 'Tentang Kami', url: '/about' },
-    { title: 'Kamar', url: '/room-types' },
+    { title: 'Cari Kamar', url: '/search-room' },
   ];
 
   const secondaryLink = [
