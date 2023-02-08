@@ -133,7 +133,7 @@ app.post('/admin', async (req, res) => {
     if(result) {
       let payload = JSON.stringify(result);
       let token = jwt.sign(payload, SECRET_KEY);
-      res.json({ success: 1, message: "Login success, welcome back!", token: token })
+      res.json({ success: 1, message: "Login success, welcome back!", data: result, token: token })
     } else {
       res.json({ success: 0, message: "Invalid email or password!" })
     }
@@ -159,7 +159,7 @@ app.post('/resepsionis', async (req, res) => {
     if(result) {
       let payload = JSON.stringify(result);
       let token = jwt.sign(payload, SECRET_KEY);
-      res.json({ success: 1, message: "Login success, welcome back!", token: token })
+      res.json({ success: 1, message: "Login success, welcome back!", data: result, token: token })
     } else {
       res.json({ success: 0, message: "Invalid email or password!" })
     }
