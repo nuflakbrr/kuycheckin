@@ -3,7 +3,20 @@ export const logout = (localItem: string, router: any) => {
   localStorage.removeItem('access');
   router.push('/');
 
-  if (router.pathname === '/') {
+  const listLandingLink = [
+    '/',
+    '/about',
+    'facilities',
+    'search-room',
+    '/contact',
+    '/career',
+    'internship',
+    '/faq',
+    '/term-of-service',
+    '/privacy-policy',
+  ];
+
+  if (router.pathname === listLandingLink) {
     router.reload();
   }
 };
