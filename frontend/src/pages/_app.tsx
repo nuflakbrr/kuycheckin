@@ -2,8 +2,6 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
-import Navbar from '../components/Common/Navbar/Navbar';
-import Footer from '../components/Common/Footer';
 import ScrollToTop from '../components/ScrollToTop';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -33,13 +31,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
 
-      <Navbar />
-
       <ScrollToTop />
 
       <Component {...pageProps} />
-
-      <Footer />
     </>
   );
 }

@@ -2,12 +2,17 @@ import { FC } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
+import Navbar from '../../Common/Navbar/Navbar';
+import Footer from '../../Common/Footer';
+
 const ContainerPrivacyPolicy: FC = () => {
   return (
     <>
       <Head>
         <title>Privacy Policy - Wikusama Hotel</title>
       </Head>
+
+      <Navbar />
 
       <main className="pt-20">
         <section className="pb-4 lg:py-20">
@@ -194,6 +199,8 @@ const ContainerPrivacyPolicy: FC = () => {
           </div>
         </section>
       </main>
+
+      <Footer />
     </>
   );
 };

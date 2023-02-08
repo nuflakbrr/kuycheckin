@@ -2,6 +2,9 @@ import { FC } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
+import Navbar from '../../Common/Navbar/Navbar';
+import Footer from '../../Common/Footer';
+
 const ContainerNotFound: FC = () => {
   return (
     <>
@@ -37,6 +40,8 @@ const ContainerNotFound: FC = () => {
         />
         <link rel="canonical" href="https://wikusamahotel.com/" />
       </Head>
+
+      <Navbar />
 
       <main className="py-20">
         <section className="py-20">
@@ -80,6 +85,8 @@ const ContainerNotFound: FC = () => {
           </div>
         </section>
       </main>
+
+      <Footer />
     </>
   );
 };

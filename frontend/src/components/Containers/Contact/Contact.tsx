@@ -2,6 +2,8 @@ import { FC } from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
+import Navbar from '../../Common/Navbar/Navbar';
+import Footer from '../../Common/Footer';
 import TopSection from './components/Top';
 import Form from './components/Form';
 
@@ -43,11 +45,15 @@ const ContainerContact: FC = () => {
         <link rel="canonical" href="https://wikusamahotel.com/contact" />
       </Head>
 
+      <Navbar />
+
       <main className="pt-20">
         <TopSection />
         <Maps />
         <Form />
       </main>
+
+      <Footer />
     </>
   );
 };

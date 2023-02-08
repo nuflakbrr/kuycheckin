@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import Head from 'next/head';
 
+import Navbar from '../../Common/Navbar/Navbar';
+import Footer from '../../Common/Footer';
 import TopSection from './components/Top';
 import CompanySection from './components/Company';
 
@@ -40,10 +42,14 @@ const ContainerAbout: FC = () => {
         <link rel="canonical" href="https://wikusamahotel.com/about" />
       </Head>
 
+      <Navbar />
+
       <main className="pt-20">
         <TopSection />
         <CompanySection />
       </main>
+
+      <Footer />
     </>
   );
 };

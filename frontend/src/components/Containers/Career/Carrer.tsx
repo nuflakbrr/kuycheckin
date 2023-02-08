@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import Head from 'next/head';
 
+import Navbar from '../../Common/Navbar/Navbar';
+import Footer from '../../Common/Footer';
+
 const ContainerCareer: FC = () => {
   return (
     <>
@@ -39,6 +42,8 @@ const ContainerCareer: FC = () => {
         />
         <link rel="canonical" href="https://wikusamahotel.com/internship" />
       </Head>
+
+      <Navbar />
 
       <main className="pt-20">
         <section className="pb-4 lg:py-20">
@@ -146,6 +151,8 @@ const ContainerCareer: FC = () => {
           </div>
         </section>
       </main>
+
+      <Footer />
     </>
   );
 };

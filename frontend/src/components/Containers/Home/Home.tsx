@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import Head from 'next/head';
 
+import Navbar from '../../Common/Navbar/Navbar';
+import Footer from '../../Common/Footer';
 import TopSection from './components/Top';
 import SearchRoomSection from './components/SearchRoom';
 import RecomendationSection from './components/Recomendation';
@@ -8,12 +10,6 @@ import AboutSection from './components/About';
 import FacilitiesSection from './components/Facilities';
 import CallToAction from '../../CallToAction';
 import FAQ from './components/FAQ';
-
-/**
- * To Do List
- *
- * 1. Recomendation Section
- */
 
 const ContainerHome: FC = () => {
   return (
@@ -51,6 +47,8 @@ const ContainerHome: FC = () => {
         <link rel="canonical" href="https://wikusamahotel.com/" />
       </Head>
 
+      <Navbar />
+
       <main className="pt-20">
         <TopSection />
         <SearchRoomSection />
@@ -60,6 +58,8 @@ const ContainerHome: FC = () => {
         <CallToAction />
         <FAQ />
       </main>
+
+      <Footer />
     </>
   );
 };
