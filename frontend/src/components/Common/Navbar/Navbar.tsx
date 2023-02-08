@@ -1,15 +1,21 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router';
+import { Menu, Transition } from '@headlessui/react';
+import { FaHome, FaCog, FaSignOutAlt } from 'react-icons/fa';
 import Link from 'next/link';
 
 import styles from './Navbar.module.css';
 import { headerNavLinks } from '../../../data/headerNavLinks';
 import { classNames } from '../../../lib/classNames';
+import { logout } from '../../../lib/logout';
 
 const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
+  const [data, setData] = useState({ foto: '', role: '' });
 
-  const { pathname } = useRouter();
+  const router = useRouter();
+  const { pathname } = router;
 
   // Navbar fixed position if scrolling
   useEffect(() => {
@@ -23,6 +29,14 @@ const Navbar: FC = () => {
         header?.classList.remove(styles.navbarFixed);
       }
     };
+
+    if (localStorage.getItem('admin') || localStorage.getItem('receptionist')) {
+      setData(
+        JSON.parse(localStorage.getItem('admin') || '') ||
+          JSON.parse(localStorage.getItem('receptionist') || '')
+      );
+      setIsLogged(true);
+    }
   }, []);
 
   // Hamburger menu handler
@@ -79,7 +93,10 @@ const Navbar: FC = () => {
                 id="hamburger"
                 name="hamburger"
                 type="button"
-                className="block absolute right-4 lg:hidden"
+                className={classNames(
+                  isLogged ? 'right-4' : 'right-4',
+                  'block absolute lg:hidden'
+                )}
                 onClick={hamburgerHandler}
               >
                 <span
@@ -116,6 +133,88 @@ const Navbar: FC = () => {
                   ))}
                 </ul>
               </nav>
+
+              {isLogged ? (
+                // default is ml-3
+                <Menu as="div" className="relative mr-11">
+                  <Menu.Button className="flex text-sm">
+                    <img
+                      src={data.foto}
+                      alt="User Image"
+                      loading="lazy"
+                      className="w-10 rounded-full"
+                    />
+                  </Menu.Button>
+
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            href={`${
+                              data.role === 'admin' ? '/admin' : '/receptionist'
+                            }/dashboard`}
+                            legacyBehavior
+                          >
+                            <a
+                              className={classNames(
+                                active ? '' : 'hover:bg-gray-100',
+                                'flex items-center px-4 py-2 text-sm text-gray-700'
+                              )}
+                            >
+                              <FaHome className="mr-2 mt-1" />
+                              Dasbor
+                            </a>
+                          </Link>
+                        )}
+                      </Menu.Item>
+
+                      <Menu.Item>
+                        {({ active }) => (
+                          <Link
+                            href={`${
+                              data.role === 'admin' ? '/admin' : '/receptionist'
+                            }/settings`}
+                            legacyBehavior
+                          >
+                            <a
+                              className={classNames(
+                                active ? '' : 'hover:bg-gray-100',
+                                'flex items-center px-4 py-2 text-sm text-gray-700'
+                              )}
+                            >
+                              <FaCog className="mr-2 mt-1" />
+                              Pengaturan
+                            </a>
+                          </Link>
+                        )}
+                      </Menu.Item>
+
+                      <Menu.Item>
+                        <button
+                          onClick={() =>
+                            logout('admin' || 'receptionist', router)
+                          }
+                          className="min-w-full flex items-center px-4 py-2 text-sm text-gray-700"
+                        >
+                          <FaSignOutAlt className="mr-2 mt-1" />
+                          Keluar
+                        </button>
+                      </Menu.Item>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+              ) : (
+                <div></div>
+              )}
             </div>
           </div>
         </div>

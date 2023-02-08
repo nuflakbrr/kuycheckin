@@ -33,7 +33,6 @@ const ContainerLogin: FC = () => {
 
           localStorage.setItem('access', res.data.token);
           localStorage.setItem('admin', JSON.stringify(res.data.data));
-          localStorage.setItem('role', JSON.stringify(res.data.data.role));
           router.push('/admin/dashboard');
         }
       } catch (err) {
@@ -49,7 +48,6 @@ const ContainerLogin: FC = () => {
 
           localStorage.setItem('access', res.data.token);
           localStorage.setItem('receptionist', JSON.stringify(res.data.data));
-          localStorage.setItem('role', JSON.stringify(res.data.data.role));
           router.push('/receptionist/dashboard');
         }
       } catch (err) {
