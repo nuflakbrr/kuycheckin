@@ -1,7 +1,64 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 
+import Navbar from '../../Common/Navbar/Navbar';
+import Footer from '../../Common/Footer';
+import axios from '../../../lib/axios';
+import { bindingState } from '../../../lib/bindingState';
+
 const ContainerLogin: FC = () => {
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+    role: '',
+  });
+  const [notifiedSuccess, setNotifiedSuccess] = useState(0);
+
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const sendData = { email: data.email, password: data.password };
+
+    if (data.role === 'admin') {
+      try {
+        const res = await axios.post('/user/admin', sendData);
+
+        console.log(res);
+
+        if (res.data.success === 1) {
+          setNotifiedSuccess(1);
+
+          localStorage.setItem('access', res.data.token);
+          localStorage.setItem('admin', JSON.stringify(res.data.data));
+          localStorage.setItem('role', JSON.stringify(res.data.data.role));
+          router.push('/admin/dashboard');
+        }
+      } catch (err) {
+        setNotifiedSuccess(2);
+        console.log(err);
+      }
+    } else if (data.role === 'resepsionis') {
+      try {
+        const res = await axios.post('/user/resepsionis', sendData);
+
+        if (res.data.success === 1) {
+          setNotifiedSuccess(1);
+
+          localStorage.setItem('access', res.data.token);
+          localStorage.setItem('receptionist', JSON.stringify(res.data.data));
+          localStorage.setItem('role', JSON.stringify(res.data.data.role));
+          router.push('/receptionist/dashboard');
+        }
+      } catch (err) {
+        setNotifiedSuccess(2);
+        console.log(err);
+      }
+    }
+  };
+
   return (
     <>
       <Head>
@@ -40,6 +97,8 @@ const ContainerLogin: FC = () => {
         <link rel="canonical" href="https://wikusamahotel.com/portal/login" />
       </Head>
 
+      <Navbar />
+
       <main className="pt-20">
         <section className="py-24">
           <div className="max-w-6xl mx-auto">
@@ -61,7 +120,26 @@ const ContainerLogin: FC = () => {
                     </h1>
                   </div>
 
-                  <div className="bg-white rounded-lg shadow-lg p-8">
+                  <form
+                    className="bg-white rounded-lg shadow-lg p-8"
+                    onSubmit={handleSubmit}
+                  >
+                    {notifiedSuccess === 1 && (
+                      <div className="mb-4 bg-green-500 p-3 rounded">
+                        <p className="text-white text-sm font-bold">
+                          Login Sukses, Selamat datang kembali!
+                        </p>
+                      </div>
+                    )}
+
+                    {notifiedSuccess === 2 && (
+                      <div className="mb-4 bg-red-500 p-3 rounded">
+                        <p className="text-white text-sm font-bold">
+                          Username atau Password salah, silakan coba kembali!
+                        </p>
+                      </div>
+                    )}
+
                     <div className="mb-3">
                       <label
                         htmlFor="email"
@@ -71,11 +149,14 @@ const ContainerLogin: FC = () => {
                       </label>
                       <input
                         type="email"
+                        name="email"
                         id="email"
                         className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-primary/70"
                         placeholder="Masukkan email"
                         autoFocus={true}
                         required
+                        value={data.email}
+                        onChange={(e) => bindingState(e, setData, 'email')}
                       />
                     </div>
 
@@ -88,10 +169,13 @@ const ContainerLogin: FC = () => {
                       </label>
                       <input
                         type="password"
+                        name="password"
                         id="password"
                         className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-primary/70"
                         placeholder="Masukkan password"
                         required
+                        value={data.password}
+                        onChange={(e) => bindingState(e, setData, 'password')}
                       />
                     </div>
 
@@ -106,6 +190,9 @@ const ContainerLogin: FC = () => {
                         name="role"
                         id="role"
                         className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-primary/70"
+                        required
+                        value={data.role}
+                        onChange={(e) => bindingState(e, setData, 'role')}
                       >
                         <option selected disabled>
                           Pilih Jabatan
@@ -123,13 +210,15 @@ const ContainerLogin: FC = () => {
                         Masuk
                       </button>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
         </section>
       </main>
+
+      <Footer />
     </>
   );
 };
