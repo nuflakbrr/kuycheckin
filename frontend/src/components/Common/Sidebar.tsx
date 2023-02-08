@@ -6,11 +6,12 @@ import { AiOutlineClose } from 'react-icons/ai';
 import {
   FaHome,
   FaBuilding,
-  FaBox,
   FaUserAlt,
   FaShoppingCart,
   FaSignOutAlt,
   FaGlobe,
+  FaBed,
+  FaUserFriends,
 } from 'react-icons/fa';
 
 import axios from '../../lib/axios';
@@ -64,24 +65,24 @@ const Sidebar: FC = () => {
       icon: <FaHome className="mr-2 text-lg" />,
     },
     {
-      path: '/admin/outlet',
-      name: 'Outlet',
+      path: '/admin/type-room',
+      name: 'Tipe Kamar',
       icon: <FaBuilding className="mr-2 text-lg" />,
     },
     {
-      path: '/admin/package',
-      name: 'Paket',
-      icon: <FaBox className="mr-2 text-lg" />,
+      path: '/admin/rooms',
+      name: 'Kamar',
+      icon: <FaBed className="mr-2 text-lg" />,
     },
     {
-      path: '/admin/member',
-      name: 'Member',
-      icon: <FaUserAlt className="mr-2 text-lg" />,
-    },
-    {
-      path: '/admin/transaction/add',
-      name: 'Transaksi',
+      path: '/admin/booking/add',
+      name: 'Pemesanan',
       icon: <FaShoppingCart className="mr-2 text-lg" />,
+    },
+    {
+      path: '/admin/user',
+      name: 'User',
+      icon: <FaUserFriends className="mr-2 text-lg" />,
     },
   ];
 
@@ -219,14 +220,16 @@ const Sidebar: FC = () => {
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
               <li className="items-center">
-                <Link href="/admin/user" legacyBehavior>
+                <Link href="/admin/profile" legacyBehavior>
                   <a
                     className={classNames(
-                      isMenuActive('/admin/user') ? activeClass : inActiveClass
+                      isMenuActive('/admin/profile')
+                        ? activeClass
+                        : inActiveClass
                     )}
                   >
                     <FaUserAlt className="mr-2 text-lg" />
-                    Petugas
+                    Profil
                   </a>
                 </Link>
               </li>
