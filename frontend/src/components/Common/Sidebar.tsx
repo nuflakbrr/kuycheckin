@@ -14,7 +14,6 @@ import {
   FaUserFriends,
 } from 'react-icons/fa';
 
-import axios from '../../lib/axios';
 import { logout } from '../../lib/logout';
 import { blockAccess } from '../../lib/blockAccess';
 import { classNames } from '../../lib/classNames';
@@ -65,7 +64,7 @@ const Sidebar: FC = () => {
       icon: <FaHome className="mr-2 text-lg" />,
     },
     {
-      path: '/admin/type-room',
+      path: '/admin/room-type',
       name: 'Tipe Kamar',
       icon: <FaBuilding className="mr-2 text-lg" />,
     },
@@ -88,22 +87,11 @@ const Sidebar: FC = () => {
 
   // Render data from local storage
   useEffect(() => {
-    const getAdmin = async () => {
-      const admin = JSON.parse(localStorage.getItem('admin') || '{}');
+    const user =
+      JSON.parse(localStorage.getItem('admin') || '{}') ||
+      JSON.parse(localStorage.getItem('receptionist') || '{}');
 
-      await axios
-        .get('/user', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access')}`,
-          },
-        })
-        .then(() => setUserName(admin.nama_user))
-        .catch((err) => console.log(err));
-    };
-
-    Promise.all([getAdmin()]);
-
-    console.log(userName);
+    setUserName(user.nama_user);
   }, []);
 
   // Block Access if Login level is not Admin
