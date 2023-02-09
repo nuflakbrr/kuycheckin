@@ -80,7 +80,7 @@ app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
 
   if(req.file) {
     let oldImg = await user.findOne({ where: params });
-    let oldImgName = oldImg.foto;
+    let oldImgName = oldImg.foto.replace(req.protocol + '://' + req.get('host') + '/usr/', '');
 
     let loc = path.join(__dirname, '../public/usr/', oldImgName);
     fs.unlink(loc, (err) => console.log(err));
@@ -105,7 +105,7 @@ app.delete('/:id', auth, async (req, res) => {
 
   let delImg = await user.findOne({ where: params });
   if(delImg) {
-    let delImgName = delImg.foto;
+    let delImgName = delImg.foto.replace(req.protocol + '://' + req.get('host') + '/usr/', '');
     let loc = path.join(__dirname, '../public/usr/', delImgName);
     fs.unlink(loc, (err) => console.log(err));
   }
