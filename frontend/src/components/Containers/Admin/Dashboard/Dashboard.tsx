@@ -12,12 +12,19 @@ import { headerConfig } from '../../../../lib/headerConfig';
 import { errorToast, infoToast } from '../../../../lib/toast';
 
 const ContainerDashboard: FC = () => {
+  const [userRole, setUserRole] = useState('');
   const [dataTypeRoom, setDataTypeRoom] = useState([]);
   const [dataRoom, setDataRoom] = useState([]);
   const [dataBooking, setDataBooking] = useState([]);
   const [dataUser, setDataUser] = useState([]);
 
   useEffect(() => {
+    const user =
+      JSON.parse(localStorage.getItem('admin') || '{}') ||
+      JSON.parse(localStorage.getItem('receptionist') || '{}');
+
+    setUserRole(user.role);
+
     const getUser = async () => {
       await axios
         .get('/user', headerConfig())
@@ -30,7 +37,7 @@ const ContainerDashboard: FC = () => {
 
     const getTypeRoom = async () => {
       await axios
-        .get('/type-room', headerConfig())
+        .get('/room-type', headerConfig())
         .then((res) => setDataTypeRoom(res.data.data))
         .catch((err) => errorToast(err));
     };
@@ -66,7 +73,9 @@ const ContainerDashboard: FC = () => {
         <div className="container">
           <div className="flex flex-wrap">
             <div className="w-full p-10">
-              <h2 className="text-2xl font-bold text-primary">Dashbor Admin</h2>
+              <h2 className="text-2xl font-bold text-primary capitalize">
+                Dashbor {userRole}
+              </h2>
               <StatsSection
                 dataUser={dataUser}
                 dataTypeRoom={dataTypeRoom}

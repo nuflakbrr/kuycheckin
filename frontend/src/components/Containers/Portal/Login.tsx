@@ -26,8 +26,6 @@ const ContainerLogin: FC = () => {
       try {
         const res = await axios.post('/user/admin', sendData);
 
-        console.log(res);
-
         if (res.data.success === 1) {
           setNotifiedSuccess(1);
 
