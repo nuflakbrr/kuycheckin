@@ -42,7 +42,7 @@ const ContainerProfile: FC = () => {
                                 'font-segoe text-base leading-6 mr-8'
                               )}
                             >
-                              Profi Saya
+                              Profil Saya
                             </button>
                           )}
                         </Tab>
