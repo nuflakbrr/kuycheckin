@@ -49,8 +49,6 @@ const EditProfile: FC = () => {
       axios
         .put('/user', sendData, headerConfig())
         .then((res) => {
-          console.log(res);
-
           if (res.data.success === 1) {
             successToast(
               'Berhasil mengubah data profil! Silahkan login kembali'
