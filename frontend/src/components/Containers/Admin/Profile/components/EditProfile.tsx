@@ -17,7 +17,7 @@ const EditProfile: FC = () => {
     role: 'default',
     foto: '',
   });
-  const [image, setImage] = useState('https://fakeimg.pl/200x200');
+  const [image, setImage] = useState('/assets/img/template-img.png');
 
   const router = useRouter();
 
