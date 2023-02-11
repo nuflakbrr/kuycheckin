@@ -65,7 +65,7 @@ const ContainerDashboard: FC = () => {
         <title>Dasbor - Wikusama Hotel</title>
       </Head>
 
-      <ToastContainer />
+      <ToastContainer autoClose={1500} />
 
       <Sidebar />
 

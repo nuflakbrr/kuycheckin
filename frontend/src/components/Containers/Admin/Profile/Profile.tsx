@@ -15,7 +15,7 @@ const ContainerProfile: FC = () => {
         <title>Profil Saya - Wikusama Hotel</title>
       </Head>
 
-      <ToastContainer />
+      <ToastContainer autoClose={1500} />
 
       <Sidebar />
 
