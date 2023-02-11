@@ -12,7 +12,7 @@ const ContainerProfile: FC = () => {
   return (
     <>
       <Head>
-        <title>Profile Saya - Wikusama Hotel</title>
+        <title>Profil Saya - Wikusama Hotel</title>
       </Head>
 
       <ToastContainer />
