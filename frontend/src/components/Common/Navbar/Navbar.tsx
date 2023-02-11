@@ -12,7 +12,11 @@ import { logout } from '../../../lib/logout';
 const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
-  const [data, setData] = useState({ foto: '', role: '' });
+  const [dataAdmin, setDataAdmin] = useState({ foto: '', role: '' });
+  const [dataReceptionist, setDataReceptionist] = useState({
+    foto: '',
+    role: '',
+  });
 
   const router = useRouter();
   const { pathname } = router;
@@ -30,10 +34,14 @@ const Navbar: FC = () => {
       }
     };
 
-    if (localStorage.getItem('admin') || localStorage.getItem('receptionist')) {
-      setData(
-        JSON.parse(localStorage.getItem('admin') || '') ||
-          JSON.parse(localStorage.getItem('receptionist') || '')
+    if (localStorage.getItem('admin')) {
+      setDataAdmin(JSON.parse(localStorage.getItem('admin') || '{}'));
+      setIsLogged(true);
+    }
+
+    if (localStorage.getItem('receptionist')) {
+      setDataReceptionist(
+        JSON.parse(localStorage.getItem('receptionist') || '{}')
       );
       setIsLogged(true);
     }
@@ -139,7 +147,7 @@ const Navbar: FC = () => {
                 <Menu as="div" className="relative mr-11">
                   <Menu.Button className="flex text-sm">
                     <img
-                      src={data.foto}
+                      src={dataAdmin.foto || dataReceptionist.foto}
                       alt="User Image"
                       loading="lazy"
                       className="w-10 rounded-full"
@@ -160,7 +168,9 @@ const Navbar: FC = () => {
                         {({ active }) => (
                           <Link
                             href={`${
-                              data.role === 'admin' ? '/admin' : '/receptionist'
+                              dataAdmin.role === 'admin'
+                                ? '/admin'
+                                : '/receptionist'
                             }/dashboard`}
                             legacyBehavior
                           >
@@ -181,7 +191,9 @@ const Navbar: FC = () => {
                         {({ active }) => (
                           <Link
                             href={`${
-                              data.role === 'admin' ? '/admin' : '/receptionist'
+                              dataAdmin.role === 'admin'
+                                ? '/admin'
+                                : '/receptionist'
                             }/settings`}
                             legacyBehavior
                           >
@@ -201,7 +213,12 @@ const Navbar: FC = () => {
                       <Menu.Item>
                         <button
                           onClick={() =>
-                            logout('admin' || 'receptionist', router)
+                            logout(
+                              dataAdmin.role === 'admin'
+                                ? 'admin'
+                                : 'receptionist',
+                              router
+                            )
                           }
                           className="min-w-full flex items-center px-4 py-2 text-sm text-gray-700"
                         >
