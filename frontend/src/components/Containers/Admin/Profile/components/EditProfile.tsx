@@ -54,6 +54,8 @@ const EditProfile: FC = () => {
               'Berhasil mengubah data profil! Silahkan login kembali'
             );
             logout('admin' || 'receptionist', router);
+          } else {
+            errorToast('Gagal mengubah data profil! Silahkan coba lagi');
           }
         })
         .catch((err) => {
