@@ -79,8 +79,6 @@ const ContainerProfile: FC = () => {
                 </div>
               </Tab.Group>
             </div>
-
-            <div className="w-full p-10"></div>
           </div>
         </div>
       </main>

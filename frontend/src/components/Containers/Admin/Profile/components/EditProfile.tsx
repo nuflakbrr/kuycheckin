@@ -13,7 +13,8 @@ const EditProfile: FC = () => {
     nama_user: '',
     email: '',
     password: '',
-    role: '',
+    confirmPass: '',
+    role: 'default',
     foto: '',
   });
   const [image, setImage] = useState('https://fakeimg.pl/200x200');
@@ -30,29 +31,38 @@ const EditProfile: FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const sendData = {
-      id_user: oldData.id_user,
-      nama_user: data.nama_user,
-      email: data.email,
-      password: data.password,
-      role: data.role,
-      foto: data.foto,
-    };
+    if (data.password !== data.confirmPass) {
+      errorToast('Password tidak sama! Silahkan coba lagi');
+      setData({ ...data, password: '', confirmPass: '' });
 
-    axios
-      .put('/user', sendData, headerConfig())
-      .then((res) => {
-        console.log(res);
+      return;
+    } else {
+      const sendData = {
+        id_user: oldData.id_user,
+        nama_user: data.nama_user,
+        email: data.email,
+        password: data.password,
+        role: data.role,
+        foto: data.foto,
+      };
 
-        if (res.data.success === 1) {
-          successToast('Berhasil mengubah data profil! Silahkan login kembali');
-          logout('admin' || 'receptionist', router);
-        }
-      })
-      .catch((err) => {
-        errorToast('Gagal mengubah data profil! Silahkan coba lagi');
-        console.log(err);
-      });
+      axios
+        .put('/user', sendData, headerConfig())
+        .then((res) => {
+          console.log(res);
+
+          if (res.data.success === 1) {
+            successToast(
+              'Berhasil mengubah data profil! Silahkan login kembali'
+            );
+            logout('admin' || 'receptionist', router);
+          }
+        })
+        .catch((err) => {
+          errorToast('Gagal mengubah data profil! Silahkan coba lagi');
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -167,10 +177,21 @@ const EditProfile: FC = () => {
               name="password"
               id="password"
               value={data.password}
-              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
+              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
               placeholder="Password Baru"
               required
               onChange={(e) => bindingState(e, setData, 'password')}
+            />
+
+            <input
+              type="password"
+              name="confirmPass"
+              id="confirmPass"
+              value={data.confirmPass}
+              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
+              placeholder="Konfirmasi Password Baru"
+              required
+              onChange={(e) => bindingState(e, setData, 'confirmPass')}
             />
           </div>
         </div>
@@ -199,7 +220,7 @@ const EditProfile: FC = () => {
               required
               onChange={(e) => bindingState(e, setData, 'role')}
             >
-              <option selected disabled>
+              <option value="default" selected disabled>
                 Pilih Jabatan
               </option>
               <option value="admin">Admin</option>

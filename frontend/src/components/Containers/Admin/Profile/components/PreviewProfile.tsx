@@ -34,12 +34,12 @@ const PreviewProfile: FC = () => {
 
           <div className="mt-2">
             <h4 className="font-semibold text-2xl leading-7 mb-2">
-              {data.nama_user}
+              {data.nama_user || 'Tidak ada data'}
             </h4>
 
             <hr />
 
-            <p>{data.email}</p>
+            <p>{data.email || 'Tidak ada data'}</p>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@ const PreviewProfile: FC = () => {
                 type="text"
                 name="name"
                 id="name"
-                value={data.nama_user}
+                value={data.nama_user || 'Tidak ada data'}
                 className="block w-full border text-gray-500 border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
                 disabled
               />
@@ -77,7 +77,7 @@ const PreviewProfile: FC = () => {
                 type="email"
                 name="email"
                 id="email"
-                value={data.email}
+                value={data.email || 'Tidak ada data'}
                 className="block w-full border text-gray-500 border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
                 disabled
               />
@@ -94,7 +94,7 @@ const PreviewProfile: FC = () => {
                 type="text"
                 name="role"
                 id="role"
-                value={data.role}
+                value={data.role || 'Tidak ada data'}
                 className="block w-full border text-gray-500 border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
                 disabled
               />
