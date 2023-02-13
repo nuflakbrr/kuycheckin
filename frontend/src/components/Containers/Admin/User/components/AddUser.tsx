@@ -25,13 +25,7 @@ const AddUserSection: FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const sendData = {
-      nama_user: data.nama_user,
-      email: data.email,
-      password: data.password,
-      role: data.role,
-      foto: data.foto,
-    };
+    const sendData = { ...data };
 
     axios
       .post('/user', sendData, headerConfig())

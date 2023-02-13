@@ -20,7 +20,7 @@ const ContainerLogin: FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const sendData = { email: data.email, password: data.password };
+    const sendData = { ...data, role: '' };
 
     if (data.role === 'admin') {
       try {

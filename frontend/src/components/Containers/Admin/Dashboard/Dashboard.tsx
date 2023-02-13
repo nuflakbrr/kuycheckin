@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { FaCartPlus } from 'react-icons/fa';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import Sidebar from '../../../Common/Sidebar';
 import StatsSection from './components/Stats';

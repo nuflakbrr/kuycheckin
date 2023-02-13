@@ -39,11 +39,7 @@ const EditProfile: FC = () => {
     } else {
       const sendData = {
         id_user: oldData.id_user,
-        nama_user: data.nama_user,
-        email: data.email,
-        password: data.password,
-        role: data.role,
-        foto: data.foto,
+        ...data,
       };
 
       axios
