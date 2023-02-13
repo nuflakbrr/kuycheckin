@@ -4,11 +4,13 @@ const PreviewProfile: FC = () => {
   const [data, setData] = useState<any>({});
 
   useEffect(() => {
-    const user =
-      JSON.parse(localStorage.getItem('admin') || '{}') ||
-      JSON.parse(localStorage.getItem('receptionist') || '{}');
+    if (localStorage.getItem('admin')) {
+      setData(JSON.parse(localStorage.getItem('admin') || '{}'));
+    }
 
-    setData(user);
+    if (localStorage.getItem('receptionist')) {
+      setData(JSON.parse(localStorage.getItem('receptionist') || '{}'));
+    }
   }, []);
 
   return (

@@ -25,8 +25,11 @@ const Sidebar: FC = () => {
 
   // Required State
   const [collapseShow, setCollapseShow] = useState('hidden');
-  const [adminName, setAdminName] = useState();
-  const [receptionistName, setReceptionistName] = useState();
+  const [dataAdmin, setDataAdmin] = useState({ nama_user: '', role: '' });
+  const [dataReceptionist, setDataReceptionist] = useState({
+    nama_user: '',
+    role: '',
+  });
 
   // Get full year
   const year = new Date().getFullYear();
@@ -89,15 +92,13 @@ const Sidebar: FC = () => {
   // Render data from local storage
   useEffect(() => {
     if (localStorage.getItem('admin')) {
-      const admin = JSON.parse(localStorage.getItem('admin') || '');
-      setAdminName(admin.nama_user);
+      setDataAdmin(JSON.parse(localStorage.getItem('admin') || '{}'));
     }
 
     if (localStorage.getItem('receptionist')) {
-      const receptionist = JSON.parse(
-        localStorage.getItem('receptionist') || ''
+      setDataReceptionist(
+        JSON.parse(localStorage.getItem('receptionist') || '{}')
       );
-      setReceptionistName(receptionist.nama_user);
     }
   }, []);
 
@@ -109,7 +110,7 @@ const Sidebar: FC = () => {
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden bg-slate-100 flex flex-wrap items-center justify-between relative md:w-64 z-20 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           <Link href="/admin/dashboard" legacyBehavior>
-            {!adminName && !receptionistName ? (
+            {!dataAdmin.nama_user && !dataReceptionist.nama_user ? (
               <p className="md:block text-left md:pb-2 text-gray-500 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
                 Halo,
                 <span className="animate-pulse bg-gray-300 text-transparent ml-1">
@@ -120,7 +121,7 @@ const Sidebar: FC = () => {
               <p className="md:block text-left md:pb-2 text-gray-500 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
                 Halo,{' '}
                 <span className="text-primary">
-                  {adminName || receptionistName}
+                  {dataAdmin.nama_user || dataReceptionist.nama_user}
                 </span>
               </p>
             )}
@@ -234,7 +235,12 @@ const Sidebar: FC = () => {
               <li className="items-center">
                 <button
                   className={inActiveClass}
-                  onClick={() => logout('admin', router)}
+                  onClick={() =>
+                    logout(
+                      dataAdmin.role === 'admin' ? 'admin' : 'receptionist',
+                      router
+                    )
+                  }
                 >
                   <FaSignOutAlt className="mr-2 text-lg" />
                   Keluar

@@ -1,19 +1,34 @@
 import { FC, useState, useEffect } from 'react';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaUser, FaEdit, FaTrash, FaLock } from 'react-icons/fa';
 import Link from 'next/link';
 
-import { headerConfig } from '../../../../../lib/headerConfig';
 import axios from '../../../../../lib/axios';
-import { errorToast, successToast } from '../../../../../lib/toast';
+import { headerConfig } from '../../../../../lib/headerConfig';
+import { errorToast, infoToast, successToast } from '../../../../../lib/toast';
+import { classNames } from '../../../../../lib/classNames';
 
 const AllUserSection: FC = () => {
+  const [dataLogin, setDataLogin] = useState<any>({});
   const [data, setData] = useState<any>([]);
 
   useEffect(() => {
+    if (localStorage.getItem('admin')) {
+      setDataLogin(JSON.parse(localStorage.getItem('admin') || '{}'));
+      // setIsLogin(true);
+    }
+
+    if (localStorage.getItem('receptionist')) {
+      setDataLogin(JSON.parse(localStorage.getItem('receptionist') || '{}'));
+      // setIsLogin(true);
+    }
+
     const getData = async () => {
       await axios
         .get('/user', headerConfig())
-        .then((res) => setData(res.data.data))
+        .then((res) => {
+          infoToast('Memuat data 📦...');
+          setData(res.data.data);
+        })
         .catch((err) => {
           errorToast('Terjadi kesalahan saat memuat data!');
           console.log(err);
@@ -149,6 +164,16 @@ const AllUserSection: FC = () => {
 
                 <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
                   <div className="flex items-center">
+                    <img
+                      src={a.foto || '/assets/img/no-image.png'}
+                      alt="User Image"
+                      loading="lazy"
+                      className={classNames(
+                        a.foto ? 'w-10' : 'w-10 h-10',
+                        'mr-2 rounded-full object-cover object-center'
+                      )}
+                    />
+
                     <p className="text-gray-900 whitespace-no-wrap">
                       {a.nama_user}
                     </p>
@@ -178,20 +203,35 @@ const AllUserSection: FC = () => {
                 </td>
 
                 <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
-                  <Link
-                    href={`/admin/user/edit/${a.id_user}`}
-                    className="w-lg flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
-                  >
-                    <FaEdit className="mr-2" /> Ubah
-                  </Link>
+                  {dataLogin.email === a.email ? (
+                    <Link
+                      href="/admin/profile"
+                      className="w-lg flex items-center justify-center bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide"
+                    >
+                      <FaUser className="mr-2" /> Profil Saya
+                    </Link>
+                  ) : dataLogin.role !== 'admin' ? (
+                    <div className="w-full flex items-center justify-center bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide mt-2 cursor-not-allowed">
+                      <FaLock className="mr-2" /> Perlu Akses
+                    </div>
+                  ) : (
+                    <>
+                      <Link
+                        href={`/admin/user/edit/${a.id_user}`}
+                        className="w-lg flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide"
+                      >
+                        <FaEdit className="mr-2" /> Ubah
+                      </Link>
 
-                  <button
-                    type="button"
-                    className="w-full flex items-center justify-center bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer mt-2"
-                    onClick={() => handleDelete(a.id_user)}
-                  >
-                    <FaTrash className="mr-2" /> Hapus
-                  </button>
+                      <button
+                        type="button"
+                        className="w-full flex items-center justify-center bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer mt-2"
+                        onClick={() => handleDelete(a.id_user)}
+                      >
+                        <FaTrash className="mr-2" /> Hapus
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))

@@ -49,7 +49,7 @@ const EditProfile: FC = () => {
             successToast(
               'Berhasil mengubah data profil! Silahkan login kembali'
             );
-            logout('admin' || 'receptionist', router);
+            logout(oldData.role === 'admin' ? 'admin' : 'receptionist', router);
           } else {
             errorToast('Gagal mengubah data profil! Silahkan coba lagi');
           }
@@ -62,11 +62,13 @@ const EditProfile: FC = () => {
   };
 
   useEffect(() => {
-    const user =
-      JSON.parse(localStorage.getItem('admin') || '{}') ||
-      JSON.parse(localStorage.getItem('receptionist') || '{}');
+    if (localStorage.getItem('admin')) {
+      setOldData(JSON.parse(localStorage.getItem('admin') || '{}'));
+    }
 
-    setOldData(user);
+    if (localStorage.getItem('receptionist')) {
+      setOldData(JSON.parse(localStorage.getItem('receptionist') || '{}'));
+    }
   }, []);
 
   return (

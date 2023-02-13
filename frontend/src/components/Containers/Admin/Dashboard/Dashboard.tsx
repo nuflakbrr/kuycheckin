@@ -11,18 +11,20 @@ import { headerConfig } from '../../../../lib/headerConfig';
 import { errorToast, infoToast } from '../../../../lib/toast';
 
 const ContainerDashboard: FC = () => {
-  const [userRole, setUserRole] = useState('');
-  const [dataTypeRoom, setDataTypeRoom] = useState([]);
-  const [dataRoom, setDataRoom] = useState([]);
-  const [dataBooking, setDataBooking] = useState([]);
-  const [dataUser, setDataUser] = useState([]);
+  const [user, setUser] = useState<any>('');
+  const [dataTypeRoom, setDataTypeRoom] = useState<any>([]);
+  const [dataRoom, setDataRoom] = useState<any>([]);
+  const [dataBooking, setDataBooking] = useState<any>([]);
+  const [dataUser, setDataUser] = useState<any>([]);
 
   useEffect(() => {
-    const user =
-      JSON.parse(localStorage.getItem('admin') || '{}') ||
-      JSON.parse(localStorage.getItem('receptionist') || '{}');
+    if (localStorage.getItem('admin')) {
+      setUser(JSON.parse(localStorage.getItem('admin') || '{}'));
+    }
 
-    setUserRole(user.role);
+    if (localStorage.getItem('receptionist')) {
+      setUser(JSON.parse(localStorage.getItem('receptionist') || '{}'));
+    }
 
     const getUser = async () => {
       await axios
@@ -73,7 +75,7 @@ const ContainerDashboard: FC = () => {
           <div className="flex flex-wrap">
             <div className="w-full p-10">
               <h2 className="text-2xl font-bold text-primary capitalize">
-                Dashbor {userRole}
+                Dashbor {user.role}
               </h2>
               <StatsSection
                 dataUser={dataUser}

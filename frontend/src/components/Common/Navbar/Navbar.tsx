@@ -10,8 +10,8 @@ import { classNames } from '../../../lib/classNames';
 import { logout } from '../../../lib/logout';
 
 const Navbar: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isLogged, setIsLogged] = useState<boolean>(false);
   const [dataAdmin, setDataAdmin] = useState({ foto: '', role: '' });
   const [dataReceptionist, setDataReceptionist] = useState({
     foto: '',
@@ -147,7 +147,11 @@ const Navbar: FC = () => {
                 <Menu as="div" className="relative mr-11">
                   <Menu.Button className="flex text-sm">
                     <img
-                      src={dataAdmin.foto || dataReceptionist.foto}
+                      src={
+                        dataAdmin.foto ||
+                        dataReceptionist.foto ||
+                        '/assets/img/no-image.png'
+                      }
                       alt="User Image"
                       loading="lazy"
                       className="w-10 rounded-full"
@@ -194,7 +198,7 @@ const Navbar: FC = () => {
                               dataAdmin.role === 'admin'
                                 ? '/admin'
                                 : '/receptionist'
-                            }/settings`}
+                            }/profile`}
                             legacyBehavior
                           >
                             <a
