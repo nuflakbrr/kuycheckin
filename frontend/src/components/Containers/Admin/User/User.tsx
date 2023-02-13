@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Tab } from '@headlessui/react';
 import Head from 'next/head';
@@ -9,6 +9,18 @@ import AllUserSection from './components/AllUser';
 import AddUserSection from './components/AddUser';
 
 const ContainerUser: FC = () => {
+  const [dataLogin, setDataLogin] = useState<any>({});
+
+  useEffect(() => {
+    if (localStorage.getItem('admin')) {
+      setDataLogin(JSON.parse(localStorage.getItem('admin') || '{}'));
+    }
+
+    if (localStorage.getItem('receptionist')) {
+      setDataLogin(JSON.parse(localStorage.getItem('receptionist') || '{}'));
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -47,20 +59,22 @@ const ContainerUser: FC = () => {
                           )}
                         </Tab>
 
-                        <Tab>
-                          {({ selected }) => (
-                            <button
-                              className={classNames(
-                                selected
-                                  ? 'font-extrabold text-primary'
-                                  : 'font-medium text-secondarydark hover:font-extrabold hover:text-primary',
-                                'font-segoe text-base leading-6 mr-8'
-                              )}
-                            >
-                              Tambah Data
-                            </button>
-                          )}
-                        </Tab>
+                        {dataLogin.role === 'admin' && (
+                          <Tab>
+                            {({ selected }) => (
+                              <button
+                                className={classNames(
+                                  selected
+                                    ? 'font-extrabold text-primary'
+                                    : 'font-medium text-secondarydark hover:font-extrabold hover:text-primary',
+                                  'font-segoe text-base leading-6 mr-8'
+                                )}
+                              >
+                                Tambah Data
+                              </button>
+                            )}
+                          </Tab>
+                        )}
                       </Tab.List>
                     </div>
                   </div>
