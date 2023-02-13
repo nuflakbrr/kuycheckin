@@ -4,7 +4,7 @@ import smoothscroll from 'smoothscroll-polyfill';
 import { classNames } from '../lib/classNames';
 
 const ScrollToTop: FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const toggleVisibility = () => {
     if (window.pageYOffset > 300) {

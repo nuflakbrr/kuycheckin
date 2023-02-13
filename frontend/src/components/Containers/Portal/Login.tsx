@@ -13,7 +13,7 @@ const ContainerLogin: FC = () => {
     password: '',
     role: '',
   });
-  const [notifiedSuccess, setNotifiedSuccess] = useState(0);
+  const [notifiedSuccess, setNotifiedSuccess] = useState<number>(0);
 
   const router = useRouter();
 
