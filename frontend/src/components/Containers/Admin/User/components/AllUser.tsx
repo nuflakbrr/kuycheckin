@@ -14,12 +14,10 @@ const AllUserSection: FC = () => {
   useEffect(() => {
     if (localStorage.getItem('admin')) {
       setDataLogin(JSON.parse(localStorage.getItem('admin') || '{}'));
-      // setIsLogin(true);
     }
 
     if (localStorage.getItem('receptionist')) {
       setDataLogin(JSON.parse(localStorage.getItem('receptionist') || '{}'));
-      // setIsLogin(true);
     }
 
     const getData = async () => {
