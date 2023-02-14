@@ -11,7 +11,7 @@ const ContainerLogin: FC = () => {
   const [data, setData] = useState({
     email: '',
     password: '',
-    role: '',
+    role: 'default',
   });
   const [notifiedSuccess, setNotifiedSuccess] = useState<number>(0);
 
@@ -190,7 +190,7 @@ const ContainerLogin: FC = () => {
                         value={data.role}
                         onChange={(e) => bindingState(e, setData, 'role')}
                       >
-                        <option selected disabled>
+                        <option value="default" selected disabled>
                           Pilih Jabatan
                         </option>
                         <option value="admin">Admin</option>
