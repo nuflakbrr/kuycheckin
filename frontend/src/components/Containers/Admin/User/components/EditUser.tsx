@@ -22,14 +22,13 @@ const ContainerEditUser: FC = () => {
   const [image, setImage] = useState('/assets/img/template-img.png');
 
   const router = useRouter();
-  const { id } = router.query;
+  const { slug } = router.query;
 
   useEffect(() => {
-    if (id) {
+    if (slug) {
       axios
-        .get(`/user/${id}`, headerConfig())
+        .get(`/user/${slug}`, headerConfig())
         .then((res) => {
-          console.log(res.data);
           setOldData(res.data.data);
         })
         .catch((err) => {
@@ -41,7 +40,7 @@ const ContainerEditUser: FC = () => {
         router.push('/admin/user');
       }, 1500);
     }
-  }, [id, router]);
+  }, [slug, router]);
 
   const handleImage = (e: any) => {
     // eslint-disable-next-line prefer-const
