@@ -89,6 +89,29 @@ const Sidebar: FC = () => {
     },
   ];
 
+  const receptionistLinks = [
+    {
+      path: '/receptionist/dashboard',
+      name: 'Dashboard Resepsionis',
+      icon: <FaHome className="mr-2 text-lg" />,
+    },
+    {
+      path: '/receptionist/rooms',
+      name: 'Kamar',
+      icon: <FaBed className="mr-2 text-lg" />,
+    },
+    {
+      path: '/receptionist/booking/add',
+      name: 'Pemesanan',
+      icon: <FaShoppingCart className="mr-2 text-lg" />,
+    },
+    {
+      path: '/receptionist/user',
+      name: 'User',
+      icon: <FaUserFriends className="mr-2 text-lg" />,
+    },
+  ];
+
   // Render data from local storage
   useEffect(() => {
     if (localStorage.getItem('admin')) {
@@ -185,20 +208,83 @@ const Sidebar: FC = () => {
             </h6>
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              {adminLinks.map((link, index) => (
-                <li key={index} className="items-center">
-                  <Link href={link.path} legacyBehavior>
-                    <a
-                      className={classNames(
-                        isMenuActive(link.path) ? activeClass : inActiveClass
-                      )}
-                    >
-                      {link.icon}
-                      {link.name}
-                    </a>
-                  </Link>
-                </li>
-              ))}
+              {!dataAdmin.role && !dataReceptionist.role ? (
+                <>
+                  <li className="animate-pulse transition-all ease-in-out duration-300">
+                    <div className="bg-gray-200 rounded p-3 mt-2 mb-1 flex">
+                      <div className="bg-gray-300 text-gray-300 text-xs uppercase font-bold">
+                        this text not displayed
+                      </div>
+                    </div>
+                  </li>
+
+                  <li className="animate-pulse transition-all ease-in-out duration-300">
+                    <div className="bg-gray-200 rounded p-3 mt-2 mb-1 flex">
+                      <div className="bg-gray-300 text-gray-300 text-xs uppercase font-bold">
+                        this text not displayed
+                      </div>
+                    </div>
+                  </li>
+
+                  <li className="animate-pulse transition-all ease-in-out duration-300">
+                    <div className="bg-gray-200 rounded p-3 mt-2 mb-1 flex">
+                      <div className="bg-gray-300 text-gray-300 text-xs uppercase font-bold">
+                        this text not displayed
+                      </div>
+                    </div>
+                  </li>
+
+                  <li className="animate-pulse transition-all ease-in-out duration-300">
+                    <div className="bg-gray-200 rounded p-3 mt-2 mb-1 flex">
+                      <div className="bg-gray-300 text-gray-300 text-xs uppercase font-bold">
+                        this text not displayed
+                      </div>
+                    </div>
+                  </li>
+
+                  <li className="animate-pulse transition-all ease-in-out duration-300">
+                    <div className="bg-gray-200 rounded p-3 mt-2 mb-1 flex">
+                      <div className="bg-gray-300 text-gray-300 text-xs uppercase font-bold">
+                        this text not displayed
+                      </div>
+                    </div>
+                  </li>
+                </>
+              ) : (
+                <>
+                  {dataAdmin.role === 'admin' &&
+                    adminLinks.map((a, i) => (
+                      <li key={i} className="items-center">
+                        <Link href={a.path} legacyBehavior>
+                          <a
+                            className={classNames(
+                              isMenuActive(a.path) ? activeClass : inActiveClass
+                            )}
+                          >
+                            {a.icon}
+                            {a.name}
+                          </a>
+                        </Link>
+                      </li>
+                    ))}
+
+                  {dataReceptionist.role === 'resepsionis' &&
+                    receptionistLinks.map((b, i) => (
+                      <li key={i} className="items-center">
+                        <Link href={b.path} legacyBehavior>
+                          <a
+                            className={classNames(
+                              isMenuActive(b.path) ? activeClass : inActiveClass
+                            )}
+                          >
+                            {b.icon}
+                            {b.name}
+                          </a>
+                        </Link>
+                      </li>
+                    ))}
+                </>
+              )}
 
               <li>
                 <Link href="/" legacyBehavior>
