@@ -1,4 +1,5 @@
 const express = require('express');
+const slugify = require('slugify');
 
 const auth = require('../middleware/auth');
 const pemesanan = require('../models/index').pemesanan;
@@ -8,8 +9,13 @@ const user = require('../models/index').user;
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+const slugOptions = {
+  replacement: '-',
+  remove: /[*+~.()'"!:@]/g,
+  lower: true,
+  strict: true,
+  locale: 'id'
+};
 
 /**
  * @apiRoutes {get} /hotel/booking/
@@ -24,13 +30,13 @@ app.get('/', async (req, res) => {
 });
 
 /**
- * @apiRoutes {get} /hotel/booking/:id
+ * @apiRoutes {get} /hotel/booking/:slug
  * @apiName GetBookingById
  * @apiGroup Booking
- * @apiDescription Get booking data by id
+ * @apiDescription Get booking data by slug
  */
-app.get('/:id', async (req, res) => {
-  let params = { id_pemesanan: req.params.id };
+app.get('/:slug', async (req, res) => {
+  let params = { slug: req.params.slug };
 
   await pemesanan.findOne({ where: params, include: ['user', 'tipe_kamar', 'detail_pemesanan'] })
   .then(result => res.json({ data: result }))
@@ -45,14 +51,18 @@ app.get('/:id', async (req, res) => {
  */
 app.post('/', async (req, res) => {
   let data = {
-    id_user: req.body.id_user,
+    nomor_pemesanan: req.body.nomor_pemesanan,
+    nama_pemesan: req.body.nama_pemesan,
+    slug: slugify(req.body.nama_pemesan, slugOptions),
+    email_pemesan: req.body.email_pemesan,
+    tgl_pemesanan: req.body.tgl_pemesanan,
+    tgl_check_in: req.body.tgl_check_in,
+    tgl_check_out: req.body.tgl_check_out,
+    nama_tamu: req.body.nama_tamu,
+    jumlah_kamar: req.body.jumlah_kamar,
     id_tipe_kamar: req.body.id_tipe_kamar,
-    id_foto_kamar: req.body.id_foto_kamar,
-    tanggal_pemesanan: req.body.tanggal_pemesanan,
-    tanggal_checkin: req.body.tanggal_checkin,
-    tanggal_checkout: req.body.tanggal_checkout,
-    total_harga: req.body.total_harga,
-    status: req.body.status,
+    status_pemesanan: req.body.status_pemesanan,
+    id_user: req.body.id_user,
   }
 
   await pemesanan.create(data)
@@ -61,22 +71,26 @@ app.post('/', async (req, res) => {
 });
 
 /**
- * @apiRoutes {put} /hotel/booking/:id
+ * @apiRoutes {put} /hotel/booking/
  * @apiName PutBooking
  * @apiGroup Booking
  * @apiDescription Update booking data
  */
-app.put('/:id', async (req, res) => {
-  let params = { id_pemesanan: req.params.id };
+app.put('/', async (req, res) => {
+  let params = { id_pemesanan: req.body.id_pemesanan };
   let data = {
-    id_user: req.body.id_user,
+    nomor_pemesanan: req.body.nomor_pemesanan,
+    nama_pemesan: req.body.nama_pemesan,
+    slug: slugify(req.body.nama_pemesan, slugOptions),
+    email_pemesan: req.body.email_pemesan,
+    tgl_pemesanan: req.body.tgl_pemesanan,
+    tgl_check_in: req.body.tgl_check_in,
+    tgl_check_out: req.body.tgl_check_out,
+    nama_tamu: req.body.nama_tamu,
+    jumlah_kamar: req.body.jumlah_kamar,
     id_tipe_kamar: req.body.id_tipe_kamar,
-    id_foto_kamar: req.body.id_foto_kamar,
-    tanggal_pemesanan: req.body.tanggal_pemesanan,
-    tanggal_checkin: req.body.tanggal_checkin,
-    tanggal_checkout: req.body.tanggal_checkout,
-    total_harga: req.body.total_harga,
-    status: req.body.status,
+    status_pemesanan: req.body.status_pemesanan,
+    id_user: req.body.id_user,
   }
 
   await pemesanan.update(data, { where: params })

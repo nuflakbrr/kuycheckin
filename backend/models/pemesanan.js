@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     nomor_pemesanan: DataTypes.INTEGER,
     nama_pemesan: DataTypes.STRING,
+    slug: {
+      type: DataTypes.STRING,
+      unique: true
+    },
     email_pemesan: DataTypes.STRING,
     tgl_pemesanan: DataTypes.DATE,
     tgl_check_in: DataTypes.DATE,

@@ -11,6 +11,9 @@ module.exports = {
       nama_tipe_kamar: {
         type: Sequelize.STRING
       },
+      slug: {
+        type: Sequelize.STRING
+      },
       harga: {
         type: Sequelize.INTEGER
       },

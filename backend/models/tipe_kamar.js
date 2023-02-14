@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
     },
     nama_tipe_kamar: DataTypes.STRING,
+    slug: {
+      type: DataTypes.STRING,
+      unique: true
+    },
     harga: DataTypes.INTEGER,
     deskripsi: DataTypes.TEXT,
     foto: DataTypes.TEXT

@@ -14,6 +14,9 @@ module.exports = {
       nama_pemesan: {
         type: Sequelize.STRING
       },
+      slug: {
+        type: Sequelize.STRING
+      },
       email_pemesan: {
         type: Sequelize.STRING
       },

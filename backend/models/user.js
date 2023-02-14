@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     nama_user: DataTypes.STRING,
     foto: DataTypes.STRING,
+    slug: {
+      type: DataTypes.STRING,
+      unique: true
+    },
     email: {
       type: DataTypes.STRING,
       unique: true

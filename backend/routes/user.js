@@ -1,6 +1,7 @@
 const express = require('express');
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
+const slugify = require('slugify');
 const path = require('path');
 const fs = require('fs');
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -10,6 +11,14 @@ const { uploadUser } = require('../middleware/uploadImage');
 const user = require('../models/index').user;
 
 const app = express();
+
+const slugOptions = {
+  replacement: '-',
+  remove: /[*+~.()'"!:@]/g,
+  lower: true,
+  strict: true,
+  locale: 'id'
+};
 
 /**
  * @apiRoutes {get} /hotel/user/
@@ -24,13 +33,13 @@ app.get('/', auth, async (req, res) => {
 });
 
 /**
- * @apiRoutes {get} /hotel/user/:id
+ * @apiRoutes {get} /hotel/user/:slug
  * @apiName GetUsersById
  * @apiGroup User
- * @apiDescription Get users data by id
+ * @apiDescription Get users data by slug
  */
-app.get('/:id', auth, async (req, res) => {
-  let params = { id_user: req.params.id };
+app.get('/:slug', auth, async (req, res) => {
+  let params = { slug: req.params.slug };
 
   await user.findOne({ where: params })
   .then(result => res.json({ data: result }))
@@ -51,6 +60,7 @@ app.post('/', uploadUser.single('foto'), async (req, res) => {
   let data = {
     nama_user: req.body.nama_user,
     foto: finalImageURL,
+    slug: slugify(req.body.nama_user, slugOptions),
     email: req.body.email,
     password: md5(req.body.password),
     role: req.body.role
@@ -73,6 +83,7 @@ app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
   let params = { id_user: req.body.id_user }
   let data = {
     nama_user: req.body.nama_user,
+    slug: slugify(req.body.nama_user, slugOptions),
     email: req.body.email,
     password: md5(req.body.password),
     role: req.body.role

@@ -1,4 +1,5 @@
 const express = require('express');
+const slugify = require('slugify');
 
 const auth = require('../middleware/auth');
 const { uploadTypeRoom } = require('../middleware/uploadImage');
@@ -6,6 +7,14 @@ const tipe_kamar = require('../models/index').tipe_kamar;
 const kamar = require('../models/index').kamar;
 
 const app = express();
+
+const slugOptions = {
+  replacement: '-',
+  remove: /[*+~.()'"!:@]/g,
+  lower: true,
+  strict: true,
+  locale: 'id'
+};
 
 /**
  * @apiRoutes {get} /hotel/type-room/
@@ -20,13 +29,13 @@ app.get('/', async (req, res) => {
 });
 
 /**
- * @apiRoutes {get} /hotel/type-room/:id
+ * @apiRoutes {get} /hotel/type-room/:slug
  * @apiName GetTypeRoomById
  * @apiGroup TypeRoom
- * @apiDescription Get type room data by id
+ * @apiDescription Get type room data by slug
  */
-app.get('/:id', async (req, res) => {
-  let params = { id_tipe_kamar: req.params.id };
+app.get('/:slug', async (req, res) => {
+  let params = { slug: req.params.slug };
 
   await tipe_kamar.findOne({ where: params, include: ['kamar'] })
   .then(result => res.json({ data: result }))
@@ -51,6 +60,7 @@ app.post('/', uploadTypeRoom.array('foto', 5), auth, async (req, res) => {
 
   let data = {
     nama_tipe_kamar: req.body.nama_tipe_kamar,
+    slug: slugify(req.body.nama_tipe_kamar, slugOptions),
     harga: req.body.harga,
     deskripsi: req.body.deskripsi,
     foto: finalImageArrayURL
@@ -67,12 +77,13 @@ app.post('/', uploadTypeRoom.array('foto', 5), auth, async (req, res) => {
  * @apiGroup TypeRoom
  * @apiDescription Update type room data
  */
-app.put('/:id', uploadTypeRoom.array('foto', 5), auth, async (req, res) => {
+app.put('/', uploadTypeRoom.array('foto', 5), auth, async (req, res) => {
   if(!req.file) return res.json({ message: "No file uploaded" })
 
-  let params = { id_tipe_kamar: req.params.id };
+  let params = { id_tipe_kamar: req.body.id_tipe_kamar };
   let data = {
     nama_tipe_kamar: req.body.nama_tipe_kamar,
+    slug: slugify(req.body.nama_tipe_kamar, slugOptions),
     harga: req.body.harga,
     deskripsi: req.body.deskripsi
   }
@@ -81,7 +92,7 @@ app.put('/:id', uploadTypeRoom.array('foto', 5), auth, async (req, res) => {
     let delImg = await tipe_kamar.findOne({ where: params });
 
     if(delImg) {
-      let delImgName = delImg.foto;
+      let delImgName = delImg.foto.replace(req.protocol + '://' + req.get('host') + '/img/', '');
       delImgName.forEach((img) => {
         let imgName = img.split('/').pop();
 
@@ -124,13 +135,6 @@ app.delete('/:id', auth, async (req, res) => {
       fs.unlinkSync(loc, (err) => console.log(err));
     });
   }
-
-  // let delImg = await tipe_kamar.findOne({ where: params });
-  // if(delImg) {
-  //   let delImgName = delImg.foto;
-  //   let loc = path.join(__dirname, '../public/img/', delImgName);
-  //   fs.unlink(loc, (err) => console.log(err));
-  // }
 
   await tipe_kamar.destroy({ where: params })
   .then(result => res.json({ success: 1, message: "Data has been deleted" }))
