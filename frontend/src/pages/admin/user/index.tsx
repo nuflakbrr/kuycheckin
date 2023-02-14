@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import ContainerUser from '../../../components/Containers/Admin/User/User';
+import ContainerUser from '../../../components/Containers/User/User';
 
 const User: FC = () => {
   return <ContainerUser />;

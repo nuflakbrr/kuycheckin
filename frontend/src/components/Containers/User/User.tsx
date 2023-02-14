@@ -3,8 +3,8 @@ import { ToastContainer } from 'react-toastify';
 import { Tab } from '@headlessui/react';
 import Head from 'next/head';
 
-import { classNames } from '../../../../lib/classNames';
-import Sidebar from '../../../Common/Sidebar';
+import { classNames } from '../../../lib/classNames';
+import Sidebar from '../../Common/Sidebar';
 import AllUserSection from './components/AllUser';
 import AddUserSection from './components/AddUser';
 

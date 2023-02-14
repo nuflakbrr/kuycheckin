@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FaEdit, FaInfoCircle, FaTrash } from 'react-icons/fa';
 
-import axios from '../../../../../lib/axios';
-import { headerConfig } from '../../../../../lib/headerConfig';
-import { formatLocalTime } from '../../../../../lib/formatLocalTime';
-import { successToast } from '../../../../../lib/toast';
+import axios from '../../../../lib/axios';
+import { headerConfig } from '../../../../lib/headerConfig';
+import { formatLocalTime } from '../../../../lib/formatLocalTime';
+import { successToast } from '../../../../lib/toast';
 
 type TransactionItemProps = {
   id: number;

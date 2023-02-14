@@ -1,11 +1,11 @@
 import { FC, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import axios from '../../../../../lib/axios';
-import { bindingState } from '../../../../../lib/bindingState';
-import { errorToast, successToast } from '../../../../../lib/toast';
-import { headerConfig } from '../../../../../lib/headerConfig';
-import { logout } from '../../../../../lib/logout';
+import axios from '../../../../lib/axios';
+import { bindingState } from '../../../../lib/bindingState';
+import { errorToast, successToast } from '../../../../lib/toast';
+import { headerConfig } from '../../../../lib/headerConfig';
+import { logout } from '../../../../lib/logout';
 
 const EditProfile: FC = () => {
   const [oldData, setOldData] = useState<any>({});

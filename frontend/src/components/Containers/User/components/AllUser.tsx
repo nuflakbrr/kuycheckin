@@ -2,10 +2,10 @@ import { FC, useState, useEffect } from 'react';
 import { FaUser, FaEdit, FaTrash, FaLock } from 'react-icons/fa';
 import Link from 'next/link';
 
-import axios from '../../../../../lib/axios';
-import { headerConfig } from '../../../../../lib/headerConfig';
-import { errorToast, infoToast, successToast } from '../../../../../lib/toast';
-import { classNames } from '../../../../../lib/classNames';
+import axios from '../../../../lib/axios';
+import { headerConfig } from '../../../../lib/headerConfig';
+import { errorToast, infoToast, successToast } from '../../../../lib/toast';
+import { classNames } from '../../../../lib/classNames';
 
 const AllUserSection: FC = () => {
   const [dataLogin, setDataLogin] = useState<any>({});

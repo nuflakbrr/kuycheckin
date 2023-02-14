@@ -3,11 +3,11 @@ import { ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-import Sidebar from '../../../../Common/Sidebar';
-import axios from '../../../../../lib/axios';
-import { bindingState } from '../../../../../lib/bindingState';
-import { headerConfig } from '../../../../../lib/headerConfig';
-import { errorToast, successToast } from '../../../../../lib/toast';
+import Sidebar from '../../../Common/Sidebar';
+import axios from '../../../../lib/axios';
+import { bindingState } from '../../../../lib/bindingState';
+import { headerConfig } from '../../../../lib/headerConfig';
+import { errorToast, successToast } from '../../../../lib/toast';
 
 const ContainerEditUser: FC = () => {
   const [oldData, setOldData] = useState<any>({});
