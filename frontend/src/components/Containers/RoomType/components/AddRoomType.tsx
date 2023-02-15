@@ -144,23 +144,9 @@ const AddRoomTypeSection: FC = () => {
               editorClassName="editorClassName"
               onEditorStateChange={handleEditor}
               toolbar={{
-                inline: { inDropdown: true },
-                list: { inDropdown: true },
-                textAlign: { inDropdown: true },
-                history: { inDropdown: true },
+                options: ['inline', 'list', 'textAlign', 'history'],
               }}
             />
-            {/* <textarea
-              name="deskripsi"
-              id="deskripsi"
-              value={data.deskripsi}
-              cols={30}
-              rows={5}
-              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
-              placeholder="Deskripsi"
-              required
-              onChange={(e) => bindingState(e, setData, 'deskripsi')}
-            /> */}
           </div>
         </div>
 
