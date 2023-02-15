@@ -50,8 +50,6 @@ const AddRoomTypeSection: FC = () => {
       });
   };
 
-  console.log(data);
-
   return (
     <section>
       <form onSubmit={handleSubmit} encType="multipart/form-data">

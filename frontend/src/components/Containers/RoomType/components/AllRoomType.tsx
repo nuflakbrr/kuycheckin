@@ -187,7 +187,7 @@ const AllRoomTypeSection: FC = () => {
                   ) : (
                     <>
                       <Link
-                        href={`/admin/user/edit/${a.slug}`}
+                        href={`/admin/room-type/edit/${a.slug}`}
                         className="w-lg flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide"
                       >
                         <FaEdit className="mr-2" /> Ubah
