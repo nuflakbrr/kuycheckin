@@ -48,10 +48,10 @@ app.get('/:slug', async (req, res) => {
  * @apiGroup TypeRoom
  * @apiDescription Insert type room data
  */
-app.post('/', uploadTypeRoom.array('foto', 5), auth, async (req, res) => {
+app.post('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
   if(!req.file) return res.json({ message: "No file uploaded" })
 
-  let finalImageURL = req.protocol + '://' + req.get('host') + '/usr/' + req.file.filename;
+  let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + req.file.filename;
 
   // req.files.forEach((file) => {
   //   let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + file.filename;
@@ -77,7 +77,7 @@ app.post('/', uploadTypeRoom.array('foto', 5), auth, async (req, res) => {
  * @apiGroup TypeRoom
  * @apiDescription Update type room data
  */
-app.put('/', uploadTypeRoom.array('foto', 5), auth, async (req, res) => {
+app.put('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
   if(!req.file) return res.json({ message: "No file uploaded" })
 
   let params = { id_tipe_kamar: req.body.id_tipe_kamar };
