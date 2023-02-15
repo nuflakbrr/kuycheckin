@@ -182,7 +182,7 @@ const ContainerEditRoomType: FC = () => {
                       />
 
                       <input
-                        type="email"
+                        type="text"
                         name="harga"
                         id="harga"
                         value={data.harga}
