@@ -51,19 +51,19 @@ app.get('/:slug', async (req, res) => {
 app.post('/', uploadTypeRoom.array('foto', 5), auth, async (req, res) => {
   if(!req.file) return res.json({ message: "No file uploaded" })
 
-  let finalImageArrayURL = [];
+  let finalImageURL = req.protocol + '://' + req.get('host') + '/usr/' + req.file.filename;
 
-  req.files.forEach((file) => {
-    let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + file.filename;
-    finalImageArrayURL.push(finalImageURL);
-  });
+  // req.files.forEach((file) => {
+  //   let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + file.filename;
+  //   finalImageArrayURL.push(finalImageURL);
+  // });
 
   let data = {
     nama_tipe_kamar: req.body.nama_tipe_kamar,
     slug: slugify(req.body.nama_tipe_kamar, slugOptions),
     harga: req.body.harga,
     deskripsi: req.body.deskripsi,
-    foto: finalImageArrayURL
+    foto: finalImageURL
   }
 
   await tipe_kamar.create(data)
@@ -88,27 +88,36 @@ app.put('/', uploadTypeRoom.array('foto', 5), auth, async (req, res) => {
     deskripsi: req.body.deskripsi
   }
 
-  if(req.files) {
+  if(req.file) {
     let delImg = await tipe_kamar.findOne({ where: params });
 
     if(delImg) {
-      let delImgName = delImg.foto.replace(req.protocol + '://' + req.get('host') + '/img/', '');
-      delImgName.forEach((img) => {
-        let imgName = img.split('/').pop();
+      let oldImg = await tipe_kamar.findOne({ where: params });
+      let oldImgName = oldImg.foto.replace(req.protocol + '://' + req.get('host') + '/img/', '');
 
-        let loc = path.join(__dirname, '../public/img/' + imgName);
-        fs.unlinkSync(loc, (err) => console.log(err));
-      });
+      let loc = path.join(__dirname, '../public/img/', oldImgName);
+      fs.unlink(loc, (err) => console.log(err));
+
+      let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + req.file.filename;
+      data.foto = finalImageURL;
+
+      // let delImgName = delImg.foto.replace(req.protocol + '://' + req.get('host') + '/img/', '');
+      // delImgName.forEach((img) => {
+      //   let imgName = img.split('/').pop();
+
+      //   let loc = path.join(__dirname, '../public/img/' + imgName);
+      //   fs.unlinkSync(loc, (err) => console.log(err));
+      // });
     }
 
-    let finalImageArrayURL = [];
+    // let finalImageArrayURL = [];
 
-    req.files.forEach((file) => {
-      let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + file.filename;
-      finalImageArrayURL.push(finalImageURL);
-    });
+    // req.files.forEach((file) => {
+    //   let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + file.filename;
+    //   finalImageArrayURL.push(finalImageURL);
+    // });
 
-    data.foto = finalImageArrayURL;
+    // data.foto = finalImageArrayURL;
   }
 
   await tipe_kamar.update(data, { where: params })
@@ -124,17 +133,24 @@ app.put('/', uploadTypeRoom.array('foto', 5), auth, async (req, res) => {
  */
 app.delete('/:id', auth, async (req, res) => {
   let params = { id_tipe_kamar: req.params.id };
+
   let delImg = await tipe_kamar.findOne({ where: params });
-
   if(delImg) {
-    let delImgName = delImg.foto;
-    delImgName.forEach((img) => {
-      let imgName = img.split('/').pop();
-
-      let loc = path.join(__dirname, '../public/img/' + imgName);
-      fs.unlinkSync(loc, (err) => console.log(err));
-    });
+    let delImgName = delImg.foto.replace(req.protocol + '://' + req.get('host') + '/img/', '');
+    let loc = path.join(__dirname, '../public/img/', delImgName);
+    fs.unlink(loc, (err) => console.log(err));
   }
+  
+  // let delImg = await tipe_kamar.findOne({ where: params });
+  // if(delImg) {
+  //   let delImgName = delImg.foto;
+  //   delImgName.forEach((img) => {
+  //     let imgName = img.split('/').pop();
+
+  //     let loc = path.join(__dirname, '../public/img/' + imgName);
+  //     fs.unlinkSync(loc, (err) => console.log(err));
+  //   });
+  // }
 
   await tipe_kamar.destroy({ where: params })
   .then(result => res.json({ success: 1, message: "Data has been deleted" }))
