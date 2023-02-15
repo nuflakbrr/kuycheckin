@@ -1,12 +1,26 @@
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Tab } from '@headlessui/react';
 import Head from 'next/head';
 
 import { classNames } from '../../../lib/classNames';
 import SidebarAdmin from '../../Common/SidebarAdmin';
+import AllRoomTypeSection from './components/AllRoomType';
+import AddRoomTypeSection from './components/AddRoomType';
 
 const ContainerRoomType: FC = () => {
+  const [dataLogin, setDataLogin] = useState<any>({});
+
+  useEffect(() => {
+    if (localStorage.getItem('admin')) {
+      setDataLogin(JSON.parse(localStorage.getItem('admin') || '{}'));
+    }
+
+    if (localStorage.getItem('resepsionis')) {
+      setDataLogin(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -45,29 +59,35 @@ const ContainerRoomType: FC = () => {
                           )}
                         </Tab>
 
-                        <Tab>
-                          {({ selected }) => (
-                            <button
-                              className={classNames(
-                                selected
-                                  ? 'font-extrabold text-primary'
-                                  : 'font-medium text-secondarydark hover:font-extrabold hover:text-primary',
-                                'font-segoe text-base leading-6 mr-8'
-                              )}
-                            >
-                              Tambah Data
-                            </button>
-                          )}
-                        </Tab>
+                        {dataLogin.role === 'admin' && (
+                          <Tab>
+                            {({ selected }) => (
+                              <button
+                                className={classNames(
+                                  selected
+                                    ? 'font-extrabold text-primary'
+                                    : 'font-medium text-secondarydark hover:font-extrabold hover:text-primary',
+                                  'font-segoe text-base leading-6 mr-8'
+                                )}
+                              >
+                                Tambah Data
+                              </button>
+                            )}
+                          </Tab>
+                        )}
                       </Tab.List>
                     </div>
                   </div>
 
                   <div className="mt-7">
                     <Tab.Panels>
-                      <Tab.Panel>{/* <AllUserSection /> */}</Tab.Panel>
+                      <Tab.Panel>
+                        <AllRoomTypeSection />
+                      </Tab.Panel>
 
-                      <Tab.Panel>{/* <AddUserSection /> */}</Tab.Panel>
+                      <Tab.Panel>
+                        <AddRoomTypeSection />
+                      </Tab.Panel>
                     </Tab.Panels>
                   </div>
                 </div>
