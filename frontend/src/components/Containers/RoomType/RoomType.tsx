@@ -24,7 +24,7 @@ const ContainerRoomType: FC = () => {
   return (
     <>
       <Head>
-        <title>Daftar Tipe Kamar</title>
+        <title>Daftar Tipe Kamar - Wikusama Hotel</title>
       </Head>
 
       <ToastContainer autoClose={1500} />
