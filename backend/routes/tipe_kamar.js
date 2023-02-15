@@ -1,5 +1,7 @@
 const express = require('express');
 const slugify = require('slugify');
+const path = require('path');
+const fs = require('fs');
 
 const auth = require('../middleware/auth');
 const { uploadTypeRoom } = require('../middleware/uploadImage');
@@ -100,24 +102,7 @@ app.put('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
 
       let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + req.file.filename;
       data.foto = finalImageURL;
-
-      // let delImgName = delImg.foto.replace(req.protocol + '://' + req.get('host') + '/img/', '');
-      // delImgName.forEach((img) => {
-      //   let imgName = img.split('/').pop();
-
-      //   let loc = path.join(__dirname, '../public/img/' + imgName);
-      //   fs.unlinkSync(loc, (err) => console.log(err));
-      // });
     }
-
-    // let finalImageArrayURL = [];
-
-    // req.files.forEach((file) => {
-    //   let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + file.filename;
-    //   finalImageArrayURL.push(finalImageURL);
-    // });
-
-    // data.foto = finalImageArrayURL;
   }
 
   await tipe_kamar.update(data, { where: params })
@@ -140,17 +125,6 @@ app.delete('/:id', auth, async (req, res) => {
     let loc = path.join(__dirname, '../public/img/', delImgName);
     fs.unlink(loc, (err) => console.log(err));
   }
-  
-  // let delImg = await tipe_kamar.findOne({ where: params });
-  // if(delImg) {
-  //   let delImgName = delImg.foto;
-  //   delImgName.forEach((img) => {
-  //     let imgName = img.split('/').pop();
-
-  //     let loc = path.join(__dirname, '../public/img/' + imgName);
-  //     fs.unlinkSync(loc, (err) => console.log(err));
-  //   });
-  // }
 
   await tipe_kamar.destroy({ where: params })
   .then(result => res.json({ success: 1, message: "Data has been deleted" }))
