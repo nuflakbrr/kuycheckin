@@ -18,14 +18,13 @@ import { logout } from '../../lib/logout';
 import { blockAccess } from '../../lib/blockAccess';
 import { classNames } from '../../lib/classNames';
 
-const Sidebar: FC = () => {
+const SidebarReceptionist: FC = () => {
   // Define Router
   const router = useRouter();
   const { pathname } = router;
 
   // Required State
   const [collapseShow, setCollapseShow] = useState('hidden');
-  const [dataAdmin, setDataAdmin] = useState({ nama_user: '', role: '' });
   const [dataReceptionist, setDataReceptionist] = useState({
     nama_user: '',
     role: '',
@@ -42,58 +41,31 @@ const Sidebar: FC = () => {
 
   const isMenuActive = (path: string) => {
     const isDashboard =
-      (pathname === '/admin/dashboard' && path === '/admin/dashboard') ||
-      (pathname === '/receptionist/dashboard' &&
-        path === '/receptionist/dashboard');
+      pathname === '/receptionist/dashboard' &&
+      path === '/receptionist/dashboard';
 
     if (isDashboard) {
       return true;
     }
 
     return (
-      (pathname !== '/admin/dashboard' &&
-        path !== '/admin/dashboard' &&
-        pathname.includes(path)) ||
-      (pathname !== '/receptionist/dashboard' &&
-        path !== '/receptionist/dashboard' &&
-        pathname.includes(path))
+      pathname !== '/receptionist/dashboard' &&
+      path !== '/receptionist/dashboard' &&
+      pathname.includes(path)
     );
   };
 
   // Access Navigation for Admin
-  const adminLinks = [
+  const receptionistLinks = [
     {
-      path: '/admin/dashboard',
+      path: '/receptionist/dashboard',
       name: 'Dashboard Admin',
       icon: <FaHome className="mr-2 text-lg" />,
     },
     {
-      path: '/admin/room-type',
+      path: '/receptionist/room-type',
       name: 'Tipe Kamar',
       icon: <FaBuilding className="mr-2 text-lg" />,
-    },
-    {
-      path: '/admin/rooms',
-      name: 'Kamar',
-      icon: <FaBed className="mr-2 text-lg" />,
-    },
-    {
-      path: '/admin/booking/add',
-      name: 'Pemesanan',
-      icon: <FaShoppingCart className="mr-2 text-lg" />,
-    },
-    {
-      path: '/admin/user',
-      name: 'User',
-      icon: <FaUserFriends className="mr-2 text-lg" />,
-    },
-  ];
-
-  const receptionistLinks = [
-    {
-      path: '/receptionist/dashboard',
-      name: 'Dashboard Resepsionis',
-      icon: <FaHome className="mr-2 text-lg" />,
     },
     {
       path: '/receptionist/rooms',
@@ -114,26 +86,22 @@ const Sidebar: FC = () => {
 
   // Render data from local storage
   useEffect(() => {
-    if (localStorage.getItem('admin')) {
-      setDataAdmin(JSON.parse(localStorage.getItem('admin') || '{}'));
-    }
-
-    if (localStorage.getItem('receptionist')) {
+    if (localStorage.getItem('resepsionis')) {
       setDataReceptionist(
-        JSON.parse(localStorage.getItem('receptionist') || '{}')
+        JSON.parse(localStorage.getItem('resepsionis') || '{}')
       );
     }
   }, []);
 
   // Block Access if Login level is not Admin
-  blockAccess('admin' || 'receptionist', router);
+  blockAccess('resepsionis', router);
 
   return (
     <>
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden bg-slate-100 flex flex-wrap items-center justify-between relative md:w-64 z-20 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
-          <Link href="/admin/dashboard" legacyBehavior>
-            {!dataAdmin.nama_user && !dataReceptionist.nama_user ? (
+          <Link href="/receptionist/dashboard" legacyBehavior>
+            {!dataReceptionist.nama_user ? (
               <p className="md:block text-left md:pb-2 text-gray-500 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
                 Halo,
                 <span className="animate-pulse bg-gray-300 text-transparent ml-1">
@@ -144,7 +112,7 @@ const Sidebar: FC = () => {
               <p className="md:block text-left md:pb-2 text-gray-500 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
                 Halo,{' '}
                 <span className="text-primary">
-                  {dataAdmin.nama_user || dataReceptionist.nama_user}
+                  {dataReceptionist.nama_user}
                 </span>
               </p>
             )}
@@ -181,7 +149,7 @@ const Sidebar: FC = () => {
             <div className="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-blueGray-200">
               <div className="flex flex-wrap">
                 <div className="w-6/12">
-                  <Link href="/admin/dashboard" legacyBehavior>
+                  <Link href="/receptionist/dashboard" legacyBehavior>
                     <a className="md:block text-left text-white md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm font-bold p-4 px-0">
                       <h1 className="text-black font-bold text-xl">
                         <span className="text-primary">Wikusama</span> Hotel
@@ -208,83 +176,20 @@ const Sidebar: FC = () => {
             </h6>
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              {!dataAdmin.role && !dataReceptionist.role ? (
-                <>
-                  <li className="animate-pulse transition-all ease-in-out duration-300">
-                    <div className="bg-gray-200 rounded p-3 mt-2 mb-1 flex">
-                      <div className="bg-gray-300 text-gray-300 text-xs uppercase font-bold">
-                        this text not displayed
-                      </div>
-                    </div>
-                  </li>
-
-                  <li className="animate-pulse transition-all ease-in-out duration-300">
-                    <div className="bg-gray-200 rounded p-3 mt-2 mb-1 flex">
-                      <div className="bg-gray-300 text-gray-300 text-xs uppercase font-bold">
-                        this text not displayed
-                      </div>
-                    </div>
-                  </li>
-
-                  <li className="animate-pulse transition-all ease-in-out duration-300">
-                    <div className="bg-gray-200 rounded p-3 mt-2 mb-1 flex">
-                      <div className="bg-gray-300 text-gray-300 text-xs uppercase font-bold">
-                        this text not displayed
-                      </div>
-                    </div>
-                  </li>
-
-                  <li className="animate-pulse transition-all ease-in-out duration-300">
-                    <div className="bg-gray-200 rounded p-3 mt-2 mb-1 flex">
-                      <div className="bg-gray-300 text-gray-300 text-xs uppercase font-bold">
-                        this text not displayed
-                      </div>
-                    </div>
-                  </li>
-
-                  <li className="animate-pulse transition-all ease-in-out duration-300">
-                    <div className="bg-gray-200 rounded p-3 mt-2 mb-1 flex">
-                      <div className="bg-gray-300 text-gray-300 text-xs uppercase font-bold">
-                        this text not displayed
-                      </div>
-                    </div>
-                  </li>
-                </>
-              ) : (
-                <>
-                  {dataAdmin.role === 'admin' &&
-                    adminLinks.map((a, i) => (
-                      <li key={i} className="items-center">
-                        <Link href={a.path} legacyBehavior>
-                          <a
-                            className={classNames(
-                              isMenuActive(a.path) ? activeClass : inActiveClass
-                            )}
-                          >
-                            {a.icon}
-                            {a.name}
-                          </a>
-                        </Link>
-                      </li>
-                    ))}
-
-                  {dataReceptionist.role === 'resepsionis' &&
-                    receptionistLinks.map((b, i) => (
-                      <li key={i} className="items-center">
-                        <Link href={b.path} legacyBehavior>
-                          <a
-                            className={classNames(
-                              isMenuActive(b.path) ? activeClass : inActiveClass
-                            )}
-                          >
-                            {b.icon}
-                            {b.name}
-                          </a>
-                        </Link>
-                      </li>
-                    ))}
-                </>
-              )}
+              {receptionistLinks.map((a, i) => (
+                <li key={i} className="items-center">
+                  <Link href={a.path} legacyBehavior>
+                    <a
+                      className={classNames(
+                        isMenuActive(a.path) ? activeClass : inActiveClass
+                      )}
+                    >
+                      {a.icon}
+                      {a.name}
+                    </a>
+                  </Link>
+                </li>
+              ))}
 
               <li>
                 <Link href="/" legacyBehavior>
@@ -305,10 +210,10 @@ const Sidebar: FC = () => {
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
               <li className="items-center">
-                <Link href="/admin/profile" legacyBehavior>
+                <Link href="/receptionist/profile" legacyBehavior>
                   <a
                     className={classNames(
-                      isMenuActive('/admin/profile')
+                      isMenuActive('/receptionist/profile')
                         ? activeClass
                         : inActiveClass
                     )}
@@ -321,12 +226,7 @@ const Sidebar: FC = () => {
               <li className="items-center">
                 <button
                   className={inActiveClass}
-                  onClick={() =>
-                    logout(
-                      dataAdmin.role === 'admin' ? 'admin' : 'receptionist',
-                      router
-                    )
-                  }
+                  onClick={() => logout('resepsionis', router)}
                 >
                   <FaSignOutAlt className="mr-2 text-lg" />
                   Keluar
@@ -352,4 +252,4 @@ const Sidebar: FC = () => {
   );
 };
 
-export default Sidebar;
+export default SidebarReceptionist;

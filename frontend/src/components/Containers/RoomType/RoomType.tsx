@@ -5,14 +5,12 @@ import Head from 'next/head';
 
 import { classNames } from '../../../lib/classNames';
 import SidebarAdmin from '../../Common/SidebarAdmin';
-import PreviewProfile from './components/PreviewProfile';
-import EditProfile from './components/EditProfile';
 
-const ContainerProfile: FC = () => {
+const ContainerRoomType: FC = () => {
   return (
     <>
       <Head>
-        <title>Profil Saya - Wikusama Hotel</title>
+        <title>Daftar Tipe Kamar</title>
       </Head>
 
       <ToastContainer autoClose={1500} />
@@ -24,7 +22,7 @@ const ContainerProfile: FC = () => {
           <div className="flex flex-wrap">
             <div className="w-full p-10">
               <h2 className="text-2xl font-bold text-primary mb-5">
-                Pengaturan Profil
+                Daftar Tipe Kamar
               </h2>
 
               <Tab.Group>
@@ -42,7 +40,7 @@ const ContainerProfile: FC = () => {
                                 'font-segoe text-base leading-6 mr-8'
                               )}
                             >
-                              Profil Saya
+                              Semua Data
                             </button>
                           )}
                         </Tab>
@@ -57,7 +55,7 @@ const ContainerProfile: FC = () => {
                                 'font-segoe text-base leading-6 mr-8'
                               )}
                             >
-                              Ubah Profil
+                              Tambah Data
                             </button>
                           )}
                         </Tab>
@@ -67,13 +65,9 @@ const ContainerProfile: FC = () => {
 
                   <div className="mt-7">
                     <Tab.Panels>
-                      <Tab.Panel>
-                        <PreviewProfile />
-                      </Tab.Panel>
+                      <Tab.Panel>{/* <AllUserSection /> */}</Tab.Panel>
 
-                      <Tab.Panel>
-                        <EditProfile />
-                      </Tab.Panel>
+                      <Tab.Panel>{/* <AddUserSection /> */}</Tab.Panel>
                     </Tab.Panels>
                   </div>
                 </div>
@@ -86,4 +80,4 @@ const ContainerProfile: FC = () => {
   );
 };
 
-export default ContainerProfile;
+export default ContainerRoomType;

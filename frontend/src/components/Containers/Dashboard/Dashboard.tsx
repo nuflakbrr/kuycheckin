@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { FaCartPlus } from 'react-icons/fa';
 import { ToastContainer } from 'react-toastify';
 
-import Sidebar from '../../Common/Sidebar';
+import SidebarAdmin from '../../Common/SidebarAdmin';
 import StatsSection from './components/Stats';
 import axios from '../../../lib/axios';
 import { headerConfig } from '../../../lib/headerConfig';
@@ -22,8 +22,8 @@ const ContainerDashboard: FC = () => {
       setUser(JSON.parse(localStorage.getItem('admin') || '{}'));
     }
 
-    if (localStorage.getItem('receptionist')) {
-      setUser(JSON.parse(localStorage.getItem('receptionist') || '{}'));
+    if (localStorage.getItem('resepsionis')) {
+      setUser(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
     }
 
     const getUser = async () => {
@@ -68,7 +68,7 @@ const ContainerDashboard: FC = () => {
 
       <ToastContainer autoClose={1500} />
 
-      <Sidebar />
+      <SidebarAdmin />
 
       <main className="bg-white md:ml-64 min-h-screen">
         <div className="container">

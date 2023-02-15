@@ -16,8 +16,8 @@ const AllUserSection: FC = () => {
       setDataLogin(JSON.parse(localStorage.getItem('admin') || '{}'));
     }
 
-    if (localStorage.getItem('receptionist')) {
-      setDataLogin(JSON.parse(localStorage.getItem('receptionist') || '{}'));
+    if (localStorage.getItem('resepsionis')) {
+      setDataLogin(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
     }
 
     const getData = async () => {

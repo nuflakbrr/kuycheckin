@@ -8,8 +8,8 @@ const PreviewProfile: FC = () => {
       setData(JSON.parse(localStorage.getItem('admin') || '{}'));
     }
 
-    if (localStorage.getItem('receptionist')) {
-      setData(JSON.parse(localStorage.getItem('receptionist') || '{}'));
+    if (localStorage.getItem('resepsionis')) {
+      setData(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
     }
   }, []);
 

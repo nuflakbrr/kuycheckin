@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-import Sidebar from '../../../Common/Sidebar';
+import SidebarAdmin from '../../../Common/SidebarAdmin';
 import axios from '../../../../lib/axios';
 import { bindingState } from '../../../../lib/bindingState';
 import { headerConfig } from '../../../../lib/headerConfig';
@@ -90,7 +90,7 @@ const ContainerEditUser: FC = () => {
 
       <ToastContainer autoClose={1500} />
 
-      <Sidebar />
+      <SidebarAdmin />
 
       <main className="bg-white md:ml-64 min-h-screen">
         <div className="container">

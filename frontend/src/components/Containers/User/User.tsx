@@ -4,7 +4,7 @@ import { Tab } from '@headlessui/react';
 import Head from 'next/head';
 
 import { classNames } from '../../../lib/classNames';
-import Sidebar from '../../Common/Sidebar';
+import SidebarAdmin from '../../Common/SidebarAdmin';
 import AllUserSection from './components/AllUser';
 import AddUserSection from './components/AddUser';
 
@@ -16,8 +16,8 @@ const ContainerUser: FC = () => {
       setDataLogin(JSON.parse(localStorage.getItem('admin') || '{}'));
     }
 
-    if (localStorage.getItem('receptionist')) {
-      setDataLogin(JSON.parse(localStorage.getItem('receptionist') || '{}'));
+    if (localStorage.getItem('resepsionis')) {
+      setDataLogin(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
     }
   }, []);
 
@@ -29,7 +29,7 @@ const ContainerUser: FC = () => {
 
       <ToastContainer autoClose={1500} />
 
-      <Sidebar />
+      <SidebarAdmin />
 
       <main className="bg-white md:ml-64 min-h-screen">
         <div className="container">

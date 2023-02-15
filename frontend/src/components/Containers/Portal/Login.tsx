@@ -11,7 +11,6 @@ const ContainerLogin: FC = () => {
   const [data, setData] = useState({
     email: '',
     password: '',
-    role: 'default',
   });
   const [notifiedSuccess, setNotifiedSuccess] = useState<number>(0);
 
@@ -22,36 +21,27 @@ const ContainerLogin: FC = () => {
 
     const sendData = { ...data, role: '' };
 
-    if (data.role === 'admin') {
-      try {
-        const res = await axios.post('/user/admin', sendData);
+    try {
+      const res = await axios.post('/user/login', sendData);
 
-        if (res.data.success === 1) {
-          setNotifiedSuccess(1);
+      if (res.data.success === 1) {
+        setNotifiedSuccess(1);
 
-          localStorage.setItem('access', res.data.token);
+        localStorage.setItem('access', res.data.token);
+
+        if (res.data.data.role === 'admin') {
           localStorage.setItem('admin', JSON.stringify(res.data.data));
           router.push('/admin/dashboard');
-        }
-      } catch (err) {
-        setNotifiedSuccess(2);
-        console.log(err);
-      }
-    } else if (data.role === 'resepsionis') {
-      try {
-        const res = await axios.post('/user/resepsionis', sendData);
-
-        if (res.data.success === 1) {
-          setNotifiedSuccess(1);
-
-          localStorage.setItem('access', res.data.token);
-          localStorage.setItem('receptionist', JSON.stringify(res.data.data));
+        } else {
+          localStorage.setItem('resepsionis', JSON.stringify(res.data.data));
           router.push('/receptionist/dashboard');
         }
-      } catch (err) {
+      } else {
         setNotifiedSuccess(2);
-        console.log(err);
       }
+    } catch (err) {
+      setNotifiedSuccess(2);
+      console.log(err);
     }
   };
 
@@ -175,7 +165,7 @@ const ContainerLogin: FC = () => {
                       />
                     </div>
 
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                       <label
                         htmlFor="role"
                         className="block text-slate-600 mb-2"
@@ -196,7 +186,7 @@ const ContainerLogin: FC = () => {
                         <option value="admin">Admin</option>
                         <option value="resepsionis">Resepsionis</option>
                       </select>
-                    </div>
+                    </div> */}
 
                     <div>
                       <button

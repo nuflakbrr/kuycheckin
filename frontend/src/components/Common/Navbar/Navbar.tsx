@@ -39,9 +39,9 @@ const Navbar: FC = () => {
       setIsLogged(true);
     }
 
-    if (localStorage.getItem('receptionist')) {
+    if (localStorage.getItem('resepsionis')) {
       setDataReceptionist(
-        JSON.parse(localStorage.getItem('receptionist') || '{}')
+        JSON.parse(localStorage.getItem('resepsionis') || '{}')
       );
       setIsLogged(true);
     }
@@ -147,11 +147,7 @@ const Navbar: FC = () => {
                 <Menu as="div" className="relative mr-11">
                   <Menu.Button className="flex text-sm">
                     <img
-                      src={
-                        dataAdmin.foto ||
-                        dataReceptionist.foto ||
-                        '/assets/img/no-image.png'
-                      }
+                      src={dataAdmin.foto || dataReceptionist.foto}
                       alt="User Image"
                       loading="lazy"
                       className="w-10 rounded-full"
@@ -220,7 +216,7 @@ const Navbar: FC = () => {
                             logout(
                               dataAdmin.role === 'admin'
                                 ? 'admin'
-                                : 'receptionist',
+                                : 'resepsionis',
                               router
                             )
                           }
