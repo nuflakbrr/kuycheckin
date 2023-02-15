@@ -55,8 +55,8 @@ app.post('/', auth, async (req, res) => {
  * @apiGroup Room
  * @apiDescription Update room data
  */
-app.put('/:id', auth, async (req, res) => {
-  let params = { id_kamar: req.params.id };
+app.put('/', auth, async (req, res) => {
+  let params = { id_kamar: req.body.id_kamar };
   let data = {
     nomor_kamar: req.body.nomor_kamar,
     id_tipe_kamar: req.body.id_tipe_kamar,
