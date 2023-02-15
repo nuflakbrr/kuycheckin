@@ -1,13 +1,19 @@
 import { FC, useState } from 'react';
 import { EditorState, convertToRaw } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
+import { EditorProps } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
+import dynamic from 'next/dynamic';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import axios from '../../../../lib/axios';
 import { bindingState } from '../../../../lib/bindingState';
 import { headerConfig } from '../../../../lib/headerConfig';
 import { errorToast, successToast } from '../../../../lib/toast';
+
+const Editor = dynamic<EditorProps>(
+  () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
+  { ssr: false }
+);
 
 const AddRoomTypeSection: FC = () => {
   const [data, setData] = useState({

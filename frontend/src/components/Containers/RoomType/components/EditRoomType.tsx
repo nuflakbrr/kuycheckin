@@ -2,8 +2,9 @@ import { FC, useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { EditorState, convertToRaw } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
+import { EditorProps } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -13,6 +14,11 @@ import { bindingState } from '../../../../lib/bindingState';
 import { headerConfig } from '../../../../lib/headerConfig';
 import { errorToast, successToast } from '../../../../lib/toast';
 import { formatCurrency } from '../../../../lib/formatCurrency';
+
+const Editor = dynamic<EditorProps>(
+  () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
+  { ssr: false }
+);
 
 const ContainerEditRoomType: FC = () => {
   const [oldData, setOldData] = useState<any>({});
