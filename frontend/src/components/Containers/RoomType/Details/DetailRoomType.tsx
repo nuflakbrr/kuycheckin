@@ -33,8 +33,6 @@ const ContainerDetailRoomType: FC = () => {
     }
   }, [router, slug]);
 
-  console.log(data);
-
   return (
     <>
       <Head>

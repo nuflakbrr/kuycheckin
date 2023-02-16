@@ -26,8 +26,6 @@ const CarouselRecomDesktop: FC = () => {
     Promise.all([getData()]);
   }, []);
 
-  console.log(data);
-
   return (
     <Swiper
       spaceBetween={0}
