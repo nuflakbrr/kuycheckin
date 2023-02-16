@@ -1,10 +1,33 @@
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
+import { FaAngleRight } from 'react-icons/fa';
 import Link from 'next/link';
 
+import axios from '../../../../../lib/axios';
+import { formatCurrency } from '../../../../../lib/formatCurrency';
+
 const CarouselRecomDesktop: FC = () => {
+  const [data, setData] = useState<any>([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      await axios
+        .get('/room-type')
+        .then((res) => {
+          setData(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    Promise.all([getData()]);
+  }, []);
+
+  console.log(data);
+
   return (
     <Swiper
       spaceBetween={0}
@@ -32,180 +55,52 @@ const CarouselRecomDesktop: FC = () => {
       }}
       modules={[Navigation]}
     >
-      <SwiperSlide className="px-4 py-5">
-        <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg">
-          <img
-            className="w-full h-full object-cover object-center"
-            src="https://v1.tailwindcss.com/img/card-top.jpg"
-            loading="lazy"
-            alt="Sunset in the mountains"
-          />
+      {data.map((a: any, i: any) => (
+        <SwiperSlide className="px-4 py-5" key={i}>
+          <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg">
+            <Link href={`/details/${a.slug}`} legacyBehavior>
+              <a>
+                <img
+                  className="w-full h-[200px] object-cover object-center"
+                  src={a.foto || '/assets/img/template-img-room.png'}
+                  loading="lazy"
+                  alt="Sunset in the mountains"
+                />
+              </a>
+            </Link>
 
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">The Coldest Sunset 1</div>
-            <p className="text-primary text-base"></p>
+            <div className="px-6 py-4">
+              <Link href={`/details/${a.slug}`} legacyBehavior>
+                <a className="font-bold text-xl text-primary hover:text-primarydark">
+                  {a.nama_tipe_kamar}
+                </a>
+              </Link>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: a.deskripsi.substring(0, 25) + '...',
+                }}
+                className="font-normal text-base text-gray-500 whitespace-no-wrap mt-2"
+              />
+            </div>
+
+            <div className="flex items-center justify-between px-6 pb-4">
+              <p className="font-semibold text-lg text-gray-500">
+                {formatCurrency(a.harga)}
+              </p>
+
+              <div className="flex items-center justify-center text-primary hover:text-primarydark text-sm">
+                <Link href={`/details/${a.slug}`} legacyBehavior>
+                  <a className="font-semibold text-center">
+                    Lihat Selengkapnya
+                  </a>
+                </Link>
+
+                <FaAngleRight className="ml-1 mt-1" />
+              </div>
+            </div>
           </div>
-
-          <div className="px-6 pt-4 pb-2">
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #travel
-            </span>
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #winter
-            </span>
-          </div>
-        </div>
-      </SwiperSlide>
-
-      <SwiperSlide className="px-4 py-5">
-        <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg">
-          <img
-            className="w-full h-full object-cover object-center"
-            src="https://v1.tailwindcss.com/img/card-top.jpg"
-            loading="lazy"
-            alt="Sunset in the mountains"
-          />
-
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">The Coldest Sunset 2</div>
-            <p className="text-primary text-base"></p>
-          </div>
-
-          <div className="px-6 pt-4 pb-2">
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #travel
-            </span>
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #winter
-            </span>
-          </div>
-        </div>
-      </SwiperSlide>
-
-      <SwiperSlide className="px-4 py-5">
-        <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg">
-          <img
-            className="w-full h-full object-cover object-center"
-            src="https://v1.tailwindcss.com/img/card-top.jpg"
-            loading="lazy"
-            alt="Sunset in the mountains"
-          />
-
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">The Coldest Sunset 3</div>
-            <p className="text-primary text-base"></p>
-          </div>
-
-          <div className="px-6 pt-4 pb-2">
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #travel
-            </span>
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #winter
-            </span>
-          </div>
-        </div>
-      </SwiperSlide>
-
-      <SwiperSlide className="px-4 py-5">
-        <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg">
-          <img
-            className="w-full h-full object-cover object-center"
-            src="https://v1.tailwindcss.com/img/card-top.jpg"
-            loading="lazy"
-            alt="Sunset in the mountains"
-          />
-
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">The Coldest Sunset 4</div>
-            <p className="text-primary text-base"></p>
-          </div>
-
-          <div className="px-6 pt-4 pb-2">
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #travel
-            </span>
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #winter
-            </span>
-          </div>
-        </div>
-      </SwiperSlide>
-
-      <SwiperSlide className="px-4 py-5">
-        <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg">
-          <img
-            className="w-full h-full object-cover object-center"
-            src="https://v1.tailwindcss.com/img/card-top.jpg"
-            loading="lazy"
-            alt="Sunset in the mountains"
-          />
-
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">The Coldest Sunset 5</div>
-            <p className="text-primary text-base"></p>
-          </div>
-
-          <div className="px-6 pt-4 pb-2">
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #travel
-            </span>
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #winter
-            </span>
-          </div>
-        </div>
-      </SwiperSlide>
-
-      <SwiperSlide className="px-4 py-5">
-        <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg">
-          <img
-            className="w-full h-full object-cover object-center"
-            src="https://v1.tailwindcss.com/img/card-top.jpg"
-            loading="lazy"
-            alt="Sunset in the mountains"
-          />
-
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">The Coldest Sunset 6</div>
-            <p className="text-primary text-base"></p>
-          </div>
-
-          <div className="px-6 pt-4 pb-2">
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #travel
-            </span>
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #winter
-            </span>
-          </div>
-        </div>
-      </SwiperSlide>
-
-      <SwiperSlide className="px-4 py-5">
-        <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg">
-          <img
-            className="w-full h-full object-cover object-center"
-            src="https://v1.tailwindcss.com/img/card-top.jpg"
-            loading="lazy"
-            alt="Sunset in the mountains"
-          />
-
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">The Coldest Sunset 7</div>
-            <p className="text-primary text-base"></p>
-          </div>
-
-          <div className="px-6 pt-4 pb-2">
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #travel
-            </span>
-            <span className="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-primary mr-2 mb-2">
-              #winter
-            </span>
-          </div>
-        </div>
-      </SwiperSlide>
+        </SwiperSlide>
+      ))}
 
       <SwiperSlide className="px-4 py-12">
         <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg">
