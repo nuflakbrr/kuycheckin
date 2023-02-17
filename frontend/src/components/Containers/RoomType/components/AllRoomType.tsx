@@ -173,7 +173,9 @@ const AllRoomTypeSection: FC = () => {
                 <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
                   <div className="flex items-center">
                     <p
-                      dangerouslySetInnerHTML={{ __html: a.deskripsi }}
+                      dangerouslySetInnerHTML={{
+                        __html: a.deskripsi.substring(0, 25) + '...',
+                      }}
                       className="text-gray-900 whitespace-no-wrap"
                     />
                   </div>

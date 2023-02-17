@@ -58,6 +58,14 @@ const ContainerDashboard: FC = () => {
     };
 
     Promise.all([getUser(), getTypeRoom(), getRoom(), getBooking()]);
+
+    return () => {
+      setUser('');
+      setDataTypeRoom([]);
+      setDataRoom([]);
+      setDataBooking([]);
+      setDataUser([]);
+    };
   }, []);
 
   return (

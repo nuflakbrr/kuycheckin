@@ -85,6 +85,10 @@ const SidebarAdmin: FC = () => {
     if (localStorage.getItem('admin')) {
       setDataAdmin(JSON.parse(localStorage.getItem('admin') || '{}'));
     }
+
+    return () => {
+      setDataAdmin({ nama_user: '', role: '' });
+    };
   }, []);
 
   // Block Access if Login level is not Admin

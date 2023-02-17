@@ -40,6 +40,19 @@ const ContainerEditUser: FC = () => {
         router.push('/admin/user');
       }, 1500);
     }
+
+    return () => {
+      setOldData({});
+      setData({
+        nama_user: '',
+        email: '',
+        password: '',
+        confirmPass: '',
+        role: 'default',
+        foto: '',
+      });
+      setImage('/assets/img/template-img.png');
+    };
   }, [slug, router]);
 
   const handleImage = (e: any) => {

@@ -28,6 +28,10 @@ const AddRoomsSection: FC = () => {
     };
 
     Promise.all([fetchData()]);
+
+    return () => {
+      setDataTypeRoom([]);
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

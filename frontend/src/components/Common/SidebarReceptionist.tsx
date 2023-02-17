@@ -91,6 +91,13 @@ const SidebarReceptionist: FC = () => {
         JSON.parse(localStorage.getItem('resepsionis') || '{}')
       );
     }
+
+    return () => {
+      setDataReceptionist({
+        nama_user: '',
+        role: '',
+      });
+    };
   }, []);
 
   // Block Access if Login level is not Admin

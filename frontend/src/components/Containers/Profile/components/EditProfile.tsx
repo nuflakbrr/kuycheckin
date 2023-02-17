@@ -69,6 +69,10 @@ const EditProfile: FC = () => {
     if (localStorage.getItem('resepsionis')) {
       setOldData(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
     }
+
+    return () => {
+      setOldData({});
+    };
   }, []);
 
   return (

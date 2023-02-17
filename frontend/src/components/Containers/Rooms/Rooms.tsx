@@ -19,6 +19,10 @@ const ContainerRooms: FC = () => {
     if (localStorage.getItem('resepsionis')) {
       setDataLogin(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
     }
+
+    return () => {
+      setDataLogin({});
+    };
   }, []);
 
   return (

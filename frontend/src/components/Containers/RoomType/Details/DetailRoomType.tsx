@@ -31,6 +31,10 @@ const ContainerDetailRoomType: FC = () => {
         router.push('/');
       }, 1500);
     }
+
+    return () => {
+      setData({});
+    };
   }, [router, slug]);
 
   return (

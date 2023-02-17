@@ -34,6 +34,10 @@ const AllUserSection: FC = () => {
     };
 
     Promise.all([getData()]);
+
+    return () => {
+      setData([]);
+    };
   }, []);
 
   const badgeColor = (role: string) => {

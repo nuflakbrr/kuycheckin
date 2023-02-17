@@ -33,6 +33,10 @@ const AllRoomsSection: FC = () => {
     };
 
     Promise.all([getData()]);
+
+    return () => {
+      setData([]);
+    };
   }, []);
 
   const handleDelete = async (id: any) => {

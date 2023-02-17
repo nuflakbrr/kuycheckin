@@ -45,6 +45,10 @@ const Navbar: FC = () => {
       );
       setIsLogged(true);
     }
+
+    return () => {
+      window.onscroll = null;
+    };
   }, []);
 
   // Hamburger menu handler

@@ -11,6 +11,10 @@ const PreviewProfile: FC = () => {
     if (localStorage.getItem('resepsionis')) {
       setData(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
     }
+
+    return () => {
+      setData({});
+    };
   }, []);
 
   return (

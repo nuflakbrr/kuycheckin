@@ -56,6 +56,18 @@ const ContainerEditRoomType: FC = () => {
         router.push('/admin/room-type');
       }, 1500);
     }
+
+    return () => {
+      setOldData({});
+      setData({
+        nama_tipe_kamar: '',
+        harga: '',
+        foto: '',
+        deskripsi: '',
+      });
+      setImage('/assets/img/template-img-room.png');
+      setEditor(EditorState.createEmpty());
+    };
   }, [slug, router]);
 
   const handleImage = (e: any) => {

@@ -57,6 +57,10 @@ const ContainerEditRooms: FC = () => {
         router.push('/admin/user');
       }, 1500);
     }
+
+    return () => {
+      setDataTypeRoom([]);
+    };
   }, [id, router, token]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

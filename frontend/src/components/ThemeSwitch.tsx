@@ -8,6 +8,8 @@ const ThemesSwitch: FC = () => {
 
   useEffect(() => {
     setMounted(true);
+
+    return () => setMounted(false);
   }, []);
 
   const renderThemeChanger = () => {

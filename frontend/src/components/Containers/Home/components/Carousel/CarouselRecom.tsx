@@ -24,6 +24,10 @@ const CarouselRecomDesktop: FC = () => {
     };
 
     Promise.all([getData()]);
+
+    return () => {
+      setData([]);
+    };
   }, []);
 
   return (
