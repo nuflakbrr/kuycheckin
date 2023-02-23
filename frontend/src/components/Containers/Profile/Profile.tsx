@@ -1,14 +1,30 @@
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Tab } from '@headlessui/react';
 import Head from 'next/head';
 
 import { classNames } from '../../../lib/classNames';
 import SidebarAdmin from '../../Common/SidebarAdmin';
+import SidebarReceptionist from '../../Common/SidebarReceptionist';
 import PreviewProfile from './components/PreviewProfile';
 import EditProfile from './components/EditProfile';
 
 const ContainerProfile: FC = () => {
+  const [dataLogin, setDataLogin] = useState<any>({});
+
+  useEffect(() => {
+    if (localStorage.getItem('admin')) {
+      setDataLogin(JSON.parse(localStorage.getItem('admin') || '{}'));
+    }
+
+    if (localStorage.getItem('resepsionis')) {
+      setDataLogin(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
+    }
+
+    return () => {
+      setDataLogin({});
+    };
+  }, []);
   return (
     <>
       <Head>
@@ -17,7 +33,9 @@ const ContainerProfile: FC = () => {
 
       <ToastContainer autoClose={1500} />
 
-      <SidebarAdmin />
+      {dataLogin.role === 'admin' && <SidebarAdmin />}
+
+      {dataLogin.role === 'resepsionis' && <SidebarReceptionist />}
 
       <main className="bg-white md:ml-64 min-h-screen">
         <div className="container">

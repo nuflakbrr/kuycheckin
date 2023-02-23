@@ -5,6 +5,7 @@ import Head from 'next/head';
 
 import { classNames } from '../../../lib/classNames';
 import SidebarAdmin from '../../Common/SidebarAdmin';
+import SidebarReceptionist from '../../Common/SidebarReceptionist';
 import AllRoomsSection from './components/AllRooms';
 import AddRoomsSection from './components/AddRooms';
 
@@ -33,7 +34,9 @@ const ContainerRooms: FC = () => {
 
       <ToastContainer autoClose={1500} />
 
-      <SidebarAdmin />
+      {dataLogin.role === 'admin' && <SidebarAdmin />}
+
+      {dataLogin.role === 'resepsionis' && <SidebarReceptionist />}
 
       <main className="bg-white md:ml-64 min-h-screen">
         <div className="container">
