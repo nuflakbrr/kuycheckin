@@ -2,6 +2,18 @@
 
 MERN `(MySQL, Express, React, Node)` stack Hotel Booking App for UKK Framework SMK Telkom Malang.
 
+## To Do List
+
+- [ ] Table customer
+- [ ] Modified booking room endpoint while table customer was created
+- [ ] Get date date an and add to localStorage
+- [ ] Filter available room
+- [ ] Display available room by type room
+- [ ] Total room
+- [ ] Get total room and add to localStorage
+- [ ] Request transaction add to localStorage
+- [ ] Payment Gateway => get value from localStorage
+
 ### Getting Started
 
 First, open your terminal and enter into this project. Then, go into the backend folder and install the required dependencies, and run the development server:
