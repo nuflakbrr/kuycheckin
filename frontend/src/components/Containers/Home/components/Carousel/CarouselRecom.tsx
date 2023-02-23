@@ -2,7 +2,6 @@ import { FC, useState, useEffect } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
-import { FaAngleRight } from 'react-icons/fa';
 import Link from 'next/link';
 
 import axios from '../../../../../lib/axios';
@@ -60,23 +59,18 @@ const CarouselRecomDesktop: FC = () => {
       {data.map((a: any, i: any) => (
         <SwiperSlide className="px-4 py-5" key={i}>
           <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg">
-            <Link href={`/details/${a.slug}`} legacyBehavior>
-              <a>
-                <img
-                  className="w-full h-[200px] object-cover object-center"
-                  src={a.foto || '/assets/img/template-img-room.png'}
-                  loading="lazy"
-                  alt="Sunset in the mountains"
-                />
-              </a>
-            </Link>
+            <img
+              className="w-full h-[200px] object-cover object-center"
+              src={a.foto || '/assets/img/template-img-room.png'}
+              loading="lazy"
+              alt="Sunset in the mountains"
+            />
 
             <div className="px-6 py-4">
-              <Link href={`/details/${a.slug}`} legacyBehavior>
-                <a className="font-bold text-xl text-primary hover:text-primarydark">
-                  {a.nama_tipe_kamar}
-                </a>
-              </Link>
+              <h2 className="font-bold text-xl text-primary">
+                {a.nama_tipe_kamar}
+              </h2>
+
               <p
                 dangerouslySetInnerHTML={{
                   __html: a.deskripsi.substring(0, 25) + '...',
@@ -89,16 +83,6 @@ const CarouselRecomDesktop: FC = () => {
               <p className="font-semibold text-lg text-gray-500">
                 {formatCurrency(a.harga)}
               </p>
-
-              <div className="flex items-center justify-center text-primary hover:text-primarydark text-sm">
-                <Link href={`/details/${a.slug}`} legacyBehavior>
-                  <a className="font-semibold text-center">
-                    Lihat Selengkapnya
-                  </a>
-                </Link>
-
-                <FaAngleRight className="ml-1 mt-1" />
-              </div>
             </div>
           </div>
         </SwiperSlide>

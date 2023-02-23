@@ -18,7 +18,7 @@ const CallToAction: FC = () => {
                 </p>
               </div>
 
-              <Link href="/" legacyBehavior>
+              <Link href="/search-room" legacyBehavior>
                 <a className="inline-block bg-primary hover:bg-primarydark active:bg-primary focus-visible:ring ring-primary text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-5 py-3">
                   Pesan Sekarang
                 </a>
