@@ -43,14 +43,14 @@ const ContainerRoomType: FC = () => {
                 Daftar Tipe Kamar
               </h2>
 
-              <Tab.Group>
+              <Tab.Group as="div">
                 <div className="bg-white p-5 rounded-lg shadow-md">
                   <div className="border-b">
                     <div className="w-full mb-5">
                       <Tab.List className="flex items-center overflow-x-auto">
-                        <Tab>
+                        <Tab as="button">
                           {({ selected }) => (
-                            <button
+                            <div
                               className={classNames(
                                 selected
                                   ? 'font-extrabold text-primary'
@@ -59,14 +59,14 @@ const ContainerRoomType: FC = () => {
                               )}
                             >
                               Semua Data
-                            </button>
+                            </div>
                           )}
                         </Tab>
 
                         {dataLogin.role === 'admin' && (
-                          <Tab>
+                          <Tab as="button">
                             {({ selected }) => (
-                              <button
+                              <div
                                 className={classNames(
                                   selected
                                     ? 'font-extrabold text-primary'
@@ -75,7 +75,7 @@ const ContainerRoomType: FC = () => {
                                 )}
                               >
                                 Tambah Data
-                              </button>
+                              </div>
                             )}
                           </Tab>
                         )}
@@ -84,12 +84,12 @@ const ContainerRoomType: FC = () => {
                   </div>
 
                   <div className="mt-7">
-                    <Tab.Panels>
-                      <Tab.Panel>
+                    <Tab.Panels as="div">
+                      <Tab.Panel as="div">
                         <AllRoomTypeSection />
                       </Tab.Panel>
 
-                      <Tab.Panel>
+                      <Tab.Panel as="div">
                         <AddRoomTypeSection />
                       </Tab.Panel>
                     </Tab.Panels>
