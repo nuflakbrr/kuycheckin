@@ -4,8 +4,8 @@ MERN `(MySQL, Express, React, Node)` stack Hotel Booking App for UKK Framework S
 
 ## To Do List
 
-- [ ] Table customer
-- [ ] Modified booking room endpoint while table customer was created
+- [x] Table customer
+- [x] Modified booking room endpoint while table customer was created
 - [ ] Get date date an and add to localStorage
 - [ ] Filter available room
 - [ ] Display available room by type room
