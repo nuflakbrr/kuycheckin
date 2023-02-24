@@ -11,14 +11,12 @@ module.exports = {
       nomor_pemesanan: {
         type: Sequelize.INTEGER
       },
-      nama_pemesan: {
-        type: Sequelize.STRING
-      },
-      slug: {
-        type: Sequelize.STRING
-      },
-      email_pemesan: {
-        type: Sequelize.STRING
+      id_pelanggan: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'pelanggan',
+          key: 'id_pelanggan'
+        }
       },
       tgl_pemesanan: {
         type: Sequelize.DATE
@@ -28,9 +26,6 @@ module.exports = {
       },
       tgl_check_out: {
         type: Sequelize.DATE
-      },
-      nama_tamu: {
-        type: Sequelize.STRING
       },
       jumlah_kamar: {
         type: Sequelize.INTEGER
