@@ -1,5 +1,4 @@
 const express = require('express');
-const slugify = require('slugify');
 const { Op } = require('sequelize');
 
 const auth = require('../middleware/auth');
@@ -11,36 +10,42 @@ const user = require('../models/index').user;
 
 const app = express();
 
-const slugOptions = {
-  replacement: '-',
-  remove: /[*+~.()'"!:@]/g,
-  lower: true,
-  strict: true,
-  locale: 'id'
-};
-
 /**
  * @apiRoutes {get} /hotel/booking/
  * @apiName GetAllBooking
  * @apiGroup Booking
  * @apiDescription Get all booking data
  */
-app.get('/', async (req, res) => {
+app.get('/', auth, async (req, res) => {
   await pemesanan.findAll({ include: ['user', 'tipe_kamar'] })
   .then(result => res.json({ data: result }))
   .catch(error => res.json({ message: error.message }))
 });
 
 /**
- * @apiRoutes {get} /hotel/booking/:slug
+ * @apiRoutes {get} /hotel/booking/:id
  * @apiName GetBookingById
  * @apiGroup Booking
- * @apiDescription Get booking data by slug
+ * @apiDescription Get booking data by id
  */
-app.get('/:slug', async (req, res) => {
-  let params = { slug: req.params.slug };
+app.get('/:id', auth, async (req, res) => {
+  let params = { id_pemesanan: req.params.id };
 
-  await pemesanan.findOne({ where: params, include: ['user', 'tipe_kamar'] })
+  await pemesanan.findOne({ where: params, include: ['user', 'pelanggan', 'tipe_kamar'] })
+  .then(result => res.json({ data: result }))
+  .catch(error => res.json({ message: error.message }))
+});
+
+/**
+ * @apiRoutes {get} /hotel/booking/customer/:id
+ * @apiName GetBookingByCustomerId
+ * @apiGroup Booking
+ * @apiDescription Get booking data by customer id
+ */
+app.get('/customer/:id', auth, async (req, res) => {
+  let params = { id_customer: req.params.id };
+
+  await pemesanan.findAll({ where: params, include: ['user', 'pelanggan', 'tipe_kamar'] })
   .then(result => res.json({ data: result }))
   .catch(error => res.json({ message: error.message }))
 });
@@ -51,15 +56,13 @@ app.get('/:slug', async (req, res) => {
  * @apiGroup Booking
  * @apiDescription Insert booking data
  */
-app.post('/', async (req, res) => {
+app.post('/', auth, async (req, res) => {
   let dt = Date.now();
   let receiptNum = Math.floor(Math.random() * (1000000000- 99999999) + 99999999);
 
   let data = {
     nomor_pemesanan: receiptNum,
-    nama_pemesan: req.body.nama_pemesan,
-    slug: slugify(req.body.nama_pemesan, slugOptions),
-    email_pemesan: req.body.email_pemesan,
+    id_pelanggan: req.body.id_pelanggan,
     tgl_pemesanan: dt,
     tgl_check_in: req.body.tgl_check_in,
     tgl_check_out: req.body.tgl_check_out,
@@ -81,11 +84,23 @@ app.post('/', async (req, res) => {
     attributes: ["id_tipe_kamar", "nama_tipe_kamar"],
     where: { id_tipe_kamar: data.id_tipe_kamar },
     include: [
-      { model: kamar, as: "kamar", attributes: ["id_kamar", "id_tipe_kamar"], include: [
-        { model: detail_pemesanan, as: "detail_pemesanan", attributes: ["tgl_akses"], where: { tgl_akses: {
-          [Op.between]: [data.tgl_check_in, data.tgl_check_out]
-        } } }
-      ] },
+      { 
+        model: kamar,
+        as: "kamar",
+        attributes: ["id_kamar", "id_tipe_kamar"],
+        include: [
+          { 
+            model: detail_pemesanan,
+            as: "detail_pemesanan",
+            attributes: ["tgl_akses"],
+            where: {
+              tgl_akses: {
+                [Op.between]: [data.tgl_check_in, data.tgl_check_out]
+              }
+            }
+          }
+        ]
+      },
     ]
    });
 
@@ -101,7 +116,7 @@ app.post('/', async (req, res) => {
   let checkOut = new Date(data.tgl_check_out);
   const totalHari = Math.round((checkOut - checkIn) / (1000 * 3600 * 24));
 
-  if(dataKamar === null || adaKamar.length < data.jumlah_kamar || totalHari === 0 || pilihDataKamar === null) {
+  if (dataKamar === null || adaKamar.length < data.jumlah_kamar || totalHari === 0 || pilihDataKamar === null) {
     return res.json({ message: "Kamar tidak tersedia" });
   } else {
     await pemesanan.create(data)

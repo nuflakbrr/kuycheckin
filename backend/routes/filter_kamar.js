@@ -1,29 +1,23 @@
-const sequelize = require('sequelize');
-const operator = sequelize.Op;
-
 const express = require('express');
+const { Op } = require('sequelize');
+
+const tipe_kamar = require('../models/index').tipe_kamar;
+const kamar = require('../models/index').kamar;
+const detail_pemesanan = require('../models/index').detail_pemesanan;
 
 const app = express();
-app.use(express.json());
 
-const models = require("../models/index");
-const kamar = models.kamar;
-const tipe_kamar = models.tipe_kamar;
-const detail_pemesanan = models.detail_pemesanan;
-
+/**
+ * @apiRoutes {post} /hotel/filter/
+ * @apiName PostFilter
+ * @apiGroup Filter
+ * @apiDescription Filter room by date
+ */
 app.post('/', async (req, res) => {
     let checkInDate = req.body.check_in_date;
     let checkOutDate = req.body.check_out_date;
 
-    let roomData = await tipe_kamar.findAll({
-        // attributes: ["id_tipe_kamar", "nama_tipe_kamar"],
-        include: [
-            {
-                model: kamar,
-                as: "kamar",
-            },
-        ],
-    });
+    let roomData = await tipe_kamar.findAll({ include: [ { model: kamar, as: "kamar"} ] });
 
     let roomBookedData = await tipe_kamar.findAll({
         attributes: ["id_tipe_kamar", "nama_tipe_kamar"],
@@ -38,7 +32,7 @@ app.post('/', async (req, res) => {
                         attributes: ["tgl_akses"],
                         where: {
                             tgl_akses: {
-                                [operator.between]: [checkInDate, checkOutDate],
+                                [Op.between]: [checkInDate, checkOutDate],
                             },
                         },
                     },

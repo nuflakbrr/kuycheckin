@@ -27,6 +27,9 @@ module.exports = {
       tgl_check_out: {
         type: Sequelize.DATE
       },
+      nama_tamu: {
+        type: Sequelize.STRING
+      },
       jumlah_kamar: {
         type: Sequelize.INTEGER
       },
