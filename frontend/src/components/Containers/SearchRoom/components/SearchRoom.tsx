@@ -1,10 +1,9 @@
 import { FC } from 'react';
-import Link from 'next/link';
-import { FaHotel, FaAngleRight, FaSearch } from 'react-icons/fa';
+import { FaHotel, FaSearch } from 'react-icons/fa';
 
 const SearchRoomSection: FC = () => {
   return (
-    <section className="py-10 lg:pt-24" id="search-room">
+    <section className="py-10 lg:py-24">
       <div className="max-w-7xl mx-auto">
         <div className="container">
           <div className="w-full px-4">
@@ -17,14 +16,6 @@ const SearchRoomSection: FC = () => {
                     Temukan Kamar Disini
                   </h2>
                 </div>
-
-                <Link href="/search-room" legacyBehavior>
-                  <a className="flex items-center text-gray-500 hover:text-primary">
-                    <h2 className="text-md mb-1">Cari Lebih Lengkap</h2>
-
-                    <FaAngleRight className="ml-2 text-md" />
-                  </a>
-                </Link>
               </div>
 
               <div className="w-full mb-5 gap-5 flex flex-col lg:flex-row items-center justify-between py-5 px-4">

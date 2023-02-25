@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import ContainerDetailRoomType from '../../components/Containers/RoomType/Details/DetailRoomType';
+import ContainerDetailRoomType from '../../../components/Containers/RoomType/Details/DetailRoomType';
 
 const DetailsRoomType: FC = () => {
   return <ContainerDetailRoomType />;
