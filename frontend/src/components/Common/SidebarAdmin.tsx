@@ -74,6 +74,11 @@ const SidebarAdmin: FC = () => {
       icon: <FaShoppingCart className="mr-2 text-lg" />,
     },
     {
+      path: '/admin/customer',
+      name: 'Pelanggan',
+      icon: <FaUserFriends className="mr-2 text-lg" />,
+    },
+    {
       path: '/admin/user',
       name: 'User',
       icon: <FaUserFriends className="mr-2 text-lg" />,

@@ -1,18 +1,29 @@
 import { FC, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Link from 'next/link';
 
 import Navbar from '../../Common/Navbar/Navbar';
 import Footer from '../../Common/Footer';
 import axios from '../../../lib/axios';
 import { bindingState } from '../../../lib/bindingState';
 
-const ContainerLogin: FC = () => {
+const ContainerRegister: FC = () => {
   const [data, setData] = useState({
+    nama: '',
+    foto: '',
     email: '',
     password: '',
   });
+  const [image, setImage] = useState('/assets/img/template-img.png');
   const [notifiedSuccess, setNotifiedSuccess] = useState<number>(0);
+
+  const handleImage = (e: any) => {
+    // eslint-disable-next-line prefer-const
+    let foto = e.target.files[0];
+    setImage(URL.createObjectURL(foto));
+    setData({ ...data, foto });
+  };
 
   const router = useRouter();
 
@@ -22,20 +33,17 @@ const ContainerLogin: FC = () => {
     const sendData = { ...data };
 
     try {
-      const res = await axios.post('/user/login', sendData);
+      const res = await axios.post('/customer', sendData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       if (res.data.success === 1) {
         setNotifiedSuccess(1);
-
-        localStorage.setItem('access', res.data.token);
-
-        if (res.data.data.role === 'admin') {
-          localStorage.setItem('admin', JSON.stringify(res.data.data));
-          router.push('/admin/dashboard');
-        } else {
-          localStorage.setItem('resepsionis', JSON.stringify(res.data.data));
-          router.push('/receptionist/dashboard');
-        }
+        setTimeout(() => {
+          router.push('/auth/login');
+        }, 1800);
       } else {
         setNotifiedSuccess(2);
       }
@@ -48,7 +56,7 @@ const ContainerLogin: FC = () => {
   return (
     <>
       <Head>
-        <title>Masuk - Wikusama Hotel</title>
+        <title>Daftar Guest - Wikusama Hotel</title>
         <meta name="robots" content="follow, index" />
         <meta
           name="description"
@@ -87,19 +95,10 @@ const ContainerLogin: FC = () => {
 
       <main className="pt-20">
         <section className="py-24">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-xl mx-auto">
             <div className="container">
               <div className="flex flex-col lg:flex-row items-center justify-between">
-                <div className="mb-10 lg:mb-0 w-full px-4 mx-5 lg:w-1/2">
-                  <img
-                    src="/assets/svg/undraw_login.svg"
-                    loading="lazy"
-                    alt="Hero Illustration"
-                    className="w-full h-full object-cover object-center"
-                  />
-                </div>
-
-                <div className="w-full px-4 mx-5 lg:w-1/2">
+                <div className="w-full px-4 mx-5">
                   <div className="flex items-center justify-center mb-5">
                     <h1 className="font-primary font-semibold text-2xl lg:text-3xl text-center">
                       Selamat Datang!
@@ -109,11 +108,12 @@ const ContainerLogin: FC = () => {
                   <form
                     className="bg-white rounded-lg shadow-lg p-8"
                     onSubmit={handleSubmit}
+                    encType="multipart/form-data"
                   >
                     {notifiedSuccess === 1 && (
                       <div className="mb-4 bg-green-500 p-3 rounded">
                         <p className="text-white text-sm font-bold">
-                          Login Sukses, Selamat datang kembali!
+                          Daftar Sukses, Selamat datang!
                         </p>
                       </div>
                     )}
@@ -121,10 +121,57 @@ const ContainerLogin: FC = () => {
                     {notifiedSuccess === 2 && (
                       <div className="mb-4 bg-red-500 p-3 rounded">
                         <p className="text-white text-sm font-bold">
-                          Username atau Password salah, silakan coba kembali!
+                          Daftar Gagal, silakan coba kembali!
                         </p>
                       </div>
                     )}
+
+                    <div className="mb-3">
+                      <img
+                        src={image}
+                        alt="Image User Update"
+                        className="mx-auto w-[200px] h-[200px] object-cover object-center mt-2"
+                      />
+                    </div>
+
+                    <div className="mb-3">
+                      <label
+                        htmlFor="nama"
+                        className="block text-slate-600 mb-2"
+                      >
+                        Nama
+                      </label>
+                      <input
+                        type="text"
+                        name="nama"
+                        id="nama"
+                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-primary/70"
+                        placeholder="Masukkan nama"
+                        autoFocus={true}
+                        required
+                        value={data.nama}
+                        onChange={(e) => bindingState(e, setData, 'nama')}
+                      />
+                    </div>
+
+                    <div className="mb-3">
+                      <label
+                        htmlFor="image"
+                        className="block text-slate-600 mb-2"
+                      >
+                        Foto
+                      </label>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        name="image"
+                        id="image"
+                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-primary/70"
+                        placeholder="Masukkan email"
+                        required
+                        onChange={handleImage}
+                      />
+                    </div>
 
                     <div className="mb-3">
                       <label
@@ -139,7 +186,6 @@ const ContainerLogin: FC = () => {
                         id="email"
                         className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-primary/70"
                         placeholder="Masukkan email"
-                        autoFocus={true}
                         required
                         value={data.email}
                         onChange={(e) => bindingState(e, setData, 'email')}
@@ -170,10 +216,19 @@ const ContainerLogin: FC = () => {
                         type="submit"
                         className="w-full bg-primary hover:bg-primarydark text-white py-2 rounded-lg font-bold transition duration-300 ease-in-out mt-3"
                       >
-                        Masuk
+                        Daftar
                       </button>
                     </div>
                   </form>
+
+                  <div className="flex items-center justify-center mt-5">
+                    <p className="text-slate-600">
+                      Sudah punya akun?{' '}
+                      <Link href="/auth/login" legacyBehavior>
+                        <a className="text-primary font-bold">Masuk</a>
+                      </Link>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -186,4 +241,4 @@ const ContainerLogin: FC = () => {
   );
 };
 
-export default ContainerLogin;
+export default ContainerRegister;

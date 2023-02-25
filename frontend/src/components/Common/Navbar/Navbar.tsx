@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { FC, useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { Menu, Transition } from '@headlessui/react';
@@ -12,11 +13,7 @@ import { logout } from '../../../lib/logout';
 const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLogged, setIsLogged] = useState<boolean>(false);
-  const [dataAdmin, setDataAdmin] = useState({ foto: '', role: '' });
-  const [dataReceptionist, setDataReceptionist] = useState({
-    foto: '',
-    role: '',
-  });
+  const [dataUser, setDataUser] = useState({ foto: '', role: '' });
 
   const router = useRouter();
   const { pathname } = router;
@@ -35,14 +32,17 @@ const Navbar: FC = () => {
     };
 
     if (localStorage.getItem('admin')) {
-      setDataAdmin(JSON.parse(localStorage.getItem('admin') || '{}'));
+      setDataUser(JSON.parse(localStorage.getItem('admin') || '{}'));
       setIsLogged(true);
     }
 
     if (localStorage.getItem('resepsionis')) {
-      setDataReceptionist(
-        JSON.parse(localStorage.getItem('resepsionis') || '{}')
-      );
+      setDataUser(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
+      setIsLogged(true);
+    }
+
+    if (localStorage.getItem('pelanggan')) {
+      setDataUser(JSON.parse(localStorage.getItem('pelanggan') || '{}'));
       setIsLogged(true);
     }
 
@@ -143,6 +143,35 @@ const Navbar: FC = () => {
                       </Link>
                     </li>
                   ))}
+
+                  {isLogged ? (
+                    <li></li>
+                  ) : (
+                    <>
+                      <li>
+                        <Link href="/auth/login" legacyBehavior>
+                          <a
+                            className={classNames(
+                              isMenuActive('/auth/login')
+                                ? 'text-primary'
+                                : 'text-black',
+                              'font-secondary font-semibold text-base py-2 mx-8 lg:mx-2 flex group-hover:text-primary transition duration-300 ease-in-out'
+                            )}
+                          >
+                            Masuk
+                          </a>
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link href="/auth/register" legacyBehavior>
+                          <a className="inline-flex bg-primary hover:bg-primarydark active:bg-primary focus-visible:ring ring-primary text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-5 lg:px-3 py-2 mx-8 lg:mx-2">
+                            Daftar
+                          </a>
+                        </Link>
+                      </li>
+                    </>
+                  )}
                 </ul>
               </nav>
 
@@ -151,7 +180,7 @@ const Navbar: FC = () => {
                 <Menu as="div" className="relative mr-11">
                   <Menu.Button className="flex text-sm">
                     <img
-                      src={dataAdmin.foto || dataReceptionist.foto}
+                      src={dataUser.foto || '/assets/img/no-image.png'}
                       alt="User Image"
                       loading="lazy"
                       className="w-10 rounded-full"
@@ -172,9 +201,11 @@ const Navbar: FC = () => {
                         {({ active }) => (
                           <Link
                             href={`${
-                              dataAdmin.role === 'admin'
+                              dataUser.role === 'admin'
                                 ? '/admin'
-                                : '/receptionist'
+                                : dataUser.role === 'resepsionis'
+                                ? '/receptionist'
+                                : '/customer'
                             }/dashboard`}
                             legacyBehavior
                           >
@@ -195,9 +226,11 @@ const Navbar: FC = () => {
                         {({ active }) => (
                           <Link
                             href={`${
-                              dataAdmin.role === 'admin'
+                              dataUser.role === 'admin'
                                 ? '/admin'
-                                : '/receptionist'
+                                : dataUser.role === 'resepsionis'
+                                ? '/receptionist'
+                                : '/customer'
                             }/profile`}
                             legacyBehavior
                           >
@@ -218,9 +251,11 @@ const Navbar: FC = () => {
                         <button
                           onClick={() =>
                             logout(
-                              dataAdmin.role === 'admin'
+                              dataUser.role === 'admin'
                                 ? 'admin'
-                                : 'resepsionis',
+                                : dataUser.role === 'resepsionis'
+                                ? 'resepsionis'
+                                : 'pelanggan',
                               router
                             )
                           }

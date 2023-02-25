@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Link from 'next/link';
 
 import Navbar from '../../Common/Navbar/Navbar';
 import Footer from '../../Common/Footer';
@@ -22,20 +23,17 @@ const ContainerLogin: FC = () => {
     const sendData = { ...data };
 
     try {
-      const res = await axios.post('/user/login', sendData);
+      const res = await axios.post('/customer/login', sendData);
 
       if (res.data.success === 1) {
         setNotifiedSuccess(1);
 
         localStorage.setItem('access', res.data.token);
+        localStorage.setItem('pelanggan', JSON.stringify(res.data.data));
 
-        if (res.data.data.role === 'admin') {
-          localStorage.setItem('admin', JSON.stringify(res.data.data));
-          router.push('/admin/dashboard');
-        } else {
-          localStorage.setItem('resepsionis', JSON.stringify(res.data.data));
-          router.push('/receptionist/dashboard');
-        }
+        setTimeout(() => {
+          router.push('/');
+        }, 1800);
       } else {
         setNotifiedSuccess(2);
       }
@@ -48,7 +46,7 @@ const ContainerLogin: FC = () => {
   return (
     <>
       <Head>
-        <title>Masuk - Wikusama Hotel</title>
+        <title>Masuk Guest - Wikusama Hotel</title>
         <meta name="robots" content="follow, index" />
         <meta
           name="description"
@@ -174,6 +172,15 @@ const ContainerLogin: FC = () => {
                       </button>
                     </div>
                   </form>
+
+                  <div className="flex items-center justify-center mt-5">
+                    <p className="text-slate-600">
+                      Belum punya akun?{' '}
+                      <Link href="/auth/register" legacyBehavior>
+                        <a className="text-primary font-bold">Daftar</a>
+                      </Link>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

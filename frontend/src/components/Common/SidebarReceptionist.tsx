@@ -78,6 +78,11 @@ const SidebarReceptionist: FC = () => {
       icon: <FaShoppingCart className="mr-2 text-lg" />,
     },
     {
+      path: '/receptionist/customer',
+      name: 'Pelanggan',
+      icon: <FaUserFriends className="mr-2 text-lg" />,
+    },
+    {
       path: '/receptionist/user',
       name: 'User',
       icon: <FaUserFriends className="mr-2 text-lg" />,
