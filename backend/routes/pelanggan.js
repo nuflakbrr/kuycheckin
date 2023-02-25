@@ -63,6 +63,7 @@ app.post('/', uploadUser.single('foto'), async (req, res) => {
     slug: slugify(req.body.nama, slugOptions),
     email: req.body.email,
     password: md5(req.body.password),
+    role: 'pelanggan'
   }
 
   await pelanggan.create(data)
