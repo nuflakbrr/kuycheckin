@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
   pelanggan.init({
     id_pelanggan: {
       type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
+      autoIncrement: true,
+      primaryKey: true,
     },
     nama: DataTypes.STRING,
     foto: DataTypes.TEXT,
