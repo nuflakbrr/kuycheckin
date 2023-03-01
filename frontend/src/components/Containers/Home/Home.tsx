@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import Head from 'next/head';
 
-import Navbar from '../../Common/Navbar/Navbar';
-import Footer from '../../Common/Footer';
+import Navbar from '@/components/Common/Navbar/Navbar';
+import Footer from '@/components/Common/Footer';
+import CallToAction from '@/components/CallToAction';
 import TopSection from './components/Top';
 import RecomendationSection from './components/Recomendation';
 import AboutSection from './components/About';
 import FacilitiesSection from './components/Facilities';
-import CallToAction from '../../CallToAction';
 import FAQ from './components/FAQ';
 
 const ContainerHome: FC = () => {

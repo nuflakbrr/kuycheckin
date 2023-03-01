@@ -2,8 +2,8 @@ import { FC } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import Navbar from '../../Common/Navbar/Navbar';
-import Footer from '../../Common/Footer';
+import Navbar from '@/components/Common/Navbar/Navbar';
+import Footer from '@/components/Common/Footer';
 
 const ContainerNotFound: FC = () => {
   return (

@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { FaCartPlus } from 'react-icons/fa';
 import { ToastContainer } from 'react-toastify';
 
-import axios from '../../../lib/axios';
-import { headerConfig } from '../../../lib/headerConfig';
-import { errorToast, infoToast } from '../../../lib/toast';
-import SidebarAdmin from '../../Common/SidebarAdmin';
-import SidebarReceptionist from '../../Common/SidebarReceptionist';
+import axios from '@/lib/axios';
+import { headerConfig } from '@/lib/headerConfig';
+import { errorToast, infoToast } from '@/lib/toast';
+import SidebarAdmin from '@/components/Common/SidebarAdmin';
+import SidebarReceptionist from '@/components/Common/SidebarReceptionist';
 import StatsSection from './components/Stats';
 
 const ContainerDashboard: FC = () => {

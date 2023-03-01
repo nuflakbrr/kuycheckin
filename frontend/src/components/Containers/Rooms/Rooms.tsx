@@ -3,9 +3,9 @@ import { ToastContainer } from 'react-toastify';
 import { Tab } from '@headlessui/react';
 import Head from 'next/head';
 
-import { classNames } from '../../../lib/classNames';
-import SidebarAdmin from '../../Common/SidebarAdmin';
-import SidebarReceptionist from '../../Common/SidebarReceptionist';
+import { classNames } from '@/lib/classNames';
+import SidebarAdmin from '@/components/Common/SidebarAdmin';
+import SidebarReceptionist from '@/components/Common/SidebarReceptionist';
 import AllRoomsSection from './components/AllRooms';
 import AddRoomsSection from './components/AddRooms';
 

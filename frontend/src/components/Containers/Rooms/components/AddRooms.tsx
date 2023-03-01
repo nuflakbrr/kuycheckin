@@ -1,10 +1,10 @@
 import { FC, useState, useEffect } from 'react';
 
-import axios from '../../../../lib/axios';
-import { bindingState } from '../../../../lib/bindingState';
-import { formatCurrency } from '../../../../lib/formatCurrency';
-import { headerConfig } from '../../../../lib/headerConfig';
-import { errorToast, successToast } from '../../../../lib/toast';
+import axios from '@/lib/axios';
+import { bindingState } from '@/lib/bindingState';
+import { formatCurrency } from '@/lib/formatCurrency';
+import { headerConfig } from '@/lib/headerConfig';
+import { errorToast, successToast } from '@/lib/toast';
 
 const AddRoomsSection: FC = () => {
   const [dataTypeRoom, setDataTypeRoom] = useState<any>([]);

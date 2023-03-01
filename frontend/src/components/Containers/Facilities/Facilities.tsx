@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import Head from 'next/head';
 
-import Navbar from '../../Common/Navbar/Navbar';
-import Footer from '../../Common/Footer';
-import CallToAction from '../../CallToAction';
+import Navbar from '@/components/Common/Navbar/Navbar';
+import Footer from '@/components/Common/Footer';
+import CallToAction from '@/components/CallToAction';
 
 const ContainerFacilities: FC = () => {
   return (

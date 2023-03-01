@@ -8,12 +8,12 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-import SidebarAdmin from '../../../Common/SidebarAdmin';
-import axios from '../../../../lib/axios';
-import { bindingState } from '../../../../lib/bindingState';
-import { headerConfig } from '../../../../lib/headerConfig';
-import { errorToast, successToast } from '../../../../lib/toast';
-import { formatCurrency } from '../../../../lib/formatCurrency';
+import axios from '@/lib/axios';
+import { bindingState } from '@/lib/bindingState';
+import { headerConfig } from '@/lib/headerConfig';
+import { errorToast, successToast } from '@/lib/toast';
+import { formatCurrency } from '@/lib/formatCurrency';
+import SidebarAdmin from '@/components/Common/SidebarAdmin';
 
 const Editor = dynamic<EditorProps>(
   () => import('react-draft-wysiwyg').then((mod) => mod.Editor),

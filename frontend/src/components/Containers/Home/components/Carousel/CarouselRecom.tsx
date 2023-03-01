@@ -4,10 +4,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 import Link from 'next/link';
 
-import axios from '../../../../../lib/axios';
-import { formatCurrency } from '../../../../../lib/formatCurrency';
+import axios from '@/lib/axios';
+import { formatCurrency } from '@/lib/formatCurrency';
 
-const CarouselRecomDesktop: FC = () => {
+const CarouselRecom: FC = () => {
   const [data, setData] = useState<any>([]);
 
   useEffect(() => {
@@ -111,4 +111,4 @@ const CarouselRecomDesktop: FC = () => {
   );
 };
 
-export default CarouselRecomDesktop;
+export default CarouselRecom;

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
 
-import { formatCurrency } from '../../../../../lib/formatCurrency';
+import { formatCurrency } from '@/lib/formatCurrency';
 import SideMainContent from './SideMainContent';
 
 type Props = {

@@ -6,9 +6,9 @@ import { FaHome, FaCog, FaSignOutAlt } from 'react-icons/fa';
 import Link from 'next/link';
 
 import styles from './Navbar.module.css';
-import { headerNavLinks } from '../../../data/headerNavLinks';
-import { classNames } from '../../../lib/classNames';
-import { logout } from '../../../lib/logout';
+import { headerNavLinks } from '@/data/headerNavLinks';
+import { classNames } from '@/lib/classNames';
+import { logout } from '@/lib/logout';
 
 const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

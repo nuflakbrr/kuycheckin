@@ -14,9 +14,9 @@ import {
   FaUserFriends,
 } from 'react-icons/fa';
 
-import { logout } from '../../lib/logout';
-import { blockAccess } from '../../lib/blockAccess';
-import { classNames } from '../../lib/classNames';
+import { logout } from '@/lib/logout';
+import { blockAccess } from '@/lib/blockAccess';
+import { classNames } from '@/lib/classNames';
 
 const SidebarReceptionist: FC = () => {
   // Define Router

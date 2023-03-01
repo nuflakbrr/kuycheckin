@@ -2,9 +2,9 @@ import { FC, useState, useEffect } from 'react';
 import { FaEdit, FaLock, FaTrash } from 'react-icons/fa';
 import Link from 'next/link';
 
-import axios from '../../../../lib/axios';
-import { headerConfig } from '../../../../lib/headerConfig';
-import { errorToast, infoToast, successToast } from '../../../../lib/toast';
+import axios from '@/lib/axios';
+import { headerConfig } from '@/lib/headerConfig';
+import { errorToast, infoToast, successToast } from '@/lib/toast';
 
 const AllRoomsSection: FC = () => {
   const [dataLogin, setDataLogin] = useState<any>({});

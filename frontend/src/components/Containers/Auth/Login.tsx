@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import Navbar from '../../Common/Navbar/Navbar';
-import Footer from '../../Common/Footer';
-import axios from '../../../lib/axios';
-import { bindingState } from '../../../lib/bindingState';
+import axios from '@/lib/axios';
+import { bindingState } from '@/lib/bindingState';
+import Navbar from '@/components/Common/Navbar/Navbar';
+import Footer from '@/components/Common/Footer';
 
 const ContainerLogin: FC = () => {
   const [data, setData] = useState({

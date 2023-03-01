@@ -5,10 +5,10 @@ import draftToHtml from 'draftjs-to-html';
 import dynamic from 'next/dynamic';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-import axios from '../../../../lib/axios';
-import { bindingState } from '../../../../lib/bindingState';
-import { headerConfig } from '../../../../lib/headerConfig';
-import { errorToast, successToast } from '../../../../lib/toast';
+import axios from '@/lib/axios';
+import { bindingState } from '@/lib/bindingState';
+import { headerConfig } from '@/lib/headerConfig';
+import { errorToast, successToast } from '@/lib/toast';
 
 const Editor = dynamic<EditorProps>(
   () => import('react-draft-wysiwyg').then((mod) => mod.Editor),

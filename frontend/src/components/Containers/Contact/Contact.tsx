@@ -2,8 +2,8 @@ import { FC } from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
-import Navbar from '../../Common/Navbar/Navbar';
-import Footer from '../../Common/Footer';
+import Navbar from '@/components/Common/Navbar/Navbar';
+import Footer from '@/components/Common/Footer';
 import TopSection from './components/Top';
 import Form from './components/Form';
 

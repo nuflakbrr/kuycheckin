@@ -3,12 +3,12 @@ import { ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-import SidebarAdmin from '../../../Common/SidebarAdmin';
-import axios from '../../../../lib/axios';
-import { bindingState } from '../../../../lib/bindingState';
-import { headerConfig } from '../../../../lib/headerConfig';
-import { formatCurrency } from '../../../../lib/formatCurrency';
-import { errorToast, successToast } from '../../../../lib/toast';
+import axios from '@/lib/axios';
+import { bindingState } from '@/lib/bindingState';
+import { headerConfig } from '@/lib/headerConfig';
+import { formatCurrency } from '@/lib/formatCurrency';
+import { errorToast, successToast } from '@/lib/toast';
+import SidebarAdmin from '@/components/Common/SidebarAdmin';
 
 const ContainerEditRooms: FC = () => {
   const [dataTypeRoom, setDataTypeRoom] = useState<any>([]);
