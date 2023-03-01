@@ -1,6 +1,7 @@
 const express = require('express');
 const { Op } = require('sequelize');
 
+const auth = require('../middleware/auth');
 const tipe_kamar = require('../models/index').tipe_kamar;
 const kamar = require('../models/index').kamar;
 const detail_pemesanan = require('../models/index').detail_pemesanan;
@@ -13,7 +14,7 @@ const app = express();
  * @apiGroup Filter
  * @apiDescription Filter room by date
  */
-app.post('/', async (req, res) => {
+app.post('/', auth, async (req, res) => {
     let checkInDate = req.body.check_in_date;
     let checkOutDate = req.body.check_out_date;
 
@@ -64,6 +65,7 @@ app.post('/', async (req, res) => {
         let roomType = {};
         roomType.id_tipe_kamar = roomData[i].id_tipe_kamar;
         roomType.nama_tipe_kamar = roomData[i].nama_tipe_kamar;
+        roomType.slug = roomData[i].slug;
         roomType.harga = roomData[i].harga;
         roomType.deskripsi = roomData[i].deskripsi;
         roomType.foto = roomData[i].foto;
@@ -78,7 +80,7 @@ app.post('/', async (req, res) => {
         }
     }
 
-    return res.json({  room: availableByType });
+    return res.json({  kamar : availableByType });
 })
 
 module.exports = app
