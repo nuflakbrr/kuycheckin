@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
 
-import { classNames } from '../lib/classNames';
+import { classNames } from '@/lib/classNames';
 
 const ScrollToTop: FC = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);

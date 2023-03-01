@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 
-import axios from '../../../../lib/axios';
-import { bindingState } from '../../../../lib/bindingState';
-import { headerConfig } from '../../../../lib/headerConfig';
-import { errorToast, successToast } from '../../../../lib/toast';
+import axios from '@/lib/axios';
+import { bindingState } from '@/lib/bindingState';
+import { headerConfig } from '@/lib/headerConfig';
+import { errorToast, successToast } from '@/lib/toast';
 
 const AddUserSection: FC = () => {
   const [data, setData] = useState({
