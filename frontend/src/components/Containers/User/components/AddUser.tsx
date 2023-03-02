@@ -2,7 +2,6 @@ import { FC, useState } from 'react';
 
 import axios from '@/lib/axios';
 import { bindingState } from '@/lib/bindingState';
-import { headerConfig } from '@/lib/headerConfig';
 import { errorToast, successToast } from '@/lib/toast';
 
 const AddUserSection: FC = () => {
@@ -28,7 +27,11 @@ const AddUserSection: FC = () => {
     const sendData = { ...data };
 
     axios
-      .post('/user', sendData, headerConfig())
+      .post('/user', sendData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       .then((res) => {
         res.data.success === 1
           ? successToast('Selamat! Anda berhasil menambahkan user baru')

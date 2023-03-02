@@ -62,7 +62,7 @@ const ContainerSearchRoom: FC = () => {
   return (
     <>
       <Head>
-        <title>Cari Kamar</title>
+        <title>Cari Kamar - Wikusama Hotel</title>
       </Head>
 
       <ToastContainer autoClose={1500} />
