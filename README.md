@@ -9,10 +9,10 @@ MERN `(MySQL, Express, React, Node)` stack Hotel Booking App for UKK Framework S
 - [x] Get date date an and add to localStorage
 - [x] Filter available room
 - [x] Display available room by type room
-- [ ] Total room
-- [ ] Get total room and add to localStorage
-- [ ] Request transaction add to localStorage
-- [ ] Payment Gateway => get value from localStorage
+- [x] Total room
+- [x] Get total room and add to localStorage
+- [x] Request transaction add to localStorage
+- [x] Payment Gateway => get value from localStorage
 
 ### Getting Started
 
