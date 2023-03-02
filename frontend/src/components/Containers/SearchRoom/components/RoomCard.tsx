@@ -18,7 +18,7 @@ const RoomCardSection: FC<Props> = ({ dataRoom }) => {
             <div className="grid grid-cols-12 gap-5">
               {dataRoom.map((a: any, i: any) => (
                 <div className="col-span-12 lg:col-span-3" key={i}>
-                  <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg hover:-translate-y-5 transition-all ease-in-out duration-300">
+                  <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg hover:-translate-y-2 transition-all ease-in-out duration-300">
                     <Link
                       href={`/search-room/details/${a.slug}`}
                       legacyBehavior
@@ -28,7 +28,7 @@ const RoomCardSection: FC<Props> = ({ dataRoom }) => {
                           className="w-full h-[200px] object-cover object-center"
                           src={a.foto || '/assets/img/template-img-room.png'}
                           loading="lazy"
-                          alt="Sunset in the mountains"
+                          alt={a.nama_tipe_kamar}
                         />
                       </a>
                     </Link>
