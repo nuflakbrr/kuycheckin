@@ -58,8 +58,13 @@ const SideMainContent: FC<Props> = ({ data }) => {
     return totalDays;
   };
 
-  const totalPrice = (totalRoom: number, price: number) => {
-    const total = totalRoom * price;
+  const totalPrice = (
+    chck_in: string,
+    chck_out: string,
+    totalRoom: number,
+    price: number
+  ) => {
+    const total = diffDays(chck_in, chck_out) * totalRoom * price;
 
     return formatCurrency(total);
   };
@@ -97,6 +102,8 @@ const SideMainContent: FC<Props> = ({ data }) => {
         console.log(err);
       });
   };
+
+  console.log(data);
 
   return (
     <form onSubmit={handleSubmit} className="col-span-10 lg:col-span-3">
@@ -153,7 +160,7 @@ const SideMainContent: FC<Props> = ({ data }) => {
               placeholder="Masukkan Jumlah Kamar"
               required
               min={0}
-              max={5}
+              max={data.kamar.length}
               value={bookingData.jumlah_kamar}
               onChange={(e) => bindingState(e, setBookingData, 'jumlah_kamar')}
             />
@@ -193,7 +200,12 @@ const SideMainContent: FC<Props> = ({ data }) => {
             <h2 className="text-sm font-medium">Total Harga</h2>
 
             <p className="text-sm font-semibold text-black">
-              {totalPrice(bookingData.jumlah_kamar, data.harga)}
+              {totalPrice(
+                dataDate.tgl_check_in,
+                dataDate.tgl_check_out,
+                bookingData.jumlah_kamar,
+                data.harga
+              )}
             </p>
           </div>
         </div>
