@@ -40,7 +40,7 @@ const ContainerDetailRoomType: FC = () => {
   return (
     <>
       <Head>
-        <title>Detail {data.nama_tipe_kamar} - Wikusama Hotel</title>
+        <title>Detil Kamar {data.nama_tipe_kamar} - Wikusama Hotel</title>
       </Head>
 
       <Navbar />
