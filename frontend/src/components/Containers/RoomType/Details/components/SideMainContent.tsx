@@ -1,8 +1,9 @@
 import { FC, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import { bindingState } from '@/lib/bindingState';
 import axios from '@/lib/axios';
+import { bindingState } from '@/lib/bindingState';
+import { formatCurrency } from '@/lib/formatCurrency';
 
 type Props = {
   data: any;
@@ -13,7 +14,6 @@ const SideMainContent: FC<Props> = ({ data }) => {
     tgl_check_in: '',
     tgl_check_out: '',
   });
-  const [dataCustomer, setDataCustomer] = useState<string | any>({});
   const [bookingData, setBookingData] = useState<string | any>({
     id_pelanggan: '',
     tgl_check_in: '',
@@ -24,6 +24,7 @@ const SideMainContent: FC<Props> = ({ data }) => {
     status_pemesanan: '',
     id_user: '',
   });
+  const [dataCustomer, setDataCustomer] = useState<string | any>({});
 
   const router = useRouter();
 
@@ -47,8 +48,26 @@ const SideMainContent: FC<Props> = ({ data }) => {
     }
   }, []);
 
+  const diffDays = (chck_in: string, chck_out: string) => {
+    const checkIn = new Date(chck_in);
+    const checkOut = new Date(chck_out);
+
+    const diff = checkOut.getTime() - checkIn.getTime();
+    const totalDays = Math.ceil(diff / (1000 * 3600 * 24));
+
+    return totalDays;
+  };
+
+  const totalPrice = (totalRoom: number, price: number) => {
+    const total = totalRoom * price;
+
+    return formatCurrency(total);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const token = localStorage.getItem('access');
 
     const sendData = {
       ...bookingData,
@@ -63,7 +82,12 @@ const SideMainContent: FC<Props> = ({ data }) => {
 
     // need to be fixed
     await axios
-      .post('/booking', sendData)
+      .post('/booking', sendData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         if (res) {
           router.push('/booking');
@@ -161,7 +185,7 @@ const SideMainContent: FC<Props> = ({ data }) => {
             <h2 className="text-sm font-medium">Total Hari</h2>
 
             <p className="text-sm font-semibold text-black">
-              {data.nama_tipe_kamar}
+              {diffDays(dataDate.tgl_check_in, dataDate.tgl_check_out)}
             </p>
           </div>
 
@@ -169,7 +193,7 @@ const SideMainContent: FC<Props> = ({ data }) => {
             <h2 className="text-sm font-medium">Total Harga</h2>
 
             <p className="text-sm font-semibold text-black">
-              {data.nama_tipe_kamar}
+              {totalPrice(bookingData.jumlah_kamar, data.harga)}
             </p>
           </div>
         </div>
