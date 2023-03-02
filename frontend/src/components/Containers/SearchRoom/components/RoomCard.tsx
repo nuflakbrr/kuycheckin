@@ -8,8 +8,6 @@ type Props = {
 };
 
 const RoomCardSection: FC<Props> = ({ dataRoom }) => {
-  console.log(dataRoom);
-
   return (
     <section className="py-10">
       <div className="max-w-7xl mx-auto">

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import axios from '@/lib/axios';
 import { bindingState } from '@/lib/bindingState';
 import { formatCurrency } from '@/lib/formatCurrency';
+import { errorToast, successToast } from '@/lib/toast';
 
 type Props = {
   data: any;
@@ -85,7 +86,6 @@ const SideMainContent: FC<Props> = ({ data }) => {
       id_user: null,
     };
 
-    // need to be fixed
     await axios
       .post('/booking', sendData, {
         headers: {
@@ -94,11 +94,46 @@ const SideMainContent: FC<Props> = ({ data }) => {
         },
       })
       .then((res) => {
-        if (res) {
-          router.push('/booking');
+        if (res.data.success === 1) {
+          successToast(
+            'Pemesanan berhasil dibuat! Silahkan lakukan pembayaran.'
+          );
+
+          localStorage.setItem(
+            'tipe_kamar',
+            JSON.stringify(data.nama_tipe_kamar)
+          );
+          localStorage.setItem(
+            'jumlah_kamar',
+            JSON.stringify(bookingData.jumlah_kamar)
+          );
+          localStorage.setItem(
+            'total_hari',
+            JSON.stringify(
+              diffDays(dataDate.tgl_check_in, dataDate.tgl_check_out)
+            )
+          );
+          localStorage.setItem(
+            'total_harga',
+            JSON.stringify(
+              totalPrice(
+                dataDate.tgl_check_in,
+                dataDate.tgl_check_out,
+                bookingData.jumlah_kamar,
+                data.harga
+              )
+            )
+          );
+
+          setTimeout(() => {
+            router.push('/payment');
+          }, 1800);
+        } else {
+          errorToast('Gagal membuat pemesanan, silahkan coba lagi nanti!');
         }
       })
       .catch((err) => {
+        errorToast('Gagal membuat pemesanan, silahkan coba lagi nanti!');
         console.log(err);
       });
   };
@@ -158,7 +193,7 @@ const SideMainContent: FC<Props> = ({ data }) => {
               placeholder="Masukkan Jumlah Kamar"
               required
               min={0}
-              max={data.kamar.length}
+              max={5}
               value={bookingData.jumlah_kamar}
               onChange={(e) => bindingState(e, setBookingData, 'jumlah_kamar')}
             />
