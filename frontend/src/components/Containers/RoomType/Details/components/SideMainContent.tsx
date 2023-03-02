@@ -103,8 +103,6 @@ const SideMainContent: FC<Props> = ({ data }) => {
       });
   };
 
-  console.log(data);
-
   return (
     <form onSubmit={handleSubmit} className="col-span-10 lg:col-span-3">
       <div className="bg-gray-100 rounded-lg px-4 py-3">
