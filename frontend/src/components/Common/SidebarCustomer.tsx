@@ -191,7 +191,7 @@ const SidebarCustomer: FC = () => {
               <li className="items-center">
                 <button
                   className={inActiveClass}
-                  onClick={() => logout('admin', router)}
+                  onClick={() => logout('pelanggan', router)}
                 >
                   <FaSignOutAlt className="mr-2 text-lg" />
                   Keluar
