@@ -16,6 +16,7 @@ const DetailTransactionSection: FC<Props> = ({ paymentMethodName }) => {
     total_hari: '',
     total_harga: '',
   });
+  const [dataCustomer, setDataCustomer] = useState<string | any>({});
 
   useEffect(() => {
     const checkIn = localStorage.getItem('tgl_check_in');
@@ -24,6 +25,7 @@ const DetailTransactionSection: FC<Props> = ({ paymentMethodName }) => {
     const totalRoom = JSON.parse(localStorage.getItem('jumlah_kamar') || '{}');
     const totalDays = JSON.parse(localStorage.getItem('total_hari') || '{}');
     const totalPrice = JSON.parse(localStorage.getItem('total_harga') || '{}');
+    const customer = JSON.parse(localStorage.getItem('pelanggan') || '{}');
 
     setData({
       tgl_check_in: checkIn,
@@ -33,6 +35,7 @@ const DetailTransactionSection: FC<Props> = ({ paymentMethodName }) => {
       total_hari: totalDays,
       total_harga: totalPrice,
     });
+    setDataCustomer(customer);
   }, []);
 
   const router = useRouter();
@@ -70,6 +73,18 @@ const DetailTransactionSection: FC<Props> = ({ paymentMethodName }) => {
 
         <div className="border">
           <div className="flex flex-wrap items-center justify-between px-5 pt-5">
+            <h3>Nama Pemesan</h3>
+
+            <p>{dataCustomer.nama}</p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between px-5 pt-3">
+            <h3>Email Pemesan</h3>
+
+            <p>{dataCustomer.email}</p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between px-5 pt-3">
             <h3>Tanggal Check-in</h3>
 
             <p>{data.tgl_check_in}</p>
