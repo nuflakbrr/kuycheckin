@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { FaHotel, FaSearch } from 'react-icons/fa';
 import Head from 'next/head';
+import moment from 'moment';
 
 import axios from '@/lib/axios';
 import { bindingState } from '@/lib/bindingState';
@@ -20,12 +21,6 @@ const ContainerSearchRoom: FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    localStorage.setItem('tgl_check_in', JSON.stringify(dataDate.tgl_check_in));
-    localStorage.setItem(
-      'tgl_check_out',
-      JSON.stringify(dataDate.tgl_check_out)
-    );
-
     const token = localStorage.getItem('access');
 
     const sendData = { ...dataDate };
@@ -40,6 +35,14 @@ const ContainerSearchRoom: FC = () => {
       .then((res) => {
         if (res) {
           setDataRoom(res.data.kamar);
+          localStorage.setItem(
+            'tgl_check_in',
+            moment(dataDate.tgl_check_in).format('YYYY-MM-DD')
+          );
+          localStorage.setItem(
+            'tgl_check_out',
+            moment(dataDate.tgl_check_out).format('YYYY-MM-DD')
+          );
         } else {
           errorToast('Terjadi kesalahan! Silahkan coba lagi');
         }
