@@ -7,7 +7,6 @@ import {
   FaHome,
   FaBuilding,
   FaUserAlt,
-  FaShoppingCart,
   FaSignOutAlt,
   FaGlobe,
   FaBed,
@@ -67,11 +66,6 @@ const SidebarAdmin: FC = () => {
       path: '/admin/rooms',
       name: 'Kamar',
       icon: <FaBed className="mr-2 text-lg" />,
-    },
-    {
-      path: '/admin/booking/add',
-      name: 'Pemesanan',
-      icon: <FaShoppingCart className="mr-2 text-lg" />,
     },
     {
       path: '/admin/customer',

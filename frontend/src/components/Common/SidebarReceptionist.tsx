@@ -7,7 +7,6 @@ import {
   FaHome,
   FaBuilding,
   FaUserAlt,
-  FaShoppingCart,
   FaSignOutAlt,
   FaGlobe,
   FaBed,
@@ -71,11 +70,6 @@ const SidebarReceptionist: FC = () => {
       path: '/receptionist/rooms',
       name: 'Kamar',
       icon: <FaBed className="mr-2 text-lg" />,
-    },
-    {
-      path: '/receptionist/booking/add',
-      name: 'Pemesanan',
-      icon: <FaShoppingCart className="mr-2 text-lg" />,
     },
     {
       path: '/receptionist/customer',

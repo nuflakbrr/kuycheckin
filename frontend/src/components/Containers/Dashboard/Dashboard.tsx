@@ -1,7 +1,5 @@
 import { FC, useState, useEffect } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
-import { FaCartPlus } from 'react-icons/fa';
 import { ToastContainer } from 'react-toastify';
 
 import axios from '@/lib/axios';
@@ -10,6 +8,7 @@ import { errorToast, infoToast } from '@/lib/toast';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
 import SidebarReceptionist from '@/components/Common/SidebarReceptionist';
 import StatsSection from './components/Stats';
+import BookingSection from './components/Booking';
 
 const ContainerDashboard: FC = () => {
   const [user, setUser] = useState<any>('');
@@ -97,22 +96,12 @@ const ContainerDashboard: FC = () => {
             </div>
 
             <div className="w-full p-10">
-              <div className="flex items-center justify-between pb-6">
-                <div>
-                  <h2 className="text-gray-500 text-2xl font-semibold">
-                    Daftar Pemesanan
-                  </h2>
-                </div>
-                <div className="flex flex-wrap items-center justify-between">
-                  <div className="lg:ml-40 ml-10 space-x-8">
-                    <Link
-                      href="/admin/booking/add"
-                      className="flex items-center justify-center bg-primary hover:bg-primarydark px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
-                    >
-                      <FaCartPlus className="mr-2" /> Tambah Pemesanan
-                    </Link>
-                  </div>
-                </div>
+              <div className="pb-6">
+                <h2 className="text-gray-500 text-2xl font-semibold">
+                  Daftar Pemesanan
+                </h2>
+
+                <BookingSection dataBooking={dataBooking} />
               </div>
             </div>
           </div>
