@@ -18,8 +18,8 @@ const DetailTransactionSection: FC<Props> = ({ paymentMethodName }) => {
   });
 
   useEffect(() => {
-    const checkIn = JSON.parse(localStorage.getItem('tgl_check_in') || '{}');
-    const checkOut = JSON.parse(localStorage.getItem('tgl_check_out') || '{}');
+    const checkIn = localStorage.getItem('tgl_check_in');
+    const checkOut = localStorage.getItem('tgl_check_out');
     const typeRoom = JSON.parse(localStorage.getItem('tipe_kamar') || '{}');
     const totalRoom = JSON.parse(localStorage.getItem('jumlah_kamar') || '{}');
     const totalDays = JSON.parse(localStorage.getItem('total_hari') || '{}');

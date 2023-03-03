@@ -36,8 +36,8 @@ const SideMainContent: FC<Props> = ({ data }) => {
 
     if (tgl_check_in && tgl_check_out) {
       setDataDate({
-        tgl_check_in: JSON.parse(tgl_check_in),
-        tgl_check_out: JSON.parse(tgl_check_out),
+        tgl_check_in,
+        tgl_check_out,
       });
     }
 
