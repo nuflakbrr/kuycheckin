@@ -7,6 +7,7 @@ import { headerConfig } from '@/lib/headerConfig';
 import { errorToast, infoToast } from '@/lib/toast';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
 import SidebarReceptionist from '@/components/Common/SidebarReceptionist';
+import SidebarCustomer from '@/components/Common/SidebarCustomer';
 import StatsSection from './components/Stats';
 import BookingSection from './components/Booking';
 
@@ -24,6 +25,10 @@ const ContainerDashboard: FC = () => {
 
     if (localStorage.getItem('resepsionis')) {
       setUser(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
+    }
+
+    if (localStorage.getItem('pelanggan')) {
+      setUser(JSON.parse(localStorage.getItem('pelanggan') || '{}'));
     }
 
     const getUser = async () => {
@@ -80,14 +85,18 @@ const ContainerDashboard: FC = () => {
 
       {user.role === 'resepsionis' && <SidebarReceptionist />}
 
+      {user.role === 'pelanggan' && <SidebarCustomer />}
+
       <main className="bg-white md:ml-64 min-h-screen">
         <div className="container">
           <div className="flex flex-wrap">
             <div className="w-full p-10">
               <h2 className="text-2xl font-bold text-primary capitalize">
-                Dashbor {user.role}
+                Dashboard {user.role}
               </h2>
+
               <StatsSection
+                user={user}
                 dataUser={dataUser}
                 dataTypeRoom={dataTypeRoom}
                 dataRoom={dataRoom}
@@ -101,7 +110,7 @@ const ContainerDashboard: FC = () => {
                   Daftar Pemesanan
                 </h2>
 
-                <BookingSection dataBooking={dataBooking} />
+                <BookingSection user={user} dataBooking={dataBooking} />
               </div>
             </div>
           </div>
