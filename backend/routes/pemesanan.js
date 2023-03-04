@@ -6,7 +6,6 @@ const pemesanan = require('../models/index').pemesanan;
 const detail_pemesanan = require('../models/index').detail_pemesanan;
 const kamar = require('../models/index').kamar;
 const tipe_kamar = require('../models/index').tipe_kamar;
-const user = require('../models/index').user;
 
 const app = express();
 
@@ -17,7 +16,7 @@ const app = express();
  * @apiDescription Get all booking data
  */
 app.get('/', auth, async (req, res) => {
-  await pemesanan.findAll({ include: ['user', 'tipe_kamar'] })
+  await pemesanan.findAll({ include: ['user', 'pelanggan', 'tipe_kamar'] })
   .then(result => res.json({ data: result }))
   .catch(error => res.json({ message: error.message }))
 });
@@ -43,7 +42,7 @@ app.get('/:id', auth, async (req, res) => {
  * @apiDescription Get booking data by customer id
  */
 app.get('/customer/:id', auth, async (req, res) => {
-  let params = { id_customer: req.params.id };
+  let params = { id_pelanggan: req.params.id };
 
   await pemesanan.findAll({ where: params, include: ['user', 'pelanggan', 'tipe_kamar'] })
   .then(result => res.json({ data: result }))
@@ -61,7 +60,7 @@ app.post('/', auth, async (req, res) => {
   let receiptNum = Math.floor(Math.random() * (1000000000- 99999999) + 99999999);
 
   let data = {
-    nomor_pemesanan: receiptNum,
+    nomor_pemesanan: `WH-${receiptNum}`,
     id_pelanggan: req.body.id_pelanggan,
     tgl_pemesanan: dt,
     tgl_check_in: req.body.tgl_check_in,
