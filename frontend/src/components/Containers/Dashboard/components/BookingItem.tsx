@@ -18,6 +18,7 @@ type Props = {
   tgl_pemesanan: string;
   jumlah_kamar: number;
   status_pemesanan: string;
+  user: any;
 };
 
 const BookingItem: FC<Props> = ({
@@ -30,6 +31,7 @@ const BookingItem: FC<Props> = ({
   tgl_pemesanan,
   jumlah_kamar,
   status_pemesanan,
+  user,
 }) => {
   const router = useRouter();
 
@@ -125,7 +127,7 @@ const BookingItem: FC<Props> = ({
 
           <div className="block md:hidden text-left pt-5">
             <h1 className="font-bold text-sm text-slate-500">
-              Tanggal Transaksi
+              Tanggal Pemesanan
             </h1>
             <h1 className="font-bold text-lg text-black">
               {formatLocalTime(tgl_pemesanan) || 'Tidak diketahui'}
@@ -134,7 +136,7 @@ const BookingItem: FC<Props> = ({
 
           <div className="block md:hidden text-left pt-5">
             <h1 className="font-bold text-sm text-slate-500">
-              Status Transaksi
+              Status Pemesanan
             </h1>
             <h1 className="font-bold text-lg text-black">
               {badgeColorTransaction(status_pemesanan) || 'Tidak diketahui'}
@@ -152,7 +154,7 @@ const BookingItem: FC<Props> = ({
 
           <div className="text-left pt-5">
             <h1 className="font-bold text-sm text-slate-500">
-              Tanggal Transaksi
+              Tanggal Pemesanan
             </h1>
             <h1 className="font-bold text-lg text-black">
               {formatLocalTime(tgl_pemesanan) || 'Tidak diketahui'}
@@ -161,7 +163,7 @@ const BookingItem: FC<Props> = ({
 
           <div className="text-left pt-5">
             <h1 className="font-bold text-sm text-slate-500">
-              Status Pengerjaan
+              Status Pemesanan
             </h1>
             <h1 className="font-bold text-lg text-black">
               {badgeColorTransaction(status_pemesanan) || 'Tidak diketahui'}
@@ -169,29 +171,50 @@ const BookingItem: FC<Props> = ({
           </div>
         </section>
 
-        <section>
-          <Link
-            href={`/admin/transaction/detail/`}
-            className="flex items-center justify-center bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
-          >
-            <FaInfoCircle className="mr-2" /> Detail
-          </Link>
+        {user.role === 'admin' || user.role === 'resepsionis' ? (
+          <section>
+            <Link
+              href={
+                user.role === 'admin'
+                  ? `/admin/booking/detail/${id_pemesanan}`
+                  : `/receptionist/booking/detail/${id_pemesanan}`
+              }
+              className="flex items-center justify-center bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
+            >
+              <FaInfoCircle className="mr-2" /> Detail
+            </Link>
 
-          <Link
-            href={`/admin/transaction/edit/${id_pemesanan}`}
-            className="flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer mt-2"
-          >
-            <FaEdit className="mr-2" /> Ubah
-          </Link>
+            <Link
+              href={
+                user.role === 'admin'
+                  ? `/admin/booking/edit/${id_pemesanan}`
+                  : `/receptionist/booking/edit/${id_pemesanan}`
+              }
+              className="flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer mt-2"
+            >
+              <FaEdit className="mr-2" /> Ubah
+            </Link>
 
-          <button
-            type="button"
-            className="flex items-center justify-center bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer mt-2"
-            onClick={(e) => handleDelete(e)}
-          >
-            <FaTrash className="mr-2" /> Hapus
-          </button>
-        </section>
+            {user.role === 'admin' && (
+              <button
+                type="button"
+                className="flex items-center justify-center bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer mt-2"
+                onClick={(e) => handleDelete(e)}
+              >
+                <FaTrash className="mr-2" /> Hapus
+              </button>
+            )}
+          </section>
+        ) : (
+          <section>
+            <Link
+              href={`/customer/booking/detail/${id_pemesanan}`}
+              className="flex items-center justify-center bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
+            >
+              <FaInfoCircle className="mr-2" /> Detail
+            </Link>
+          </section>
+        )}
       </div>
     </div>
   );

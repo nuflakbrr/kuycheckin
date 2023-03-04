@@ -45,6 +45,7 @@ const BookingSection: FC<Props> = ({ user, dataBooking }) => {
                 tgl_pemesanan={a.tgl_pemesanan}
                 jumlah_kamar={a.jumlah_kamar}
                 status_pemesanan={a.status_pemesanan}
+                user={user}
                 key={i}
               />
             ))
@@ -60,6 +61,7 @@ const BookingSection: FC<Props> = ({ user, dataBooking }) => {
                 tgl_pemesanan={a.tgl_pemesanan}
                 jumlah_kamar={a.jumlah_kamar}
                 status_pemesanan={a.status_pemesanan}
+                user={user}
                 key={i}
               />
             ))
