@@ -9,7 +9,7 @@ module.exports = {
         allowNull: false
       },
       nomor_pemesanan: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       id_pelanggan: {
         type: Sequelize.INTEGER,
