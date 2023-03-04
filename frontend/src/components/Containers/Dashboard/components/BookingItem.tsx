@@ -46,39 +46,28 @@ const BookingItem: FC<Props> = ({
     router.reload();
   };
 
-  // const badgeColorTransaction = (status: string) => {
-  //   if (status === 'baru') {
-  //     return (
-  //       <p className="bg-red-500 px-2 py-0.5 rounded-xl text-white whitespace-no-wrap">
-  //         Baru
-  //       </p>
-  //     );
-  //   } else if (status === 'proses') {
-  //     return (
-  //       <p className="bg-yellow-500 px-2 py-0.5 rounded-xl text-black whitespace-no-wrap">
-  //         Proses
-  //       </p>
-  //     );
-  //   } else if (status === 'selesai') {
-  //     return (
-  //       <p className="bg-green-500 px-2 py-0.5 rounded-xl text-white whitespace-no-wrap">
-  //         Selesai
-  //       </p>
-  //     );
-  //   } else if (status === 'diambil') {
-  //     return (
-  //       <p className="bg-blue-500 px-2 py-0.5 rounded-xl text-white whitespace-no-wrap">
-  //         Diambil
-  //       </p>
-  //     );
-  //   } else {
-  //     return (
-  //       <p className="bg-red-500 px-2 py-0.5 rounded-xl text-white whitespace-no-wrap">
-  //         Dibatalkan
-  //       </p>
-  //     );
-  //   }
-  // };
+  const badgeColorTransaction = (status: string) => {
+    switch (status) {
+      case 'check_out':
+        return (
+          <p className="border-2 border-green-500 bg-transparent px-2 py-0.5 rounded-xl text-green-500 text-center whitespace-no-wrap mt-2">
+            Check-out
+          </p>
+        );
+      case 'check_in':
+        return (
+          <p className="border-2 border-yellow-500 bg-transparent px-2 py-0.5 rounded-xl text-yellow-500 text-center whitespace-no-wrap mt-2">
+            Check-in
+          </p>
+        );
+      default:
+        return (
+          <p className="border-2 border-red-500 bg-transparent px-2 py-0.5 rounded-xl text-red-500 text-center whitespace-no-wrap mt-2">
+            Baru
+          </p>
+        );
+    }
+  };
 
   const diffDays = (chck_in: string, chck_out: string) => {
     const checkIn = new Date(chck_in);
@@ -148,7 +137,7 @@ const BookingItem: FC<Props> = ({
               Status Transaksi
             </h1>
             <h1 className="font-bold text-lg text-black">
-              {status_pemesanan || 'Tidak diketahui'}
+              {badgeColorTransaction(status_pemesanan) || 'Tidak diketahui'}
             </h1>
           </div>
         </section>
@@ -175,7 +164,7 @@ const BookingItem: FC<Props> = ({
               Status Pengerjaan
             </h1>
             <h1 className="font-bold text-lg text-black">
-              {status_pemesanan || 'Tidak diketahui'}
+              {badgeColorTransaction(status_pemesanan) || 'Tidak diketahui'}
             </h1>
           </div>
         </section>

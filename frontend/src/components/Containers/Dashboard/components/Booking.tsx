@@ -4,6 +4,7 @@ import axios from '@/lib/axios';
 import { headerConfig } from '@/lib/headerConfig';
 import { errorToast } from '@/lib/toast';
 import BookingItem from './BookingItem';
+import Skeleton from './Skeleton';
 
 type Props = {
   user: any;
@@ -31,9 +32,7 @@ const BookingSection: FC<Props> = ({ user, dataBooking }) => {
       <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
         <div className="inline-block min-w-full rounded-lg overflow-hidden">
           {!dataBooking.length ? (
-            <p className="text-black dark:text-white text-center mx-auto">
-              Memuat Data📦...
-            </p>
+            <Skeleton />
           ) : user.role === 'admin' || user.role === 'resepsionis' ? (
             dataBooking.map((a: any, i: any) => (
               <BookingItem
