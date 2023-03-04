@@ -44,7 +44,7 @@ const SidebarCustomer: FC = () => {
   // Access Navigation for Customer
   const customerLinks = [
     {
-      path: '/admin/dashboard',
+      path: '/customer/dashboard',
       name: 'Dashboard Pelanggan',
       icon: <FaHome className="mr-2 text-lg" />,
     },
@@ -175,10 +175,10 @@ const SidebarCustomer: FC = () => {
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
               <li className="items-center">
-                <Link href="/admin/profile" legacyBehavior>
+                <Link href="/customer/profile" legacyBehavior>
                   <a
                     className={classNames(
-                      isMenuActive('/admin/profile')
+                      isMenuActive('/customer/profile')
                         ? activeClass
                         : inActiveClass
                     )}
