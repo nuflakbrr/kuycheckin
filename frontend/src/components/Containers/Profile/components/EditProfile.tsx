@@ -17,6 +17,13 @@ const EditProfile: FC = () => {
     role: 'default',
     foto: '',
   });
+  const [dataCustomer, setDataCustomer] = useState({
+    nama: '',
+    email: '',
+    password: '',
+    confirmPass: '',
+    foto: '',
+  });
   const [image, setImage] = useState('/assets/img/template-img.png');
 
   const router = useRouter();
@@ -25,7 +32,11 @@ const EditProfile: FC = () => {
     // eslint-disable-next-line prefer-const
     let foto = e.target.files[0];
     setImage(URL.createObjectURL(foto));
-    setData({ ...data, foto });
+    if (oldData.role === 'pelanggan') {
+      setDataCustomer({ ...dataCustomer, foto });
+    } else {
+      setData({ ...data, foto });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,10 +44,15 @@ const EditProfile: FC = () => {
 
     if (data.password !== data.confirmPass) {
       errorToast('Password tidak sama! Silahkan coba lagi');
-      setData({ ...data, password: '', confirmPass: '' });
+
+      if (oldData.role === 'pelanggan') {
+        setDataCustomer({ ...dataCustomer, password: '', confirmPass: '' });
+      } else {
+        setData({ ...data, password: '', confirmPass: '' });
+      }
 
       return;
-    } else {
+    } else if (oldData.role === 'admin' || oldData.role === 'resepsionis') {
       const sendData = {
         id_user: oldData.id_user,
         ...data,
@@ -49,7 +65,36 @@ const EditProfile: FC = () => {
             successToast(
               'Berhasil mengubah data profil! Silahkan login kembali'
             );
-            logout(oldData.role === 'admin' ? 'admin' : 'resepsionis', router);
+            setTimeout(() => {
+              logout(
+                oldData.role === 'admin' ? 'admin' : 'resepsionis',
+                router
+              );
+            }, 1800);
+          } else {
+            errorToast('Gagal mengubah data profil! Silahkan coba lagi');
+          }
+        })
+        .catch((err) => {
+          errorToast('Gagal mengubah data profil! Silahkan coba lagi');
+          console.log(err);
+        });
+    } else {
+      const sendData = {
+        id_pelanggan: oldData.id_pelanggan,
+        ...dataCustomer,
+      };
+
+      axios
+        .put('/customer', sendData, headerConfig())
+        .then((res) => {
+          if (res.data.success === 1) {
+            successToast(
+              'Berhasil mengubah data profil! Silahkan login kembali'
+            );
+            setTimeout(() => {
+              logout('pelanggan', router);
+            }, 1800);
           } else {
             errorToast('Gagal mengubah data profil! Silahkan coba lagi');
           }
@@ -70,10 +115,16 @@ const EditProfile: FC = () => {
       setOldData(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
     }
 
+    if (localStorage.getItem('pelanggan')) {
+      setOldData(JSON.parse(localStorage.getItem('pelanggan') || '{}'));
+    }
+
     return () => {
       setOldData({});
     };
   }, []);
+
+  console.log(dataCustomer);
 
   return (
     <section>
@@ -118,21 +169,34 @@ const EditProfile: FC = () => {
           <div className="max-w-2xl w-full mt-3 lg:mt-0">
             <input
               type="text"
-              value={oldData.nama_user}
+              value={oldData.nama_user || oldData.nama}
               className="block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
               disabled
             />
 
-            <input
-              type="text"
-              name="nama_user"
-              id="nama_user"
-              value={data.nama_user}
-              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
-              placeholder="Nama User"
-              required
-              onChange={(e) => bindingState(e, setData, 'nama_user')}
-            />
+            {oldData.role === 'admin' || oldData.role === 'resepsionis' ? (
+              <input
+                type="text"
+                name="nama_user"
+                id="nama_user"
+                value={data.nama_user}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
+                placeholder="Nama User"
+                required
+                onChange={(e) => bindingState(e, setData, 'nama_user')}
+              />
+            ) : (
+              <input
+                type="text"
+                name="nama"
+                id="nama"
+                value={dataCustomer.nama}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
+                placeholder="Nama User"
+                required
+                onChange={(e) => bindingState(e, setDataCustomer, 'nama')}
+              />
+            )}
           </div>
         </div>
 
@@ -152,16 +216,29 @@ const EditProfile: FC = () => {
               disabled
             />
 
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={data.email}
-              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
-              placeholder="Email User"
-              required
-              onChange={(e) => bindingState(e, setData, 'email')}
-            />
+            {oldData.role === 'admin' || oldData.role === 'resepsionis' ? (
+              <input
+                type="email"
+                name="email"
+                id="email"
+                value={data.email}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
+                placeholder="Email User"
+                required
+                onChange={(e) => bindingState(e, setData, 'email')}
+              />
+            ) : (
+              <input
+                type="email"
+                name="email"
+                id="email"
+                value={dataCustomer.email}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
+                placeholder="Email User"
+                required
+                onChange={(e) => bindingState(e, setDataCustomer, 'email')}
+              />
+            )}
           </div>
         </div>
 
@@ -173,29 +250,57 @@ const EditProfile: FC = () => {
             Password Baru
           </label>
 
-          <div className="max-w-2xl w-full mt-3 lg:mt-0">
-            <input
-              type="password"
-              name="password"
-              id="password"
-              value={data.password}
-              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
-              placeholder="Password Baru"
-              required
-              onChange={(e) => bindingState(e, setData, 'password')}
-            />
+          {oldData.role === 'admin' || oldData.role === 'resepsionis' ? (
+            <div className="max-w-2xl w-full mt-3 lg:mt-0">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                value={data.password}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
+                placeholder="Password Baru"
+                required
+                onChange={(e) => bindingState(e, setData, 'password')}
+              />
 
-            <input
-              type="password"
-              name="confirmPass"
-              id="confirmPass"
-              value={data.confirmPass}
-              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
-              placeholder="Konfirmasi Password Baru"
-              required
-              onChange={(e) => bindingState(e, setData, 'confirmPass')}
-            />
-          </div>
+              <input
+                type="password"
+                name="confirmPass"
+                id="confirmPass"
+                value={data.confirmPass}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
+                placeholder="Konfirmasi Password Baru"
+                required
+                onChange={(e) => bindingState(e, setData, 'confirmPass')}
+              />
+            </div>
+          ) : (
+            <div className="max-w-2xl w-full mt-3 lg:mt-0">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                value={dataCustomer.password}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
+                placeholder="Password Baru"
+                required
+                onChange={(e) => bindingState(e, setDataCustomer, 'password')}
+              />
+
+              <input
+                type="password"
+                name="confirmPass"
+                id="confirmPass"
+                value={dataCustomer.confirmPass}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
+                placeholder="Konfirmasi Password Baru"
+                required
+                onChange={(e) =>
+                  bindingState(e, setDataCustomer, 'confirmPass')
+                }
+              />
+            </div>
+          )}
         </div>
 
         <div className="mb-5 flex flex-wrap items-center justify-between">
@@ -214,20 +319,22 @@ const EditProfile: FC = () => {
               disabled
             />
 
-            <select
-              name="role"
-              id="role"
-              value={data.role}
-              className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
-              required
-              onChange={(e) => bindingState(e, setData, 'role')}
-            >
-              <option value="default" selected disabled>
-                Pilih Jabatan
-              </option>
-              <option value="admin">Admin</option>
-              <option value="resepsionis">Resepsionis</option>
-            </select>
+            {oldData.role === 'admin' && (
+              <select
+                name="role"
+                id="role"
+                value={data.role}
+                className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
+                required
+                onChange={(e) => bindingState(e, setData, 'role')}
+              >
+                <option value="default" selected disabled>
+                  Pilih Jabatan
+                </option>
+                <option value="admin">Admin</option>
+                <option value="resepsionis">Resepsionis</option>
+              </select>
+            )}
           </div>
         </div>
 

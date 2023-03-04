@@ -6,6 +6,7 @@ import Head from 'next/head';
 import { classNames } from '@/lib/classNames';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
 import SidebarReceptionist from '@/components/Common/SidebarReceptionist';
+import SidebarCustomer from '@/components/Common/SidebarCustomer';
 import PreviewProfile from './components/PreviewProfile';
 import EditProfile from './components/EditProfile';
 
@@ -19,6 +20,10 @@ const ContainerProfile: FC = () => {
 
     if (localStorage.getItem('resepsionis')) {
       setDataLogin(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
+    }
+
+    if (localStorage.getItem('pelanggan')) {
+      setDataLogin(JSON.parse(localStorage.getItem('pelanggan') || '{}'));
     }
 
     return () => {
@@ -36,6 +41,8 @@ const ContainerProfile: FC = () => {
       {dataLogin.role === 'admin' && <SidebarAdmin />}
 
       {dataLogin.role === 'resepsionis' && <SidebarReceptionist />}
+
+      {dataLogin.role === 'pelanggan' && <SidebarCustomer />}
 
       <main className="bg-white md:ml-64 min-h-screen">
         <div className="container">

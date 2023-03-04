@@ -12,6 +12,10 @@ const PreviewProfile: FC = () => {
       setData(JSON.parse(localStorage.getItem('resepsionis') || '{}'));
     }
 
+    if (localStorage.getItem('pelanggan')) {
+      setData(JSON.parse(localStorage.getItem('pelanggan') || '{}'));
+    }
+
     return () => {
       setData({});
     };
@@ -40,7 +44,7 @@ const PreviewProfile: FC = () => {
 
           <div className="mt-2">
             <h4 className="font-semibold text-2xl leading-7 mb-2">
-              {data.nama_user || 'Tidak ada data'}
+              {data.nama_user || data.nama || 'Tidak ada data'}
             </h4>
 
             <hr />
@@ -66,7 +70,7 @@ const PreviewProfile: FC = () => {
                 type="text"
                 name="name"
                 id="name"
-                value={data.nama_user || 'Tidak ada data'}
+                value={data.nama_user || data.nama || 'Tidak ada data'}
                 className="block w-full border text-gray-500 border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
                 disabled
               />
@@ -90,22 +94,25 @@ const PreviewProfile: FC = () => {
             </div>
           </div>
 
-          <div className="mb-5 flex flex-wrap items-center justify-between">
-            <h2 className="block text-sm font-medium text-gray-500 mb-2">
-              Jabatan User
-            </h2>
+          {data.role === 'admin' ||
+            (data.role === 'resepsionis' && (
+              <div className="mb-5 flex flex-wrap items-center justify-between">
+                <h2 className="block text-sm font-medium text-gray-500 mb-2">
+                  Jabatan User
+                </h2>
 
-            <div className="max-w-2xl w-full mt-3 lg:mt-0">
-              <input
-                type="text"
-                name="role"
-                id="role"
-                value={data.role || 'Tidak ada data'}
-                className="block w-full border text-gray-500 border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
-                disabled
-              />
-            </div>
-          </div>
+                <div className="max-w-2xl w-full mt-3 lg:mt-0">
+                  <input
+                    type="text"
+                    name="role"
+                    id="role"
+                    value={data.role || 'Tidak ada data'}
+                    className="block w-full border text-gray-500 border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
+                    disabled
+                  />
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </section>
