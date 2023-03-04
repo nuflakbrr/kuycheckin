@@ -10,6 +10,7 @@ const pelanggan = require('./routes/pelanggan');
 const tipe_kamar = require('./routes/tipe_kamar');
 const kamar = require('./routes/kamar');
 const pemesanan = require('./routes/pemesanan');
+const detail_pemesanan = require('./routes/detail_pemesanan');
 const filter_kamar = require('./routes/filter_kamar');
 
 app.use(cors());
@@ -22,6 +23,7 @@ app.use('/api/v1/hotel/customer', pelanggan);
 app.use('/api/v1/hotel/room-type', tipe_kamar);
 app.use('/api/v1/hotel/room', kamar);
 app.use('/api/v1/hotel/booking', pemesanan);
+app.use('/api/v1/hotel/booking/detail', detail_pemesanan);
 app.use('/api/v1/hotel/filter', filter_kamar);
 
 app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT} 🚀`));
