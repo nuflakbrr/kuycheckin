@@ -77,7 +77,7 @@ const ContainerDetailBooking: FC = () => {
   return (
     <>
       <Head>
-        <title>Detil Pemesanan - Wikusama Hotel</title>
+        <title>Detail Pemesanan - Wikusama Hotel</title>
       </Head>
 
       <ToastContainer autoClose={1500} />
