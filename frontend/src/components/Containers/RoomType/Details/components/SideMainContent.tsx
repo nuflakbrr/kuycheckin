@@ -3,8 +3,9 @@ import { useRouter } from 'next/router';
 
 import axios from '@/lib/axios';
 import { bindingState } from '@/lib/bindingState';
-import { formatCurrency } from '@/lib/formatCurrency';
+import { diffDays } from '@/lib/diffDays';
 import { errorToast, successToast } from '@/lib/toast';
+import { totalPrice } from '@/lib/totalPrice';
 
 type Props = {
   data: any;
@@ -48,27 +49,6 @@ const SideMainContent: FC<Props> = ({ data }) => {
       setDataCustomer(JSON.parse(customer));
     }
   }, []);
-
-  const diffDays = (chck_in: string, chck_out: string) => {
-    const checkIn = new Date(chck_in);
-    const checkOut = new Date(chck_out);
-
-    const diff = checkOut.getTime() - checkIn.getTime();
-    const totalDays = Math.ceil(diff / (1000 * 3600 * 24));
-
-    return totalDays;
-  };
-
-  const totalPrice = (
-    chck_in: string,
-    chck_out: string,
-    totalRoom: number,
-    price: number
-  ) => {
-    const total = diffDays(chck_in, chck_out) * totalRoom * price;
-
-    return formatCurrency(total);
-  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -193,7 +173,7 @@ const SideMainContent: FC<Props> = ({ data }) => {
               placeholder="Masukkan Jumlah Kamar"
               required
               min={0}
-              max={5}
+              max={data.kamar?.length}
               value={bookingData.jumlah_kamar}
               onChange={(e) => bindingState(e, setBookingData, 'jumlah_kamar')}
             />

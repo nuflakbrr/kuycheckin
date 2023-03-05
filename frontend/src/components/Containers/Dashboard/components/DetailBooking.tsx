@@ -8,7 +8,7 @@ import { headerConfig } from '@/lib/headerConfig';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
 import SidebarReceptionist from '@/components/Common/SidebarReceptionist';
 import SidebarCustomer from '@/components/Common/SidebarCustomer';
-import { errorToast, infoToast } from '@/lib/toast';
+import { errorToast } from '@/lib/toast';
 import Link from 'next/link';
 import { formatLocalTime } from '@/lib/formatLocalTime';
 
@@ -38,12 +38,7 @@ const ContainerDetailBooking: FC = () => {
         await axios
           .get(`/booking/${id}`, headerConfig())
           .then((res) => {
-            if (res) {
-              infoToast('Memuat data 📦...');
-              setData(res.data.data);
-            } else {
-              errorToast('Data tidak ditemukan!');
-            }
+            res ? setData(res.data.data) : errorToast('Data tidak ditemukan!');
           })
           .catch((err) => {
             errorToast('Data tidak ditemukan!');
@@ -71,9 +66,6 @@ const ContainerDetailBooking: FC = () => {
     }
   }, [id]);
 
-  // console.log('data', data);
-  console.log('dataRoom', dataRoom);
-
   return (
     <>
       <Head>
@@ -100,7 +92,7 @@ const ContainerDetailBooking: FC = () => {
             <div className="w-full p-10">
               <div className="w-full">
                 <div className="border-gray-300 bg-white border-solid border-2 rounded-lg px-5">
-                  <div className="mt-3 ">
+                  <div className="mt-3">
                     <h1 className="text-xl font-bold text-primary border-b-2 border-solid border-gray-300 pb-3">
                       Rincian Pesanan
                     </h1>
@@ -119,6 +111,7 @@ const ContainerDetailBooking: FC = () => {
                         />
                       </div>
                     </div>
+
                     <div className="w-full flex justify-between gap-5 pb-5">
                       <div className="w-full">
                         <h2 className="mb-2 text-lg font-medium text-gray-500">
@@ -136,6 +129,7 @@ const ContainerDetailBooking: FC = () => {
                         />
                       </div>
                     </div>
+
                     <div className="w-full flex justify-between gap-5 pb-5">
                       <div className="w-full">
                         <h2 className="mb-2 text-lg font-medium text-gray-500">
@@ -149,6 +143,7 @@ const ContainerDetailBooking: FC = () => {
                           value={data.pelanggan?.nama || 'Tidak Diketahui'}
                         />
                       </div>
+
                       <div className="w-full">
                         <h2 className="mb-2 text-lg font-medium text-gray-500">
                           Email Pemesan
@@ -179,6 +174,7 @@ const ContainerDetailBooking: FC = () => {
                           }
                         />
                       </div>
+
                       <div className="w-full">
                         <h2 className="mb-2 text-sm lg:text-lg font-medium text-gray-500">
                           Tgl Check In
@@ -194,6 +190,7 @@ const ContainerDetailBooking: FC = () => {
                           }
                         />
                       </div>
+
                       <div className="w-full">
                         <h2 className="mb-2 text-sm lg:text-lg font-medium text-gray-500">
                           Tgl Check Out
@@ -238,97 +235,104 @@ const ContainerDetailBooking: FC = () => {
                         </Link>
                       )}
                     </div>
-                    <table className="w-full text-sm text-left text-gray-500 my-5">
-                      <thead className="text-xs text-white uppercase bg-primary">
-                        <tr>
-                          <th scope="col" className="px-6 py-3">
-                            No Kamar
-                          </th>
 
-                          <th scope="col" className="px-6 py-3">
-                            Nama Tipe Kamar
-                          </th>
-
-                          <th scope="col" className="px-6 py-3">
-                            Tgl Check In
-                          </th>
-
-                          <th scope="col" className="px-6 py-3">
-                            Tgl Check Out
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {!dataRoom.length ? (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm text-left text-gray-500 my-5">
+                        <thead className="text-xs text-white uppercase bg-primary">
                           <tr>
-                            <td className="animate-pulse transition-all ease-in-out duration-300 bg-gray-100 px-5 py-5 border-b border-gray-200 text-sm">
-                              <div className="flex items-center select-none">
-                                <div className="bg-gray-200 text-gray-200 whitespace-no-wrap">
-                                  this text will not displayed
-                                </div>
-                              </div>
-                            </td>
+                            <th scope="col" className="px-6 py-3">
+                              No Kamar
+                            </th>
 
-                            <td className="animate-pulse transition-all ease-in-out duration-300 bg-gray-100 px-5 py-5 border-b border-gray-200 text-sm">
-                              <div className="flex items-center select-none">
-                                <div className="bg-gray-200 text-gray-200 whitespace-no-wrap">
-                                  this text will not displayed
-                                </div>
-                              </div>
-                            </td>
+                            <th scope="col" className="px-6 py-3">
+                              Nama Tipe Kamar
+                            </th>
 
-                            <td className="animate-pulse transition-all ease-in-out duration-300 bg-gray-100 px-5 py-5 border-b border-gray-200 text-sm">
-                              <div className="flex items-center select-none">
-                                <div className="bg-gray-200 text-gray-200 whitespace-no-wrap">
-                                  this text will not displayed
-                                </div>
-                              </div>
-                            </td>
+                            <th scope="col" className="px-6 py-3">
+                              Tgl Check In
+                            </th>
 
-                            <td className="animate-pulse transition-all ease-in-out duration-300 bg-gray-100 px-5 py-5 border-b border-gray-200 text-sm">
-                              <div className="flex items-center select-none">
-                                <div className="bg-gray-200 text-gray-200 whitespace-no-wrap">
-                                  this text will not displayed
-                                </div>
-                              </div>
-                            </td>
+                            <th scope="col" className="px-6 py-3">
+                              Tgl Check Out
+                            </th>
                           </tr>
-                        ) : (
-                          dataRoom.map((a: any, i: any) => (
-                            <tr key={i} className="bg-gray-500">
-                              <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
-                                <div className="flex items-center">
-                                  <p className="text-gray-900 whitespace-no-wrap">
-                                    {a.kamar?.nomor_kamar}
-                                  </p>
+                        </thead>
+
+                        <tbody>
+                          {!dataRoom.length ? (
+                            <tr>
+                              <td className="animate-pulse transition-all ease-in-out duration-300 bg-gray-100 px-5 py-5 border-b border-gray-200 text-sm">
+                                <div className="flex items-center select-none">
+                                  <div className="bg-gray-200 text-gray-200 whitespace-no-wrap">
+                                    this text will not displayed
+                                  </div>
                                 </div>
                               </td>
-                              <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
-                                <div className="flex items-center">
-                                  <p className="text-gray-900 whitespace-no-wrap">
-                                    {data.tipe_kamar?.nama_tipe_kamar}
-                                  </p>
+
+                              <td className="animate-pulse transition-all ease-in-out duration-300 bg-gray-100 px-5 py-5 border-b border-gray-200 text-sm">
+                                <div className="flex items-center select-none">
+                                  <div className="bg-gray-200 text-gray-200 whitespace-no-wrap">
+                                    this text will not displayed
+                                  </div>
                                 </div>
                               </td>
-                              <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
-                                <div className="flex items-center">
-                                  <p className="text-gray-900 whitespace-no-wrap">
-                                    {formatLocalTime(data.tgl_check_in)}
-                                  </p>
+
+                              <td className="animate-pulse transition-all ease-in-out duration-300 bg-gray-100 px-5 py-5 border-b border-gray-200 text-sm">
+                                <div className="flex items-center select-none">
+                                  <div className="bg-gray-200 text-gray-200 whitespace-no-wrap">
+                                    this text will not displayed
+                                  </div>
                                 </div>
                               </td>
-                              <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
-                                <div className="flex items-center">
-                                  <p className="text-gray-900 whitespace-no-wrap">
-                                    {formatLocalTime(data.tgl_check_out)}
-                                  </p>
+
+                              <td className="animate-pulse transition-all ease-in-out duration-300 bg-gray-100 px-5 py-5 border-b border-gray-200 text-sm">
+                                <div className="flex items-center select-none">
+                                  <div className="bg-gray-200 text-gray-200 whitespace-no-wrap">
+                                    this text will not displayed
+                                  </div>
                                 </div>
                               </td>
                             </tr>
-                          ))
-                        )}
-                      </tbody>
-                    </table>
+                          ) : (
+                            dataRoom.map((a: any, i: any) => (
+                              <tr key={i} className="bg-gray-500">
+                                <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
+                                  <div className="flex items-center">
+                                    <p className="text-gray-900 whitespace-no-wrap">
+                                      {a.kamar?.nomor_kamar}
+                                    </p>
+                                  </div>
+                                </td>
+
+                                <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
+                                  <div className="flex items-center">
+                                    <p className="text-gray-900 whitespace-no-wrap">
+                                      {data.tipe_kamar?.nama_tipe_kamar}
+                                    </p>
+                                  </div>
+                                </td>
+
+                                <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
+                                  <div className="flex items-center">
+                                    <p className="text-gray-900 whitespace-no-wrap">
+                                      {formatLocalTime(data.tgl_check_in)}
+                                    </p>
+                                  </div>
+                                </td>
+
+                                <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
+                                  <div className="flex items-center">
+                                    <p className="text-gray-900 whitespace-no-wrap">
+                                      {formatLocalTime(data.tgl_check_out)}
+                                    </p>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>

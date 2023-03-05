@@ -3,10 +3,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FaEdit, FaInfoCircle, FaTrash } from 'react-icons/fa';
 
-import axios from '../../../../lib/axios';
-import { headerConfig } from '../../../../lib/headerConfig';
-import { formatLocalTime } from '../../../../lib/formatLocalTime';
-import { successToast } from '../../../../lib/toast';
+import axios from '@/lib/axios';
+import { headerConfig } from '@/lib/headerConfig';
+import { diffDays } from '@/lib/diffDays';
+import { formatLocalTime } from '@/lib/formatLocalTime';
+import { successToast } from '@/lib/toast';
 
 type Props = {
   id_pemesanan: number;
@@ -69,16 +70,6 @@ const BookingItem: FC<Props> = ({
           </p>
         );
     }
-  };
-
-  const diffDays = (chck_in: string, chck_out: string) => {
-    const checkIn = new Date(chck_in);
-    const checkOut = new Date(chck_out);
-
-    const diff = checkOut.getTime() - checkIn.getTime();
-    const totalDays = Math.ceil(diff / (1000 * 3600 * 24));
-
-    return totalDays;
   };
 
   return (
