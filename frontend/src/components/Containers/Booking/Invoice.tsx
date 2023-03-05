@@ -80,8 +80,6 @@ const ContainerInvoice: FC = () => {
     return formatCurrency(totalRoom * price);
   };
 
-  console.log(data);
-
   return (
     <>
       <Head>
