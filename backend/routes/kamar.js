@@ -12,7 +12,7 @@ const app = express();
  * @apiGroup Room
  * @apiDescription Get all room data
  */
-app.get('/', async (req, res) => {
+app.get('/', auth, async (req, res) => {
   await kamar.findAll({ include: ['tipe_kamar'] })
   .then(result => res.json({ data: result }))
   .catch(error => res.json({ message: error.message }))
@@ -24,7 +24,7 @@ app.get('/', async (req, res) => {
  * @apiGroup Room
  * @apiDescription Get room data by id
  */
-app.get('/:id', async (req, res) => {
+app.get('/:id', auth, async (req, res) => {
   let params = { id_kamar: req.params.id };
 
   await kamar.findOne({ where: params, include: ['tipe_kamar'] })

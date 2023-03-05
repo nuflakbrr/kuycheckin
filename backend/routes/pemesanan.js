@@ -142,12 +142,31 @@ app.post('/', auth, async (req, res) => {
 });
 
 /**
+ * @apiRoutes {put} /hotel/booking/:id
+ * @apiName PutBooking
+ * @apiGroup Booking
+ * @apiDescription Update booking data
+ */
+app.put('/:id', auth, async (req, res) => {
+  let params = { id_pemesanan: req.params.id };
+
+  let data = {
+    status_pemesanan: req.body.status_pemesanan,
+    id_user: req.body.id_user,
+  };
+
+  await pemesanan.update(data, { where: params })
+  .then(result => res.json({ success: 1, message: 'Data has been updated!' }))
+  .catch(err => res.json({ message: err.message }))
+});
+
+/**
  * @apiRoutes {delete} /hotel/booking/:id
  * @apiName DeleteBooking
  * @apiGroup Booking
  * @apiDescription Delete booking data
  */
-app.delete('/:id', async (req, res) => {
+app.delete('/:id', auth, async (req, res) => {
   try {
     let params = { id_pemesanan: req.params.id };
 
@@ -155,7 +174,7 @@ app.delete('/:id', async (req, res) => {
     .then(result => {
       if(result !== null) {
         pemesanan.destroy({ where: params })
-        .then(result => res.json({ message: 'Data has been deleted!' }))
+        .then(results => res.json({ success: 1, message: 'Data has been deleted!' }))
         .catch(err => res.json({ message: err.message }))
       }
     })

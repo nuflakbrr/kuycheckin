@@ -55,11 +55,6 @@ app.post('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
 
   let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + req.file.filename;
 
-  // req.files.forEach((file) => {
-  //   let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + file.filename;
-  //   finalImageArrayURL.push(finalImageURL);
-  // });
-
   let data = {
     nama_tipe_kamar: req.body.nama_tipe_kamar,
     slug: slugify(req.body.nama_tipe_kamar, slugOptions),
