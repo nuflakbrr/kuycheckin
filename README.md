@@ -15,7 +15,7 @@ MERN `(MySQL, Express, React, Node)` stack Hotel Booking App for UKK Framework S
 - [x] Payment Gateway => get value from localStorage
 - [x] Get Booking Data at dashboard admin || receptionist
 - [x] Dashboard Customer
-- [ ] Print Receipt
+- [x] Print Receipt
 
 ### Getting Started
 
