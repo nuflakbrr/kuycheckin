@@ -412,18 +412,19 @@ const ContainerInvoice: FC = () => {
                         <div className="border-t py-9 border-slate-200">
                           <div className="text-sm text-justify font-light text-slate-700 ">
                             <p>
-                              Payment terms are 14 days. Please be aware that
-                              according to the Late Payment of Unwrapped Debts
-                              Act 0000, freelancers are entitled to claim a
-                              00.00 late fee upon non-payment of debts after
-                              this time, at which point a new invoice will be
-                              submitted with the addition of this fee. If
-                              payment of the revised invoice is not received
-                              within a further 14 days, additional interest will
-                              be charged to the overdue account and a statutory
-                              rate of 8% plus Bank of England base of 0.5%,
-                              totalling 8.5%. Parties cannot contract out of the
-                              Act’s provisions.
+                              Jangka waktu pembayaran adalah 14 hari. Perlu
+                              diketahui bahwa menurut Undang-Undang Pembayaran
+                              Utang Terlambat 0000, pekerja lepas berhak untuk
+                              mengklaim biaya keterlambatan 00.00 setelah tidak
+                              membayar utang setelah waktu ini, di mana faktur
+                              baru akan diajukan dengan tambahan biaya ini. Jika
+                              pembayaran tagihan yang telah direvisi tidak
+                              diterima dalam 14 hari berikutnya, bunga tambahan
+                              akan dibebankan ke rekening yang telah jatuh tempo
+                              dan tingkat wajib sebesar 8% ditambah dasar Bank
+                              of England sebesar 0,5%, dengan total 8,5%. Para
+                              pihak tidak dapat membuat kontrak di luar
+                              ketentuan Undang-undang.
                             </p>
                           </div>
                         </div>
