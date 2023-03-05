@@ -58,7 +58,7 @@ const SidebarReceptionist: FC = () => {
   const receptionistLinks = [
     {
       path: '/receptionist/dashboard',
-      name: 'Dashboard Admin',
+      name: 'Dashboard Resepsionis',
       icon: <FaHome className="mr-2 text-lg" />,
     },
     {

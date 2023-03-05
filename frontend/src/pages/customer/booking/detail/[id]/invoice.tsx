@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import ContainerInvoice from '@/components/Containers/Dashboard/components/Invoice';
+import ContainerInvoice from '@/components/Containers/Booking/Invoice';
 
 const Invoice: FC = () => {
   return <ContainerInvoice />;

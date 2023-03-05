@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import ContainerDetailBooking from '@/components/Containers/Dashboard/components/DetailBooking';
+import ContainerDetailBooking from '@/components/Containers/Booking/DetailBooking';
 
 const DetailBooking: FC = () => {
   return <ContainerDetailBooking />;

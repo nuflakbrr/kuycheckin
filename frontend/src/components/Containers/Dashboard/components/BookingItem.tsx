@@ -7,7 +7,7 @@ import axios from '@/lib/axios';
 import { headerConfig } from '@/lib/headerConfig';
 import { diffDays } from '@/lib/diffDays';
 import { formatLocalTime } from '@/lib/formatLocalTime';
-import { successToast } from '@/lib/toast';
+import { errorToast, successToast } from '@/lib/toast';
 
 type Props = {
   id_pemesanan: number;
@@ -36,15 +36,20 @@ const BookingItem: FC<Props> = ({
 }) => {
   const router = useRouter();
 
-  const handleDelete = async (e: any) => {
-    e.preventDefault();
-
+  const handleDelete = async (id: any) => {
     alert('Apakah anda yakin ingin menghapus data ini?');
 
     await axios
-      .delete(`/booking/${id_pemesanan}`, headerConfig())
-      .then(() => successToast('Data berhasil dihapus!'))
-      .catch((err) => console.log(err));
+      .delete(`/booking/${id}`, headerConfig())
+      .then((res) => {
+        res.data.status === 1
+          ? successToast('Data berhasil dihapus!')
+          : errorToast('Terjadi kesalahan saat menghapus data!');
+      })
+      .catch((err) => {
+        errorToast('Terjadi kesalahan saat menghapus data!');
+        console.log(err);
+      });
 
     router.reload();
   };
@@ -190,7 +195,7 @@ const BookingItem: FC<Props> = ({
               <button
                 type="button"
                 className="flex items-center justify-center bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer mt-2"
-                onClick={(e) => handleDelete(e)}
+                onClick={() => handleDelete(id_pemesanan)}
               >
                 <FaTrash className="mr-2" /> Hapus
               </button>
