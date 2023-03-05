@@ -124,8 +124,6 @@ const EditProfile: FC = () => {
     };
   }, []);
 
-  console.log(dataCustomer);
-
   return (
     <section>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
