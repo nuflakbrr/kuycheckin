@@ -9,7 +9,6 @@ import {
   FaUserAlt,
   FaSignOutAlt,
   FaGlobe,
-  FaBed,
   FaUserFriends,
 } from 'react-icons/fa';
 
@@ -65,11 +64,6 @@ const SidebarReceptionist: FC = () => {
       path: '/receptionist/room-type',
       name: 'Tipe Kamar',
       icon: <FaBuilding className="mr-2 text-lg" />,
-    },
-    {
-      path: '/receptionist/rooms',
-      name: 'Kamar',
-      icon: <FaBed className="mr-2 text-lg" />,
     },
     {
       path: '/receptionist/customer',
