@@ -73,7 +73,7 @@ const BookingItem: FC<Props> = ({
   };
 
   return (
-    <div className="container bg-slate-100 rounded-lg p-5 mb-5">
+    <div className="container bg-gray-100 rounded-lg p-5 mb-5">
       <div className="flex justify-between">
         <section>
           <div className="text-left">
