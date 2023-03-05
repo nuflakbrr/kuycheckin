@@ -2,15 +2,15 @@ import { FC, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { ToastContainer } from 'react-toastify';
 import Head from 'next/head';
+import Link from 'next/link';
 
 import axios from '@/lib/axios';
 import { headerConfig } from '@/lib/headerConfig';
+import { errorToast } from '@/lib/toast';
+import { formatLocalTime } from '@/lib/formatLocalTime';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
 import SidebarReceptionist from '@/components/Common/SidebarReceptionist';
 import SidebarCustomer from '@/components/Common/SidebarCustomer';
-import { errorToast } from '@/lib/toast';
-import Link from 'next/link';
-import { formatLocalTime } from '@/lib/formatLocalTime';
 
 const ContainerDetailBooking: FC = () => {
   const [user, setUser] = useState<any>('');
