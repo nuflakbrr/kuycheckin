@@ -24,7 +24,7 @@ const slugOptions = {
  * @apiRoutes {get} /hotel/user/
  * @apiName GetAllUsers
  * @apiGroup User
- * @apiDescription Get all users data
+ * @apiDescription Get all user data
  */
 app.get('/', auth, async (req, res) => {
   await user.findAll()
@@ -34,9 +34,9 @@ app.get('/', auth, async (req, res) => {
 
 /**
  * @apiRoutes {get} /hotel/user/:slug
- * @apiName GetUsersById
+ * @apiName GetUsersBySlug
  * @apiGroup User
- * @apiDescription Get users data by slug
+ * @apiDescription Get user data by slug
  */
 app.get('/:slug', auth, async (req, res) => {
   let params = { slug: req.params.slug };
@@ -127,10 +127,10 @@ app.delete('/:id', auth, async (req, res) => {
 });
 
 /**
- * @apiRoutes {post} /hotel/user/admin
- * @apiName LoginUserAdmin
+ * @apiRoutes {post} /hotel/user/login
+ * @apiName LoginUser
  * @apiGroup User
- * @apiDescription Login user admin
+ * @apiDescription Login user
  */
 app.post('/login', async (req, res) => {
   let params = {

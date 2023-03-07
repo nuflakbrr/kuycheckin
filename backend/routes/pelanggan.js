@@ -24,7 +24,7 @@ const slugOptions = {
  * @apiRoutes {get} /hotel/customer/
  * @apiName GetAllCustomers
  * @apiGroup Customer
- * @apiDescription Get all customers data
+ * @apiDescription Get all customer data
  */
 app.get('/', auth, async (req, res) => {
   await pelanggan.findAll()

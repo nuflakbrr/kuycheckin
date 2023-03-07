@@ -32,7 +32,7 @@ app.get('/', async (req, res) => {
 
 /**
  * @apiRoutes {get} /hotel/type-room/:slug
- * @apiName GetTypeRoomById
+ * @apiName GetTypeRoomBySlug
  * @apiGroup TypeRoom
  * @apiDescription Get type room data by slug
  */
