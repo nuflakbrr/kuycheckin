@@ -9,7 +9,7 @@ import { formatCurrency } from '@/lib/formatCurrency';
 import { TypeRoom } from '@/interfaces/typeroom';
 
 const CarouselRecom: FC = () => {
-  const [data, setData] = useState<TypeRoom | any>();
+  const [data, setData] = useState<TypeRoom | any>([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -64,7 +64,7 @@ const CarouselRecom: FC = () => {
       }}
       modules={[Navigation]}
     >
-      {data?.map((a: any, i: any) => (
+      {data.map((a: any, i: any) => (
         <SwiperSlide className="px-4 py-5" key={i}>
           <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg">
             <img
