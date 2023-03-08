@@ -4,12 +4,13 @@ import { Tab } from '@headlessui/react';
 import Head from 'next/head';
 
 import { classNames } from '@/lib/classNames';
+import { User } from '@/interfaces/user';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
 import SidebarReceptionist from '@/components/Common/SidebarReceptionist';
 import AllCustomersSection from './components/AllCustomers';
 
 const ContainerCustomers: FC = () => {
-  const [dataLogin, setDataLogin] = useState<any>({});
+  const [dataLogin, setDataLogin] = useState<User>();
 
   useEffect(() => {
     if (localStorage.getItem('admin')) {
@@ -21,7 +22,15 @@ const ContainerCustomers: FC = () => {
     }
 
     return () => {
-      setDataLogin({});
+      setDataLogin({
+        id_user: 0,
+        nama_user: '',
+        foto: '',
+        slug: '',
+        email: '',
+        password: '',
+        role: '',
+      });
     };
   }, []);
 
@@ -33,9 +42,9 @@ const ContainerCustomers: FC = () => {
 
       <ToastContainer autoClose={1500} />
 
-      {dataLogin.role === 'admin' && <SidebarAdmin />}
+      {dataLogin?.role === 'admin' && <SidebarAdmin />}
 
-      {dataLogin.role === 'resepsionis' && <SidebarReceptionist />}
+      {dataLogin?.role === 'resepsionis' && <SidebarReceptionist />}
 
       <main className="bg-white md:ml-64 min-h-screen">
         <div className="container">

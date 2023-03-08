@@ -6,10 +6,12 @@ import { bindingState } from '@/lib/bindingState';
 import { errorToast, successToast } from '@/lib/toast';
 import { headerConfig } from '@/lib/headerConfig';
 import { logout } from '@/lib/logout';
+import { User } from '@/interfaces/user';
+import { Customer } from '@/interfaces/customer';
 
 const EditProfile: FC = () => {
-  const [oldData, setOldData] = useState<any>({});
-  const [data, setData] = useState({
+  const [oldData, setOldData] = useState<User | Customer | any>();
+  const [data, setData] = useState<string | any>({
     nama_user: '',
     email: '',
     password: '',
@@ -17,7 +19,7 @@ const EditProfile: FC = () => {
     role: 'default',
     foto: '',
   });
-  const [dataCustomer, setDataCustomer] = useState({
+  const [dataCustomer, setDataCustomer] = useState<string | any>({
     nama: '',
     email: '',
     password: '',
@@ -32,7 +34,7 @@ const EditProfile: FC = () => {
     // eslint-disable-next-line prefer-const
     let foto = e.target.files[0];
     setImage(URL.createObjectURL(foto));
-    if (oldData.role === 'pelanggan') {
+    if (oldData?.role === 'pelanggan') {
       setDataCustomer({ ...dataCustomer, foto });
     } else {
       setData({ ...data, foto });
@@ -45,16 +47,16 @@ const EditProfile: FC = () => {
     if (data.password !== data.confirmPass) {
       errorToast('Password tidak sama! Silahkan coba lagi');
 
-      if (oldData.role === 'pelanggan') {
+      if (oldData?.role === 'pelanggan') {
         setDataCustomer({ ...dataCustomer, password: '', confirmPass: '' });
       } else {
         setData({ ...data, password: '', confirmPass: '' });
       }
 
       return;
-    } else if (oldData.role === 'admin' || oldData.role === 'resepsionis') {
+    } else if (oldData?.role === 'admin' || oldData?.role === 'resepsionis') {
       const sendData = {
-        id_user: oldData.id_user,
+        id_user: oldData?.id_user,
         ...data,
       };
 
@@ -67,7 +69,7 @@ const EditProfile: FC = () => {
             );
             setTimeout(() => {
               logout(
-                oldData.role === 'admin' ? 'admin' : 'resepsionis',
+                oldData?.role === 'admin' ? 'admin' : 'resepsionis',
                 router
               );
             }, 1800);
@@ -81,7 +83,7 @@ const EditProfile: FC = () => {
         });
     } else {
       const sendData = {
-        id_pelanggan: oldData.id_pelanggan,
+        id_pelanggan: oldData?.id_pelanggan,
         ...dataCustomer,
       };
 
@@ -120,7 +122,17 @@ const EditProfile: FC = () => {
     }
 
     return () => {
-      setOldData({});
+      setOldData({
+        id_user: 0,
+        id_pelanggan: 0,
+        nama_user: '',
+        nama: '',
+        foto: '',
+        slug: '',
+        email: '',
+        password: '',
+        role: '',
+      });
     };
   }, []);
 
@@ -167,12 +179,12 @@ const EditProfile: FC = () => {
           <div className="max-w-2xl w-full mt-3 lg:mt-0">
             <input
               type="text"
-              value={oldData.nama_user || oldData.nama}
+              value={oldData?.nama_user || oldData?.nama}
               className="block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
               disabled
             />
 
-            {oldData.role === 'admin' || oldData.role === 'resepsionis' ? (
+            {oldData?.role === 'admin' || oldData?.role === 'resepsionis' ? (
               <input
                 type="text"
                 name="nama_user"
@@ -209,12 +221,12 @@ const EditProfile: FC = () => {
           <div className="max-w-2xl w-full mt-3 lg:mt-0">
             <input
               type="text"
-              value={oldData.email}
+              value={oldData?.email}
               className="block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
               disabled
             />
 
-            {oldData.role === 'admin' || oldData.role === 'resepsionis' ? (
+            {oldData?.role === 'admin' || oldData?.role === 'resepsionis' ? (
               <input
                 type="email"
                 name="email"
@@ -248,7 +260,7 @@ const EditProfile: FC = () => {
             Password Baru
           </label>
 
-          {oldData.role === 'admin' || oldData.role === 'resepsionis' ? (
+          {oldData?.role === 'admin' || oldData?.role === 'resepsionis' ? (
             <div className="max-w-2xl w-full mt-3 lg:mt-0">
               <input
                 type="password"
@@ -312,12 +324,12 @@ const EditProfile: FC = () => {
           <div className="max-w-2xl w-full mt-3 lg:mt-0">
             <input
               type="text"
-              value={oldData.role}
+              value={oldData?.role}
               className="capitalize block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
               disabled
             />
 
-            {oldData.role === 'admin' && (
+            {oldData?.role === 'admin' && (
               <select
                 name="role"
                 id="role"

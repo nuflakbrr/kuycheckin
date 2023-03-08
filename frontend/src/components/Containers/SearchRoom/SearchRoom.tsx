@@ -7,6 +7,7 @@ import moment from 'moment';
 import axios from '@/lib/axios';
 import { bindingState } from '@/lib/bindingState';
 import { errorToast, warningToast } from '@/lib/toast';
+import { Room } from '@/interfaces/room';
 import Navbar from '@/components/Common/Navbar/Navbar';
 import Footer from '@/components/Common/Footer';
 import RoomCardSection from './components/RoomCard';
@@ -16,7 +17,7 @@ const ContainerSearchRoom: FC = () => {
     tgl_check_in: '',
     tgl_check_out: '',
   });
-  const [dataRoom, setDataRoom] = useState<string | any>({});
+  const [dataRoom, setDataRoom] = useState<Room | any>();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -162,7 +163,7 @@ const ContainerSearchRoom: FC = () => {
           </div>
         </section>
 
-        {dataRoom.length > 0 ? (
+        {dataRoom?.length > 0 ? (
           <RoomCardSection dataRoom={dataRoom} />
         ) : (
           <section className="py-10">

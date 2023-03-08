@@ -16,6 +16,7 @@ import {
 import { logout } from '@/lib/logout';
 import { blockAccess } from '@/lib/blockAccess';
 import { classNames } from '@/lib/classNames';
+import { User } from '@/interfaces/user';
 
 const SidebarAdmin: FC = () => {
   // Define Router
@@ -24,7 +25,7 @@ const SidebarAdmin: FC = () => {
 
   // Required State
   const [collapseShow, setCollapseShow] = useState('hidden');
-  const [dataAdmin, setDataAdmin] = useState({ nama_user: '', role: '' });
+  const [dataAdmin, setDataAdmin] = useState<User>();
 
   // Get full year
   const year = new Date().getFullYear();
@@ -86,7 +87,15 @@ const SidebarAdmin: FC = () => {
     }
 
     return () => {
-      setDataAdmin({ nama_user: '', role: '' });
+      setDataAdmin({
+        id_user: 0,
+        nama_user: '',
+        foto: '',
+        slug: '',
+        email: '',
+        password: '',
+        role: '',
+      });
     };
   }, []);
 
@@ -98,7 +107,7 @@ const SidebarAdmin: FC = () => {
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden bg-slate-100 flex flex-wrap items-center justify-between relative md:w-64 z-20 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           <Link href="/admin/dashboard" legacyBehavior>
-            {!dataAdmin.nama_user ? (
+            {!dataAdmin?.nama_user ? (
               <p className="md:block text-left md:pb-2 text-gray-500 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
                 Halo,
                 <span className="animate-pulse bg-gray-300 text-transparent ml-1">
@@ -108,7 +117,7 @@ const SidebarAdmin: FC = () => {
             ) : (
               <p className="md:block text-left md:pb-2 text-gray-500 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
                 Halo,{' '}
-                <span className="text-primary">{dataAdmin.nama_user}</span>
+                <span className="text-primary">{dataAdmin?.nama_user}</span>
               </p>
             )}
           </Link>
@@ -171,7 +180,7 @@ const SidebarAdmin: FC = () => {
             </h6>
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              {adminLinks.map((a, i) => (
+              {adminLinks?.map((a, i) => (
                 <li key={i} className="items-center">
                   <Link href={a.path} legacyBehavior>
                     <a

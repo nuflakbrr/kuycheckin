@@ -8,14 +8,28 @@ import axios from '@/lib/axios';
 import { headerConfig } from '@/lib/headerConfig';
 import { errorToast } from '@/lib/toast';
 import { formatLocalTime } from '@/lib/formatLocalTime';
+import { User } from '@/interfaces/user';
+import { Customer } from '@/interfaces/customer';
+import { Room } from '@/interfaces/room';
+import { Booking } from '@/interfaces/booking';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
 import SidebarReceptionist from '@/components/Common/SidebarReceptionist';
 import SidebarCustomer from '@/components/Common/SidebarCustomer';
 
 const ContainerDetailBooking: FC = () => {
-  const [user, setUser] = useState<any>('');
-  const [data, setData] = useState<any>([]);
-  const [dataRoom, setDataRoom] = useState<any>([]);
+  const [user, setUser] = useState<User | Customer>({
+    id_user: 0,
+    id_pelanggan: 0,
+    nama_user: '',
+    nama: '',
+    foto: '',
+    slug: '',
+    email: '',
+    password: '',
+    role: '',
+  });
+  const [data, setData] = useState<Booking | any>();
+  const [dataRoom, setDataRoom] = useState<Room | any>();
 
   const router = useRouter();
   const { id } = router.query;
@@ -107,7 +121,7 @@ const ContainerDetailBooking: FC = () => {
                           disabled
                           className="block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
                           type="text"
-                          value={data.nomor_pemesanan || 'Tidak Diketahui'}
+                          value={data?.nomor_pemesanan || 'Tidak Diketahui'}
                         />
                       </div>
                     </div>
@@ -123,7 +137,7 @@ const ContainerDetailBooking: FC = () => {
                           className="block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
                           type="text"
                           value={
-                            data.tipe_kamar?.nama_tipe_kamar ||
+                            data?.tipe_kamar?.nama_tipe_kamar ||
                             'Tidak Diketahui'
                           }
                         />
@@ -140,7 +154,7 @@ const ContainerDetailBooking: FC = () => {
                           disabled
                           className="block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
                           type="text"
-                          value={data.pelanggan?.nama || 'Tidak Diketahui'}
+                          value={data?.pelanggan?.nama || 'Tidak Diketahui'}
                         />
                       </div>
 
@@ -153,7 +167,7 @@ const ContainerDetailBooking: FC = () => {
                           disabled
                           className="block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm"
                           type="email"
-                          value={data.pelanggan?.email || 'Tidak Diketahui'}
+                          value={data?.pelanggan?.email || 'Tidak Diketahui'}
                         />
                       </div>
                     </div>
@@ -169,7 +183,7 @@ const ContainerDetailBooking: FC = () => {
                           disabled
                           className="w-full rounded-lg "
                           value={
-                            formatLocalTime(data.tgl_pemesanan) ||
+                            formatLocalTime(data?.tgl_pemesanan) ||
                             'Tidak Diketahui'
                           }
                         />
@@ -185,7 +199,7 @@ const ContainerDetailBooking: FC = () => {
                           disabled
                           className="w-full rounded-lg "
                           value={
-                            formatLocalTime(data.tgl_check_in) ||
+                            formatLocalTime(data?.tgl_check_in) ||
                             'Tidak Diketahui'
                           }
                         />
@@ -201,7 +215,7 @@ const ContainerDetailBooking: FC = () => {
                           disabled
                           className="w-full rounded-lg "
                           value={
-                            formatLocalTime(data.tgl_check_out) ||
+                            formatLocalTime(data?.tgl_check_out) ||
                             'Tidak Diketahui'
                           }
                         />
@@ -259,7 +273,7 @@ const ContainerDetailBooking: FC = () => {
                         </thead>
 
                         <tbody>
-                          {!dataRoom.length ? (
+                          {!dataRoom?.length ? (
                             <tr>
                               <td className="animate-pulse transition-all ease-in-out duration-300 bg-gray-100 px-5 py-5 border-b border-gray-200 text-sm">
                                 <div className="flex items-center select-none">
@@ -294,7 +308,7 @@ const ContainerDetailBooking: FC = () => {
                               </td>
                             </tr>
                           ) : (
-                            dataRoom.map((a: any, i: any) => (
+                            dataRoom?.map((a: any, i: any) => (
                               <tr key={i} className="bg-gray-500">
                                 <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
                                   <div className="flex items-center">
@@ -307,7 +321,7 @@ const ContainerDetailBooking: FC = () => {
                                 <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
                                   <div className="flex items-center">
                                     <p className="text-gray-900 whitespace-no-wrap">
-                                      {data.tipe_kamar?.nama_tipe_kamar}
+                                      {data?.tipe_kamar?.nama_tipe_kamar}
                                     </p>
                                   </div>
                                 </td>
@@ -315,7 +329,7 @@ const ContainerDetailBooking: FC = () => {
                                 <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
                                   <div className="flex items-center">
                                     <p className="text-gray-900 whitespace-no-wrap">
-                                      {formatLocalTime(data.tgl_check_in)}
+                                      {formatLocalTime(data?.tgl_check_in)}
                                     </p>
                                   </div>
                                 </td>
@@ -323,7 +337,7 @@ const ContainerDetailBooking: FC = () => {
                                 <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
                                   <div className="flex items-center">
                                     <p className="text-gray-900 whitespace-no-wrap">
-                                      {formatLocalTime(data.tgl_check_out)}
+                                      {formatLocalTime(data?.tgl_check_out)}
                                     </p>
                                   </div>
                                 </td>

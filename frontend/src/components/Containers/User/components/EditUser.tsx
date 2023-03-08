@@ -8,9 +8,10 @@ import { bindingState } from '@/lib/bindingState';
 import { headerConfig } from '@/lib/headerConfig';
 import { errorToast, successToast } from '@/lib/toast';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
+import { User } from '@/interfaces/user';
 
 const ContainerEditUser: FC = () => {
-  const [oldData, setOldData] = useState<any>({});
+  const [oldData, setOldData] = useState<User>();
   const [data, setData] = useState({
     nama_user: '',
     email: '',
@@ -42,7 +43,15 @@ const ContainerEditUser: FC = () => {
     }
 
     return () => {
-      setOldData({});
+      setOldData({
+        id_user: 0,
+        nama_user: '',
+        foto: '',
+        slug: '',
+        email: '',
+        password: '',
+        role: '',
+      });
       setData({
         nama_user: '',
         email: '',
@@ -72,7 +81,7 @@ const ContainerEditUser: FC = () => {
       return;
     } else {
       const sendData = {
-        id_user: oldData.id_user,
+        id_user: oldData?.id_user,
         ...data,
       };
 
@@ -155,7 +164,7 @@ const ContainerEditUser: FC = () => {
                     <div className="max-w-2xl w-full mt-3 lg:mt-0">
                       <input
                         type="text"
-                        value={oldData.nama_user}
+                        value={oldData?.nama_user}
                         className="block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
                         disabled
                       />
@@ -184,7 +193,7 @@ const ContainerEditUser: FC = () => {
                     <div className="max-w-2xl w-full mt-3 lg:mt-0">
                       <input
                         type="text"
-                        value={oldData.email}
+                        value={oldData?.email}
                         className="block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
                         disabled
                       />
@@ -248,7 +257,7 @@ const ContainerEditUser: FC = () => {
                     <div className="max-w-2xl w-full mt-3 lg:mt-0">
                       <input
                         type="text"
-                        value={oldData.role}
+                        value={oldData?.role}
                         className="capitalize block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
                         disabled
                       />

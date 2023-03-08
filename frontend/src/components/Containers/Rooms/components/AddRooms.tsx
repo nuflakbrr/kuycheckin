@@ -5,9 +5,10 @@ import { bindingState } from '@/lib/bindingState';
 import { formatCurrency } from '@/lib/formatCurrency';
 import { headerConfig } from '@/lib/headerConfig';
 import { errorToast, successToast } from '@/lib/toast';
+import { TypeRoom } from '@/interfaces/typeroom';
 
 const AddRoomsSection: FC = () => {
-  const [dataTypeRoom, setDataTypeRoom] = useState<any>([]);
+  const [dataTypeRoom, setDataTypeRoom] = useState<TypeRoom | any>();
   const [token, setToken] = useState<string | any>('');
   const [data, setData] = useState({
     nomor_kamar: '',
@@ -30,7 +31,14 @@ const AddRoomsSection: FC = () => {
     Promise.all([fetchData()]);
 
     return () => {
-      setDataTypeRoom([]);
+      setDataTypeRoom({
+        id_tipe_kamar: 0,
+        nama_tipe_kamar: '',
+        slug: '',
+        harga: 0,
+        deskripsi: '',
+        foto: '',
+      });
     };
   }, []);
 
@@ -101,7 +109,7 @@ const AddRoomsSection: FC = () => {
               <option value="default" selected disabled>
                 Pilih Tipe Kamar
               </option>
-              {dataTypeRoom.map((a: any, i: any) => (
+              {dataTypeRoom?.map((a: any, i: any) => (
                 <option value={a.id_tipe_kamar} key={i}>
                   ID {a.id_tipe_kamar}: {a.nama_tipe_kamar}
                   {' => '}

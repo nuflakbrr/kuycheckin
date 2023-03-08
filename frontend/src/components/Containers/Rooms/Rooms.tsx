@@ -4,13 +4,14 @@ import { Tab } from '@headlessui/react';
 import Head from 'next/head';
 
 import { classNames } from '@/lib/classNames';
+import { User } from '@/interfaces/user';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
 import SidebarReceptionist from '@/components/Common/SidebarReceptionist';
 import AllRoomsSection from './components/AllRooms';
 import AddRoomsSection from './components/AddRooms';
 
 const ContainerRooms: FC = () => {
-  const [dataLogin, setDataLogin] = useState<any>({});
+  const [dataLogin, setDataLogin] = useState<User>();
 
   useEffect(() => {
     if (localStorage.getItem('admin')) {
@@ -22,7 +23,15 @@ const ContainerRooms: FC = () => {
     }
 
     return () => {
-      setDataLogin({});
+      setDataLogin({
+        id_user: 0,
+        nama_user: '',
+        foto: '',
+        slug: '',
+        email: '',
+        password: '',
+        role: '',
+      });
     };
   }, []);
 
@@ -34,9 +43,9 @@ const ContainerRooms: FC = () => {
 
       <ToastContainer autoClose={1500} />
 
-      {dataLogin.role === 'admin' && <SidebarAdmin />}
+      {dataLogin?.role === 'admin' && <SidebarAdmin />}
 
-      {dataLogin.role === 'resepsionis' && <SidebarReceptionist />}
+      {dataLogin?.role === 'resepsionis' && <SidebarReceptionist />}
 
       <main className="bg-white md:ml-64 min-h-screen">
         <div className="container">
@@ -66,7 +75,7 @@ const ContainerRooms: FC = () => {
                           )}
                         </Tab>
 
-                        {dataLogin.role === 'admin' && (
+                        {dataLogin?.role === 'admin' && (
                           <Tab as="button">
                             {({ selected }) => (
                               <div

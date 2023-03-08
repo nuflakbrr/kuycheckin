@@ -2,9 +2,10 @@ import { FC, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { successToast } from '@/lib/toast';
+import { Customer } from '@/interfaces/customer';
 
 type Props = {
-  paymentMethodName: any;
+  paymentMethodName: string | any;
 };
 
 const DetailTransactionSection: FC<Props> = ({ paymentMethodName }) => {
@@ -16,7 +17,7 @@ const DetailTransactionSection: FC<Props> = ({ paymentMethodName }) => {
     total_hari: '',
     total_harga: '',
   });
-  const [dataCustomer, setDataCustomer] = useState<string | any>({});
+  const [dataCustomer, setDataCustomer] = useState<Customer>();
 
   useEffect(() => {
     const checkIn = localStorage.getItem('tgl_check_in');
@@ -75,43 +76,43 @@ const DetailTransactionSection: FC<Props> = ({ paymentMethodName }) => {
           <div className="flex flex-wrap items-center justify-between px-5 pt-5">
             <h3>Nama Pemesan</h3>
 
-            <p>{dataCustomer.nama}</p>
+            <p>{dataCustomer?.nama}</p>
           </div>
 
           <div className="flex flex-wrap items-center justify-between px-5 pt-3">
             <h3>Email Pemesan</h3>
 
-            <p>{dataCustomer.email}</p>
+            <p>{dataCustomer?.email}</p>
           </div>
 
           <div className="flex flex-wrap items-center justify-between px-5 pt-3">
             <h3>Tanggal Check-in</h3>
 
-            <p>{data.tgl_check_in}</p>
+            <p>{data?.tgl_check_in}</p>
           </div>
 
           <div className="flex flex-wrap items-center justify-between px-5 pt-3">
             <h3>Tanggal Check-out</h3>
 
-            <p>{data.tgl_check_out}</p>
+            <p>{data?.tgl_check_out}</p>
           </div>
 
           <div className="flex flex-wrap items-center justify-between px-5 pt-3">
             <h3>Tipe Kamar</h3>
 
-            <p>{data.tipe_kamar}</p>
+            <p>{data?.tipe_kamar}</p>
           </div>
 
           <div className="flex flex-wrap items-center justify-between px-5 pt-3">
             <h3>Jumlah Kamar</h3>
 
-            <p>{data.jumlah_kamar}</p>
+            <p>{data?.jumlah_kamar}</p>
           </div>
 
           <div className="flex flex-wrap items-center justify-between px-5 py-3">
             <h3>Total Hari</h3>
 
-            <p>{data.total_hari}</p>
+            <p>{data?.total_hari}</p>
           </div>
 
           <hr className="my-2" />
@@ -119,7 +120,7 @@ const DetailTransactionSection: FC<Props> = ({ paymentMethodName }) => {
           <div className="flex flex-wrap items-center justify-between px-5 pt-3">
             <h3>Total Harga</h3>
 
-            <p>{data.total_harga}</p>
+            <p>{data?.total_harga}</p>
           </div>
 
           <div className="flex flex-wrap items-center justify-between px-5 pt-3 pb-5">

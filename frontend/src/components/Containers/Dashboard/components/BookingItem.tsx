@@ -8,6 +8,8 @@ import { headerConfig } from '@/lib/headerConfig';
 import { diffDays } from '@/lib/diffDays';
 import { formatLocalTime } from '@/lib/formatLocalTime';
 import { errorToast, successToast } from '@/lib/toast';
+import { User } from '@/interfaces/user';
+import { Customer } from '@/interfaces/customer';
 
 type Props = {
   id_pemesanan: number;
@@ -19,7 +21,7 @@ type Props = {
   tgl_pemesanan: string;
   jumlah_kamar: number;
   status_pemesanan: string;
-  user: any;
+  user: User | Customer | any;
 };
 
 const BookingItem: FC<Props> = ({
@@ -171,7 +173,7 @@ const BookingItem: FC<Props> = ({
           <section>
             <Link
               href={
-                user.role === 'admin'
+                user?.role === 'admin'
                   ? `/admin/booking/detail/${id_pemesanan}`
                   : `/receptionist/booking/detail/${id_pemesanan}`
               }
@@ -182,7 +184,7 @@ const BookingItem: FC<Props> = ({
 
             <Link
               href={
-                user.role === 'admin'
+                user?.role === 'admin'
                   ? `/admin/booking/edit/${id_pemesanan}`
                   : `/receptionist/booking/edit/${id_pemesanan}`
               }
@@ -191,7 +193,7 @@ const BookingItem: FC<Props> = ({
               <FaEdit className="mr-2" /> Ubah
             </Link>
 
-            {user.role === 'admin' && (
+            {user?.role === 'admin' && (
               <button
                 type="button"
                 className="flex items-center justify-center bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer mt-2"

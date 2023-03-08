@@ -3,38 +3,41 @@ import { FC, useState, useEffect } from 'react';
 import axios from '@/lib/axios';
 import { headerConfig } from '@/lib/headerConfig';
 import { errorToast } from '@/lib/toast';
+import { User } from '@/interfaces/user';
+import { Customer } from '@/interfaces/customer';
+import { Booking } from '@/interfaces/booking';
 import BookingItem from './BookingItem';
 import Skeleton from './Skeleton';
 
 type Props = {
-  user: any;
-  dataBooking: any;
+  user: User | Customer | any;
+  dataBooking: Booking | any;
 };
 
 const BookingSection: FC<Props> = ({ user, dataBooking }) => {
   const [dataBookByUser, setDataBookByUser] = useState<any>([]);
 
   useEffect(() => {
-    if (user.id_pelanggan > 0) {
+    if (user?.id_pelanggan > 0) {
       const getBookingByUser = async () => {
         await axios
-          .get(`/booking/customer/${user.id_pelanggan}`, headerConfig())
+          .get(`/booking/customer/${user?.id_pelanggan}`, headerConfig())
           .then((res) => setDataBookByUser(res.data.data))
           .catch((err) => errorToast(err));
       };
 
       Promise.all([getBookingByUser()]);
     }
-  }, [user.id_pelanggan]);
+  }, [user?.id_pelanggan]);
 
   return (
     <section>
       <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
         <div className="inline-block min-w-full rounded-lg overflow-hidden">
-          {!dataBooking.length ? (
+          {!dataBooking?.length ? (
             <Skeleton />
           ) : user.role === 'admin' || user.role === 'resepsionis' ? (
-            dataBooking.map((a: any, i: any) => (
+            dataBooking?.map((a: any, i: any) => (
               <BookingItem
                 id_pemesanan={a.id_pemesanan}
                 nomor_pemesanan={a.nomor_pemesanan}
@@ -50,7 +53,7 @@ const BookingSection: FC<Props> = ({ user, dataBooking }) => {
               />
             ))
           ) : (
-            dataBookByUser.map((a: any, i: any) => (
+            dataBookByUser?.map((a: any, i: any) => (
               <BookingItem
                 id_pemesanan={a.id_pemesanan}
                 nomor_pemesanan={a.nomor_pemesanan}

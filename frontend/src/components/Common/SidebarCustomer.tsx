@@ -7,6 +7,7 @@ import { FaHome, FaUserAlt, FaSignOutAlt, FaGlobe } from 'react-icons/fa';
 import { logout } from '@/lib/logout';
 import { blockAccess } from '@/lib/blockAccess';
 import { classNames } from '@/lib/classNames';
+import { Customer } from '@/interfaces/customer';
 
 const SidebarCustomer: FC = () => {
   // Define Router
@@ -15,7 +16,7 @@ const SidebarCustomer: FC = () => {
 
   // Required State
   const [collapseShow, setCollapseShow] = useState('hidden');
-  const [dataAdmin, setDataAdmin] = useState({ nama: '', role: '' });
+  const [dataCustomer, setDataCustomer] = useState<Customer>();
 
   // Get full year
   const year = new Date().getFullYear();
@@ -53,15 +54,23 @@ const SidebarCustomer: FC = () => {
   // Render data from local storage
   useEffect(() => {
     if (localStorage.getItem('pelanggan')) {
-      setDataAdmin(JSON.parse(localStorage.getItem('pelanggan') || '{}'));
+      setDataCustomer(JSON.parse(localStorage.getItem('pelanggan') || '{}'));
     }
 
     return () => {
-      setDataAdmin({ nama: '', role: '' });
+      setDataCustomer({
+        id_pelanggan: 0,
+        nama: '',
+        foto: '',
+        slug: '',
+        email: '',
+        password: '',
+        role: '',
+      });
     };
   }, []);
 
-  // Block Access if Login level is not Admin
+  // Block Access if Login level is not Customer
   blockAccess('pelanggan', router);
 
   return (
@@ -69,7 +78,7 @@ const SidebarCustomer: FC = () => {
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden bg-slate-100 flex flex-wrap items-center justify-between relative md:w-64 z-20 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           <Link href="/admin/dashboard" legacyBehavior>
-            {!dataAdmin.nama ? (
+            {!dataCustomer?.nama ? (
               <p className="md:block text-left md:pb-2 text-gray-500 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
                 Halo,
                 <span className="animate-pulse bg-gray-300 text-transparent ml-1">
@@ -78,7 +87,7 @@ const SidebarCustomer: FC = () => {
               </p>
             ) : (
               <p className="md:block text-left md:pb-2 text-gray-500 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
-                Halo, <span className="text-primary">{dataAdmin.nama}</span>
+                Halo, <span className="text-primary">{dataCustomer?.nama}</span>
               </p>
             )}
           </Link>
@@ -141,7 +150,7 @@ const SidebarCustomer: FC = () => {
             </h6>
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              {customerLinks.map((a, i) => (
+              {customerLinks?.map((a, i) => (
                 <li key={i} className="items-center">
                   <Link href={a.path} legacyBehavior>
                     <a

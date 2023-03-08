@@ -71,7 +71,7 @@ const Footer: FC = () => {
 
             {/* social start */}
             <div className="flex gap-4">
-              {socialLink.map((f, i) => (
+              {socialLink?.map((f, i) => (
                 <a
                   href={f.url}
                   target="_blank"
@@ -93,7 +93,7 @@ const Footer: FC = () => {
             </div>
 
             <nav className="flex flex-col gap-4">
-              {primaryLink.map((b, i) => (
+              {primaryLink?.map((b, i) => (
                 <div key={i}>
                   <Link href={b.url} legacyBehavior>
                     <a className="text-gray-400 hover:text-primary active:text-primarydark transition duration-100">
@@ -113,7 +113,7 @@ const Footer: FC = () => {
             </div>
 
             <nav className="flex flex-col gap-4">
-              {secondaryLink.map((c, i) => (
+              {secondaryLink?.map((c, i) => (
                 <div key={i}>
                   <Link href={c.url} legacyBehavior>
                     <a className="text-gray-400 hover:text-primary active:text-primarydark transition duration-100">
@@ -133,7 +133,7 @@ const Footer: FC = () => {
             </div>
 
             <nav className="flex flex-col gap-4">
-              {tertiaryLink.map((d, i) => (
+              {tertiaryLink?.map((d, i) => (
                 <div key={i}>
                   <Link href={d.url} legacyBehavior>
                     <a className="text-gray-400 hover:text-primary active:text-primarydark transition duration-100">
@@ -153,7 +153,7 @@ const Footer: FC = () => {
             </div>
 
             <nav className="flex flex-col gap-4">
-              {legalLink.map((e, i) => (
+              {legalLink?.map((e, i) => (
                 <div key={i}>
                   <Link href={e.url} legacyBehavior>
                     <a className="text-gray-400 hover:text-primary active:text-primarydark transition duration-100">

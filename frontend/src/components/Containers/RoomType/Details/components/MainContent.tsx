@@ -3,10 +3,11 @@ import { ToastContainer } from 'react-toastify';
 import Link from 'next/link';
 
 import { formatCurrency } from '@/lib/formatCurrency';
+import { TypeRoom } from '@/interfaces/typeroom';
 import SideMainContent from './SideMainContent';
 
 type Props = {
-  data: any;
+  data: TypeRoom | any;
 };
 
 const MainContentSection: FC<Props> = ({ data }) => {
@@ -21,7 +22,7 @@ const MainContentSection: FC<Props> = ({ data }) => {
               <div className="col-span-10 lg:col-span-7">
                 <div className="flex flex-col">
                   <img
-                    src={data.foto}
+                    src={data?.foto}
                     alt="Type Room Image"
                     loading="lazy"
                     className="lg:h-[500px] rounded-lg object-cover object-center"
@@ -29,7 +30,7 @@ const MainContentSection: FC<Props> = ({ data }) => {
 
                   <div className="py-5">
                     <h2 className="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
-                      Wikusama Hotel {data.nama_tipe_kamar}
+                      Wikusama Hotel {data?.nama_tipe_kamar}
                     </h2>
 
                     <p className="text-gray-500 text-sm">
@@ -43,14 +44,14 @@ const MainContentSection: FC<Props> = ({ data }) => {
 
                     <div className="flex items-end gap-2 my-4">
                       <p className="font-bold text-black text-3xl">
-                        {formatCurrency(data.harga)}
+                        {formatCurrency(data?.harga)}
                       </p>
 
                       <p className="text-gray-400 text-sm">/ malam</p>
                     </div>
 
                     <p
-                      dangerouslySetInnerHTML={{ __html: data.deskripsi }}
+                      dangerouslySetInnerHTML={{ __html: data?.deskripsi }}
                       className="font-medium text-justify text-base text-gray-500 whitespace-no-wrap"
                     />
                   </div>

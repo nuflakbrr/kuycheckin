@@ -6,9 +6,10 @@ import axios from '@/lib/axios';
 import { headerConfig } from '@/lib/headerConfig';
 import { errorToast, infoToast, successToast } from '@/lib/toast';
 import { classNames } from '@/lib/classNames';
+import { User } from '@/interfaces/user';
 
 const AllUserSection: FC = () => {
-  const [dataLogin, setDataLogin] = useState<any>({});
+  const [dataLogin, setDataLogin] = useState<User>();
   const [data, setData] = useState<any>([]);
 
   useEffect(() => {
@@ -205,14 +206,14 @@ const AllUserSection: FC = () => {
                 </td>
 
                 <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
-                  {dataLogin.email === a.email ? (
+                  {dataLogin?.email === a.email ? (
                     <Link
                       href="/admin/profile"
                       className="w-lg flex items-center justify-center bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide"
                     >
                       <FaUser className="mr-2" /> Profil Saya
                     </Link>
-                  ) : dataLogin.role !== 'admin' ? (
+                  ) : dataLogin?.role !== 'admin' ? (
                     <div className="w-full flex items-center justify-center bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide mt-2 cursor-not-allowed">
                       <FaLock className="mr-2" /> Perlu Akses
                     </div>

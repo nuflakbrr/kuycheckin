@@ -4,13 +4,14 @@ import Head from 'next/head';
 
 import axios from '@/lib/axios';
 import { errorToast } from '@/lib/toast';
+import { TypeRoom } from '@/interfaces/typeroom';
 import Navbar from '@/components/Common/Navbar/Navbar';
 import Footer from '@/components/Common/Footer';
 import MainContentSection from './components/MainContent';
 import ReviewsSection from './components/Reviews';
 
 const ContainerDetailRoomType: FC = () => {
-  const [data, setData] = useState<any>({});
+  const [data, setData] = useState<TypeRoom>();
 
   const router = useRouter();
   const { slug } = router.query;
@@ -33,14 +34,22 @@ const ContainerDetailRoomType: FC = () => {
     }
 
     return () => {
-      setData({});
+      setData({
+        id_tipe_kamar: 0,
+        nama_tipe_kamar: '',
+        slug: '',
+        harga: 0,
+        deskripsi: '',
+        foto: '',
+        kamar: [],
+      });
     };
   }, [router, slug]);
 
   return (
     <>
       <Head>
-        <title>Detil Kamar {data.nama_tipe_kamar} - Wikusama Hotel</title>
+        <title>Detil Kamar {data?.nama_tipe_kamar} - Wikusama Hotel</title>
       </Head>
 
       <Navbar />

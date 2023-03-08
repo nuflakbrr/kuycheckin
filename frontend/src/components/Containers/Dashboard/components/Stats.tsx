@@ -3,13 +3,18 @@ import { FC, useState, useEffect } from 'react';
 import axios from '@/lib/axios';
 import { headerConfig } from '@/lib/headerConfig';
 import { errorToast } from '@/lib/toast';
+import { User } from '@/interfaces/user';
+import { Customer } from '@/interfaces/customer';
+import { TypeRoom } from '@/interfaces/typeroom';
+import { Room } from '@/interfaces/room';
+import { Booking } from '@/interfaces/booking';
 
 type Props = {
-  user: any;
-  dataTypeRoom: any;
-  dataRoom: any;
-  dataBooking: any;
-  dataUser: any;
+  user: User | Customer | any;
+  dataTypeRoom: TypeRoom | any;
+  dataRoom: Room | any;
+  dataBooking: Booking | any;
+  dataUser: User | any;
 };
 
 const StatsSection: FC<Props> = ({
@@ -22,22 +27,22 @@ const StatsSection: FC<Props> = ({
   const [dataBookingByUser, setDataBookingByUser] = useState<any>([]);
 
   useEffect(() => {
-    if (user.id_pelanggan > 0) {
+    if (user?.id_pelanggan > 0) {
       const getBookingByUser = async () => {
         await axios
-          .get(`/booking/customer/${user.id_pelanggan}`, headerConfig())
+          .get(`/booking/customer/${user?.id_pelanggan}`, headerConfig())
           .then((res) => setDataBookingByUser(res.data.data))
           .catch((err) => errorToast(err));
       };
 
       Promise.all([getBookingByUser()]);
     }
-  }, [user.id_pelanggan]);
+  }, [user?.id_pelanggan]);
 
   return (
     <section>
       <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 py-5 gap-4">
-        {user.role === 'admin' || user.role === 'resepsionis' ? (
+        {user?.role === 'admin' || user?.role === 'resepsionis' ? (
           <>
             <div className="bg-primary shadow-lg rounded-md flex items-center justify-between p-3 border-b-4 border-slate-100 dark:border-white text-white font-medium group">
               <div className="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
@@ -54,7 +59,7 @@ const StatsSection: FC<Props> = ({
               </div>
 
               <div className="text-right">
-                <p className="text-2xl">{dataTypeRoom.length}</p>
+                <p className="text-2xl">{dataTypeRoom?.length}</p>
                 <p>Total Tipe Kamar</p>
               </div>
             </div>
@@ -74,7 +79,7 @@ const StatsSection: FC<Props> = ({
               </div>
 
               <div className="text-right">
-                <p className="text-2xl">{dataRoom.length}</p>
+                <p className="text-2xl">{dataRoom?.length}</p>
                 <p>Total Kamar</p>
               </div>
             </div>
@@ -94,7 +99,7 @@ const StatsSection: FC<Props> = ({
               </div>
 
               <div className="text-right">
-                <p className="text-2xl">{dataBooking.length}</p>
+                <p className="text-2xl">{dataBooking?.length}</p>
                 <p>Total Pemesanan</p>
               </div>
             </div>
@@ -114,7 +119,7 @@ const StatsSection: FC<Props> = ({
               </div>
 
               <div className="text-right">
-                <p className="text-2xl">{dataUser.length}</p>
+                <p className="text-2xl">{dataUser?.length}</p>
                 <p>Total Petugas</p>
               </div>
             </div>
@@ -135,7 +140,7 @@ const StatsSection: FC<Props> = ({
             </div>
 
             <div className="text-right">
-              <p className="text-2xl">{dataBookingByUser.length}</p>
+              <p className="text-2xl">{dataBookingByUser?.length}</p>
               <p>Total Pemesanan</p>
             </div>
           </div>

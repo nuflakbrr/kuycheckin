@@ -15,6 +15,7 @@ import {
 import { logout } from '@/lib/logout';
 import { blockAccess } from '@/lib/blockAccess';
 import { classNames } from '@/lib/classNames';
+import { User } from '@/interfaces/user';
 
 const SidebarReceptionist: FC = () => {
   // Define Router
@@ -23,10 +24,7 @@ const SidebarReceptionist: FC = () => {
 
   // Required State
   const [collapseShow, setCollapseShow] = useState('hidden');
-  const [dataReceptionist, setDataReceptionist] = useState({
-    nama_user: '',
-    role: '',
-  });
+  const [dataReceptionist, setDataReceptionist] = useState<User>();
 
   // Get full year
   const year = new Date().getFullYear();
@@ -87,7 +85,12 @@ const SidebarReceptionist: FC = () => {
 
     return () => {
       setDataReceptionist({
+        id_user: 0,
         nama_user: '',
+        foto: '',
+        slug: '',
+        email: '',
+        password: '',
         role: '',
       });
     };
@@ -101,7 +104,7 @@ const SidebarReceptionist: FC = () => {
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden bg-slate-100 flex flex-wrap items-center justify-between relative md:w-64 z-20 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           <Link href="/receptionist/dashboard" legacyBehavior>
-            {!dataReceptionist.nama_user ? (
+            {!dataReceptionist?.nama_user ? (
               <p className="md:block text-left md:pb-2 text-gray-500 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
                 Halo,
                 <span className="animate-pulse bg-gray-300 text-transparent ml-1">
@@ -112,7 +115,7 @@ const SidebarReceptionist: FC = () => {
               <p className="md:block text-left md:pb-2 text-gray-500 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
                 Halo,{' '}
                 <span className="text-primary">
-                  {dataReceptionist.nama_user}
+                  {dataReceptionist?.nama_user}
                 </span>
               </p>
             )}
@@ -176,7 +179,7 @@ const SidebarReceptionist: FC = () => {
             </h6>
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              {receptionistLinks.map((a, i) => (
+              {receptionistLinks?.map((a, i) => (
                 <li key={i} className="items-center">
                   <Link href={a.path} legacyBehavior>
                     <a

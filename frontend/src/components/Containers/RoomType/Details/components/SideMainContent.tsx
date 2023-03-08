@@ -6,9 +6,10 @@ import { bindingState } from '@/lib/bindingState';
 import { diffDays } from '@/lib/diffDays';
 import { errorToast, successToast } from '@/lib/toast';
 import { totalPrice } from '@/lib/totalPrice';
+import { TypeRoom } from '@/interfaces/typeroom';
 
 type Props = {
-  data: any;
+  data: TypeRoom;
 };
 
 const SideMainContent: FC<Props> = ({ data }) => {
@@ -173,7 +174,7 @@ const SideMainContent: FC<Props> = ({ data }) => {
               placeholder="Masukkan Jumlah Kamar"
               required
               min={0}
-              max={data.kamar?.length}
+              max={data?.kamar?.length}
               value={bookingData.jumlah_kamar}
               onChange={(e) => bindingState(e, setBookingData, 'jumlah_kamar')}
             />
@@ -189,7 +190,7 @@ const SideMainContent: FC<Props> = ({ data }) => {
             <h2 className="text-sm font-medium">Tipe Kamar</h2>
 
             <p className="text-sm font-semibold text-black">
-              {data.nama_tipe_kamar}
+              {data?.nama_tipe_kamar}
             </p>
           </div>
 
@@ -217,7 +218,7 @@ const SideMainContent: FC<Props> = ({ data }) => {
                 dataDate.tgl_check_in,
                 dataDate.tgl_check_out,
                 bookingData.jumlah_kamar,
-                data.harga
+                data?.harga
               )}
             </p>
           </div>

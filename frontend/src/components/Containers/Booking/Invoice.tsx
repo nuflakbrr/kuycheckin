@@ -13,14 +13,17 @@ import { formatLocalTime } from '@/lib/formatLocalTime';
 import { diffDays } from '@/lib/diffDays';
 import { totalPrice } from '@/lib/totalPrice';
 import { errorToast } from '@/lib/toast';
+import { User } from '@/interfaces/user';
+import { Room } from '@/interfaces/room';
+import { Booking } from '@/interfaces/booking';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
 import SidebarReceptionist from '@/components/Common/SidebarReceptionist';
 import SidebarCustomer from '@/components/Common/SidebarCustomer';
 
 const ContainerInvoice: FC = () => {
-  const [user, setUser] = useState<any>('');
-  const [data, setData] = useState<any>([]);
-  const [dataRoom, setDataRoom] = useState<any>([]);
+  const [user, setUser] = useState<User>();
+  const [data, setData] = useState<Booking | any>();
+  const [dataRoom, setDataRoom] = useState<Room | any>();
 
   const router = useRouter();
   const { id } = router.query;
@@ -88,11 +91,11 @@ const ContainerInvoice: FC = () => {
 
       <ToastContainer autoClose={1500} />
 
-      {user.role === 'admin' && <SidebarAdmin />}
+      {user?.role === 'admin' && <SidebarAdmin />}
 
-      {user.role === 'resepsionis' && <SidebarReceptionist />}
+      {user?.role === 'resepsionis' && <SidebarReceptionist />}
 
-      {user.role === 'pelanggan' && <SidebarCustomer />}
+      {user?.role === 'pelanggan' && <SidebarCustomer />}
 
       <main className="md:ml-64 min-h-screen">
         <div className="container">
@@ -148,7 +151,9 @@ const ContainerInvoice: FC = () => {
                                 Diberikan Kepada
                               </p>
 
-                              <p className="text-sm font-light text-slate-500">{`${data.pelanggan?.nama}, ${data.pelanggan?.email}`}</p>
+                              <p className="text-sm font-light text-slate-500">
+                                {`${data?.pelanggan?.nama}, ${data?.pelanggan?.email}`}
+                              </p>
                             </div>
 
                             <div className="col-span-4 lg:col-span-1 print:col-span-1">
@@ -157,7 +162,7 @@ const ContainerInvoice: FC = () => {
                               </p>
 
                               <p className="text-sm font-light text-slate-500">
-                                {data.nomor_pemesanan || 'Tidak Diketahui'}
+                                {data?.nomor_pemesanan || 'Tidak Diketahui'}
                               </p>
 
                               <p className="mt-2 text-sm font-normal text-slate-700">
@@ -165,7 +170,7 @@ const ContainerInvoice: FC = () => {
                               </p>
 
                               <p className="text-sm font-light text-slate-500">
-                                {formatLocalTime(data.tgl_pemesanan) ||
+                                {formatLocalTime(data?.tgl_pemesanan) ||
                                   'Tidak Diketahui'}
                               </p>
                             </div>
@@ -177,8 +182,8 @@ const ContainerInvoice: FC = () => {
 
                               <p className="text-sm font-light text-slate-500">
                                 {diffDays(
-                                  data.tgl_check_in,
-                                  data.tgl_check_out
+                                  data?.tgl_check_in,
+                                  data?.tgl_check_out
                                 ) || 'Tidak Diketahui'}{' '}
                                 Hari
                               </p>
@@ -188,7 +193,7 @@ const ContainerInvoice: FC = () => {
                               </p>
 
                               <p className="text-sm font-light text-slate-500">
-                                {formatLocalTime(data.tgl_check_out) ||
+                                {formatLocalTime(data?.tgl_check_out) ||
                                   'Tidak Diketahui'}
                               </p>
                             </div>
@@ -239,7 +244,7 @@ const ContainerInvoice: FC = () => {
                             </thead>
 
                             <tbody>
-                              {!dataRoom.length ? (
+                              {!dataRoom?.length ? (
                                 <tr>
                                   <td className="animate-pulse transition-all ease-in-out duration-300 bg-gray-100 px-5 py-5 border-b border-gray-200 text-sm">
                                     <div className="flex items-center select-none">
@@ -282,7 +287,7 @@ const ContainerInvoice: FC = () => {
                                   </td>
                                 </tr>
                               ) : (
-                                dataRoom.map((a: any, i: any) => (
+                                dataRoom?.map((a: any, i: any) => (
                                   <tr
                                     key={i}
                                     className="border-b border-slate-200"
@@ -298,7 +303,7 @@ const ContainerInvoice: FC = () => {
                                     <td className="px-5 py-5 text-sm">
                                       <div className="flex items-center">
                                         <p className="text-gray-900 whitespace-no-wrap">
-                                          {data.tipe_kamar?.nama_tipe_kamar}
+                                          {data?.tipe_kamar?.nama_tipe_kamar}
                                         </p>
                                       </div>
                                     </td>
@@ -306,7 +311,7 @@ const ContainerInvoice: FC = () => {
                                     <td className="px-5 py-5 text-sm">
                                       <div className="flex items-center">
                                         <p className="text-gray-900 whitespace-no-wrap">
-                                          {formatLocalTime(data.tgl_check_in)}
+                                          {formatLocalTime(data?.tgl_check_in)}
                                         </p>
                                       </div>
                                     </td>
@@ -314,7 +319,7 @@ const ContainerInvoice: FC = () => {
                                     <td className="px-5 py-5 text-sm">
                                       <div className="flex items-center">
                                         <p className="text-gray-900 whitespace-no-wrap">
-                                          {formatLocalTime(data.tgl_check_out)}
+                                          {formatLocalTime(data?.tgl_check_out)}
                                         </p>
                                       </div>
                                     </td>
@@ -323,7 +328,7 @@ const ContainerInvoice: FC = () => {
                                       <div className="flex items-center">
                                         <p className="text-gray-900 whitespace-no-wrap">
                                           {formatCurrency(
-                                            data.tipe_kamar?.harga
+                                            data?.tipe_kamar?.harga
                                           )}
                                         </p>
                                       </div>
@@ -345,8 +350,8 @@ const ContainerInvoice: FC = () => {
 
                                 <td className="pt-6 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
                                   {subTotal(
-                                    data.jumlah_kamar,
-                                    data.tipe_kamar?.harga
+                                    data?.jumlah_kamar,
+                                    data?.tipe_kamar?.harga
                                   ) || 'Tidak Diketahui'}
                                 </td>
                               </tr>
@@ -361,7 +366,8 @@ const ContainerInvoice: FC = () => {
                                 </th>
 
                                 <td className="pt-6 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
-                                  {data.jumlah_kamar || 'Tidak Diketahui'} Kamar
+                                  {data?.jumlah_kamar || 'Tidak Diketahui'}{' '}
+                                  Kamar
                                 </td>
                               </tr>
 
@@ -376,8 +382,8 @@ const ContainerInvoice: FC = () => {
 
                                 <td className="pt-4 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
                                   {diffDays(
-                                    data.tgl_check_in,
-                                    data.tgl_check_out
+                                    data?.tgl_check_in,
+                                    data?.tgl_check_out
                                   ) || 'Tidak Diketahui'}{' '}
                                   Hari
                                 </td>
@@ -394,10 +400,10 @@ const ContainerInvoice: FC = () => {
 
                                 <td className="pt-4 pl-3 pr-4 text-sm font-normal text-right text-slate-700 sm:pr-6 md:pr-0">
                                   {totalPrice(
-                                    data.tgl_check_in,
-                                    data.tgl_check_out,
-                                    data.jumlah_kamar,
-                                    data.tipe_kamar?.harga
+                                    data?.tgl_check_in,
+                                    data?.tgl_check_out,
+                                    data?.jumlah_kamar,
+                                    data?.tipe_kamar?.harga
                                   ) || 'Tidak Diketahui'}
                                 </td>
                               </tr>

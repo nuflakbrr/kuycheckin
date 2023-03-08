@@ -13,6 +13,7 @@ import { bindingState } from '@/lib/bindingState';
 import { headerConfig } from '@/lib/headerConfig';
 import { errorToast, successToast } from '@/lib/toast';
 import { formatCurrency } from '@/lib/formatCurrency';
+import { TypeRoom } from '@/interfaces/typeroom';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
 
 const Editor = dynamic<EditorProps>(
@@ -21,7 +22,7 @@ const Editor = dynamic<EditorProps>(
 );
 
 const ContainerEditRoomType: FC = () => {
-  const [oldData, setOldData] = useState<any>({});
+  const [oldData, setOldData] = useState<TypeRoom | any>();
   const [data, setData] = useState({
     nama_tipe_kamar: '',
     harga: '',
@@ -58,7 +59,14 @@ const ContainerEditRoomType: FC = () => {
     }
 
     return () => {
-      setOldData({});
+      setOldData({
+        id_tipe_kamar: 0,
+        nama_tipe_kamar: '',
+        slug: '',
+        harga: 0,
+        deskripsi: '',
+        foto: '',
+      });
       setData({
         nama_tipe_kamar: '',
         harga: '',
@@ -81,7 +89,7 @@ const ContainerEditRoomType: FC = () => {
     e.preventDefault();
 
     const sendData = {
-      id_tipe_kamar: oldData.id_tipe_kamar,
+      id_tipe_kamar: oldData?.id_tipe_kamar,
       ...data,
     };
 
@@ -163,7 +171,7 @@ const ContainerEditRoomType: FC = () => {
                     <div className="max-w-2xl w-full mt-3 lg:mt-0">
                       <input
                         type="text"
-                        value={oldData.nama_tipe_kamar}
+                        value={oldData?.nama_tipe_kamar}
                         className="block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
                         disabled
                       />
@@ -194,7 +202,7 @@ const ContainerEditRoomType: FC = () => {
                     <div className="max-w-2xl w-full mt-3 lg:mt-0">
                       <input
                         type="text"
-                        value={formatCurrency(oldData.harga)}
+                        value={formatCurrency(oldData?.harga)}
                         className="block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
                         disabled
                       />
@@ -222,7 +230,7 @@ const ContainerEditRoomType: FC = () => {
 
                     <div className="max-w-2xl w-full mt-3 lg:mt-0 border rounded-xl p-2">
                       <p
-                        dangerouslySetInnerHTML={{ __html: oldData.deskripsi }}
+                        dangerouslySetInnerHTML={{ __html: oldData?.deskripsi }}
                         className="block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring focus:ring-primary/50 sm:text-sm mb-2"
                       />
 

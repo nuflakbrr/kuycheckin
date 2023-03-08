@@ -2,9 +2,10 @@ import { FC } from 'react';
 import Link from 'next/link';
 
 import { formatCurrency } from '@/lib/formatCurrency';
+import { Room } from '@/interfaces/room';
 
 type Props = {
-  dataRoom: string | any;
+  dataRoom: Room | any;
 };
 
 const RoomCardSection: FC<Props> = ({ dataRoom }) => {
@@ -14,7 +15,7 @@ const RoomCardSection: FC<Props> = ({ dataRoom }) => {
         <div className="container">
           <div className="w-full px-4">
             <div className="grid grid-cols-12 gap-5">
-              {dataRoom.map((a: any, i: any) => (
+              {dataRoom?.map((a: any, i: any) => (
                 <div className="col-span-12 lg:col-span-3" key={i}>
                   <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg hover:-translate-y-2 transition-all ease-in-out duration-300">
                     <Link

@@ -5,6 +5,11 @@ import { ToastContainer } from 'react-toastify';
 import axios from '@/lib/axios';
 import { headerConfig } from '@/lib/headerConfig';
 import { errorToast, infoToast } from '@/lib/toast';
+import { User } from '@/interfaces/user';
+import { Customer } from '@/interfaces/customer';
+import { TypeRoom } from '@/interfaces/typeroom';
+import { Room } from '@/interfaces/room';
+import { Booking } from '@/interfaces/booking';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
 import SidebarReceptionist from '@/components/Common/SidebarReceptionist';
 import SidebarCustomer from '@/components/Common/SidebarCustomer';
@@ -12,11 +17,11 @@ import StatsSection from './components/Stats';
 import BookingSection from './components/Booking';
 
 const ContainerDashboard: FC = () => {
-  const [user, setUser] = useState<any>('');
-  const [dataTypeRoom, setDataTypeRoom] = useState<any>([]);
-  const [dataRoom, setDataRoom] = useState<any>([]);
-  const [dataBooking, setDataBooking] = useState<any>([]);
-  const [dataUser, setDataUser] = useState<any>([]);
+  const [user, setUser] = useState<User | Customer | any>();
+  const [dataTypeRoom, setDataTypeRoom] = useState<TypeRoom>();
+  const [dataRoom, setDataRoom] = useState<Room>();
+  const [dataBooking, setDataBooking] = useState<Booking | any>();
+  const [dataUser, setDataUser] = useState<User>();
 
   useEffect(() => {
     if (localStorage.getItem('admin')) {
@@ -65,11 +70,86 @@ const ContainerDashboard: FC = () => {
     Promise.all([getUser(), getTypeRoom(), getRoom(), getBooking()]);
 
     return () => {
-      setUser('');
-      setDataTypeRoom([]);
-      setDataRoom([]);
-      setDataBooking([]);
-      setDataUser([]);
+      setUser({
+        id_user: 0,
+        id_pelanggan: 0,
+        nama_user: '',
+        nama: '',
+        foto: '',
+        slug: '',
+        email: '',
+        password: '',
+        role: '',
+      });
+      setDataTypeRoom({
+        id_tipe_kamar: 0,
+        nama_tipe_kamar: '',
+        slug: '',
+        harga: 0,
+        deskripsi: '',
+        foto: '',
+      });
+      setDataRoom({
+        id_kamar: 0,
+        id_tipe_kamar: 0,
+        nomor_kamar: '',
+        tipe_kamar: {
+          id_tipe_kamar: 0,
+          nama_tipe_kamar: '',
+          slug: '',
+          harga: 0,
+          deskripsi: '',
+          foto: '',
+        },
+      });
+      setDataBooking({
+        id_pemesanan: 0,
+        id_pelanggan: 0,
+        id_user: 0,
+        id_tipe_kamar: 0,
+        nomor_pemesanan: '',
+        tgl_pemesanan: '',
+        tgl_check_in: '',
+        tgl_check_out: '',
+        nama_tamu: '',
+        status_pemesanan: '',
+        jumlah_kamar: 0,
+        pelanggan: {
+          id_pelanggan: 0,
+          nama: '',
+          foto: '',
+          slug: '',
+          email: '',
+          password: '',
+          role: '',
+        },
+        tipe_kamar: {
+          id_tipe_kamar: 0,
+          nama_tipe_kamar: '',
+          slug: '',
+          harga: 0,
+          deskripsi: '',
+          foto: '',
+        },
+        user: {
+          id_user: 0,
+          nama_user: '',
+          foto: '',
+          slug: '',
+          email: '',
+          password: '',
+          role: '',
+        },
+      });
+      setDataUser({
+        id_user: 0,
+        nama_user: '',
+        foto: '',
+        slug: '',
+        email: '',
+        password: '',
+        role: '',
+      });
     };
   }, []);
 
@@ -81,18 +161,18 @@ const ContainerDashboard: FC = () => {
 
       <ToastContainer autoClose={1500} />
 
-      {user.role === 'admin' && <SidebarAdmin />}
+      {user?.role === 'admin' && <SidebarAdmin />}
 
-      {user.role === 'resepsionis' && <SidebarReceptionist />}
+      {user?.role === 'resepsionis' && <SidebarReceptionist />}
 
-      {user.role === 'pelanggan' && <SidebarCustomer />}
+      {user?.role === 'pelanggan' && <SidebarCustomer />}
 
       <main className="bg-white md:ml-64 min-h-screen">
         <div className="container">
           <div className="flex flex-wrap">
             <div className="w-full p-10">
               <h2 className="text-2xl font-bold text-primary capitalize">
-                Dashboard {user.role}
+                Dashboard {user?.role}
               </h2>
 
               <StatsSection

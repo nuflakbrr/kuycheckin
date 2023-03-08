@@ -9,11 +9,12 @@ import styles from './Navbar.module.css';
 import { headerNavLinks } from '@/data/headerNavLinks';
 import { classNames } from '@/lib/classNames';
 import { logout } from '@/lib/logout';
+import { User } from '@/interfaces/user';
 
 const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLogged, setIsLogged] = useState<boolean>(false);
-  const [dataUser, setDataUser] = useState({ foto: '', role: '' });
+  const [dataUser, setDataUser] = useState<User>();
 
   const router = useRouter();
   const { pathname } = router;
@@ -127,7 +128,7 @@ const Navbar: FC = () => {
                 className="hidden absolute py-5 bg-white shadow-lg rounded-lg max-w-[250px] w-full right-4 top-full lg:block lg:static lg:bg-transparent lg:max-w-full lg:shadow-none lg:rounded-none"
               >
                 <ul className="block lg:flex">
-                  {headerNavLinks.map((a, i) => (
+                  {headerNavLinks?.map((a, i) => (
                     <li className="group" key={i}>
                       <Link href={a.path} legacyBehavior>
                         <a
@@ -180,7 +181,7 @@ const Navbar: FC = () => {
                 <Menu as="div" className="relative mr-11">
                   <Menu.Button className="flex text-sm">
                     <img
-                      src={dataUser.foto || '/assets/img/no-image.png'}
+                      src={dataUser?.foto || '/assets/img/no-image.png'}
                       alt="User Image"
                       loading="lazy"
                       className="w-10 rounded-full"
@@ -201,9 +202,9 @@ const Navbar: FC = () => {
                         {({ active }) => (
                           <Link
                             href={`${
-                              dataUser.role === 'admin'
+                              dataUser?.role === 'admin'
                                 ? '/admin'
-                                : dataUser.role === 'resepsionis'
+                                : dataUser?.role === 'resepsionis'
                                 ? '/receptionist'
                                 : '/customer'
                             }/dashboard`}
@@ -226,9 +227,9 @@ const Navbar: FC = () => {
                         {({ active }) => (
                           <Link
                             href={`${
-                              dataUser.role === 'admin'
+                              dataUser?.role === 'admin'
                                 ? '/admin'
-                                : dataUser.role === 'resepsionis'
+                                : dataUser?.role === 'resepsionis'
                                 ? '/receptionist'
                                 : '/customer'
                             }/profile`}
@@ -251,9 +252,9 @@ const Navbar: FC = () => {
                         <button
                           onClick={() =>
                             logout(
-                              dataUser.role === 'admin'
+                              dataUser?.role === 'admin'
                                 ? 'admin'
-                                : dataUser.role === 'resepsionis'
+                                : dataUser?.role === 'resepsionis'
                                 ? 'resepsionis'
                                 : 'pelanggan',
                               router

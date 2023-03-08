@@ -1,7 +1,9 @@
+import { Customer } from '@/interfaces/customer';
+import { User } from '@/interfaces/user';
 import { FC, useState, useEffect } from 'react';
 
 const PreviewProfile: FC = () => {
-  const [data, setData] = useState<any>({});
+  const [data, setData] = useState<User | Customer | any>();
 
   useEffect(() => {
     if (localStorage.getItem('admin')) {
@@ -17,7 +19,17 @@ const PreviewProfile: FC = () => {
     }
 
     return () => {
-      setData({});
+      setData({
+        id_user: 0,
+        id_pelanggan: 0,
+        nama_user: '',
+        nama: '',
+        foto: '',
+        slug: '',
+        email: '',
+        password: '',
+        role: '',
+      });
     };
   }, []);
 
@@ -37,19 +49,19 @@ const PreviewProfile: FC = () => {
         <div className="avatar">
           <div className="image">
             <img
-              src={data.foto || '/assets/img/no-image.png'}
+              src={data?.foto || '/assets/img/no-image.png'}
               alt="Avatar User Profile"
             />
           </div>
 
           <div className="mt-2">
             <h4 className="font-semibold text-2xl leading-7 mb-2">
-              {data.nama_user || data.nama || 'Tidak ada data'}
+              {data?.nama_user || data?.nama || 'Tidak ada data'}
             </h4>
 
             <hr />
 
-            <p>{data.email || 'Tidak ada data'}</p>
+            <p>{data?.email || 'Tidak ada data'}</p>
           </div>
         </div>
       </div>
@@ -70,7 +82,7 @@ const PreviewProfile: FC = () => {
                 type="text"
                 name="name"
                 id="name"
-                value={data.nama_user || data.nama || 'Tidak ada data'}
+                value={data?.nama_user || data?.nama || 'Tidak ada data'}
                 className="block w-full border text-gray-500 border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
                 disabled
               />
@@ -87,15 +99,15 @@ const PreviewProfile: FC = () => {
                 type="email"
                 name="email"
                 id="email"
-                value={data.email || 'Tidak ada data'}
+                value={data?.email || 'Tidak ada data'}
                 className="block w-full border text-gray-500 border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
                 disabled
               />
             </div>
           </div>
 
-          {data.role === 'admin' ||
-            (data.role === 'resepsionis' && (
+          {data?.role === 'admin' ||
+            (data?.role === 'resepsionis' && (
               <div className="mb-5 flex flex-wrap items-center justify-between">
                 <h2 className="block text-sm font-medium text-gray-500 mb-2">
                   Jabatan User
@@ -106,7 +118,7 @@ const PreviewProfile: FC = () => {
                     type="text"
                     name="role"
                     id="role"
-                    value={data.role || 'Tidak ada data'}
+                    value={data?.role || 'Tidak ada data'}
                     className="block w-full border text-gray-500 border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
                     disabled
                   />

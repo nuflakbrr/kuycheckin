@@ -9,7 +9,7 @@ import DetailTransactionSection from './components/DetailTransactions';
 
 const ContainerPaymentMethod: FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
-  const [paymentMethodName, setPaymentMethodName] = useState<string | any>('');
+  const [paymentMethodName, setPaymentMethodName] = useState<string>();
 
   const handleButton = (e: any) => {
     const target = e.target;
@@ -40,7 +40,7 @@ const ContainerPaymentMethod: FC = () => {
                       <h1>Pilih Metode Pembayaran</h1>
                     </div>
 
-                    {paymentMethod.map((a, i) => (
+                    {paymentMethod?.map((a, i) => (
                       <button
                         onClick={(e) => handleButton(e)}
                         id={a.name}
