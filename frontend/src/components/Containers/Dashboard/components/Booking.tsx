@@ -11,7 +11,7 @@ import Skeleton from './Skeleton';
 
 type Props = {
   user: User | Customer | any;
-  dataBooking: Booking | any;
+  dataBooking: Booking[] | any;
 };
 
 const BookingSection: FC<Props> = ({ user, dataBooking }) => {

@@ -132,6 +132,10 @@ const EditProfile: FC = () => {
         email: '',
         password: '',
         role: '',
+        map() {
+          throw new Error('Function not implemented.');
+        },
+        length: 0,
       });
     };
   }, []);

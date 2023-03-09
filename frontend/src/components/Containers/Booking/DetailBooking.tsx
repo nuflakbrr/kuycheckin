@@ -27,9 +27,13 @@ const ContainerDetailBooking: FC = () => {
     email: '',
     password: '',
     role: '',
+    map(arg0) {
+      throw new Error('Function not implemented.');
+    },
+    length: 0,
   });
-  const [data, setData] = useState<Booking | any>();
-  const [dataRoom, setDataRoom] = useState<Room | any>();
+  const [data, setData] = useState<Booking[] | any>();
+  const [dataRoom, setDataRoom] = useState<Room[]>();
 
   const router = useRouter();
   const { id } = router.query;
@@ -77,6 +81,41 @@ const ContainerDetailBooking: FC = () => {
       };
 
       Promise.all([getData(), getDataById()]);
+
+      return () => {
+        setUser({
+          id_user: 0,
+          id_pelanggan: 0,
+          nama_user: '',
+          nama: '',
+          foto: '',
+          slug: '',
+          email: '',
+          password: '',
+          role: '',
+          map(arg0) {
+            throw new Error('Function not implemented.');
+          },
+          length: 0,
+        });
+        setData({
+          id_pemesanan: 0,
+          id_pelanggan: 0,
+          id_user: 0,
+          id_tipe_kamar: 0,
+          nomor_pemesanan: '',
+          tgl_pemesanan: '',
+          tgl_check_in: '',
+          tgl_check_out: '',
+          nama_tamu: '',
+          jumlah_kamar: 0,
+          status_pemesanan: '',
+          pelanggan: [],
+          tipe_kamar: [],
+          user: [],
+        });
+        setDataRoom([]);
+      };
     }
   }, [id]);
 
@@ -88,11 +127,11 @@ const ContainerDetailBooking: FC = () => {
 
       <ToastContainer autoClose={1500} />
 
-      {user.role === 'admin' && <SidebarAdmin />}
+      {user?.role === 'admin' && <SidebarAdmin />}
 
-      {user.role === 'resepsionis' && <SidebarReceptionist />}
+      {user?.role === 'resepsionis' && <SidebarReceptionist />}
 
-      {user.role === 'pelanggan' && <SidebarCustomer />}
+      {user?.role === 'pelanggan' && <SidebarCustomer />}
 
       <main className="bg-white md:ml-64 min-h-screen">
         <section className="container">

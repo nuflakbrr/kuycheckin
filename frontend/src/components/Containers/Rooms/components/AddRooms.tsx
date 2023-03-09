@@ -8,7 +8,7 @@ import { errorToast, successToast } from '@/lib/toast';
 import { TypeRoom } from '@/interfaces/typeroom';
 
 const AddRoomsSection: FC = () => {
-  const [dataTypeRoom, setDataTypeRoom] = useState<TypeRoom | any>();
+  const [dataTypeRoom, setDataTypeRoom] = useState<TypeRoom[]>();
   const [token, setToken] = useState<string | any>('');
   const [data, setData] = useState({
     nomor_kamar: '',
@@ -31,14 +31,7 @@ const AddRoomsSection: FC = () => {
     Promise.all([fetchData()]);
 
     return () => {
-      setDataTypeRoom({
-        id_tipe_kamar: 0,
-        nama_tipe_kamar: '',
-        slug: '',
-        harga: 0,
-        deskripsi: '',
-        foto: '',
-      });
+      setDataTypeRoom([]);
     };
   }, []);
 

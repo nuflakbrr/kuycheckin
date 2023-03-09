@@ -27,7 +27,7 @@ const SideMainContent: FC<Props> = ({ data }) => {
     status_pemesanan: '',
     id_user: '',
   });
-  const [dataCustomer, setDataCustomer] = useState<string | any>({});
+  const [dataCustomer, setDataCustomer] = useState<string | any>();
 
   const router = useRouter();
 
@@ -43,7 +43,6 @@ const SideMainContent: FC<Props> = ({ data }) => {
       });
     }
 
-    // Get data customer from localStorage
     const customer = localStorage.getItem('pelanggan');
 
     if (customer) {

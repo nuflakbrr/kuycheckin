@@ -13,7 +13,7 @@ import { Room } from '@/interfaces/room';
 import SidebarAdmin from '@/components/Common/SidebarAdmin';
 
 const ContainerEditRooms: FC = () => {
-  const [dataTypeRoom, setDataTypeRoom] = useState<TypeRoom | any>();
+  const [dataTypeRoom, setDataTypeRoom] = useState<TypeRoom[]>();
   const [oldData, setOldData] = useState<Room>();
   const [token, setToken] = useState<string | any>('');
   const [data, setData] = useState({
@@ -172,7 +172,7 @@ const ContainerEditRooms: FC = () => {
                         <option value="default" selected disabled>
                           Pilih Tipe Kamar
                         </option>
-                        {dataTypeRoom.map((a: any, i: any) => (
+                        {dataTypeRoom?.map((a: any, i: any) => (
                           <option value={a.id_tipe_kamar} key={i}>
                             ID {a.id_tipe_kamar}: {a.nama_tipe_kamar}
                             {' => '}

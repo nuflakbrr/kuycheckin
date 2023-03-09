@@ -10,7 +10,7 @@ import { User } from '@/interfaces/user';
 
 const AllUserSection: FC = () => {
   const [dataLogin, setDataLogin] = useState<User>();
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<User[]>([]);
 
   useEffect(() => {
     if (localStorage.getItem('admin')) {

@@ -11,10 +11,10 @@ import { Booking } from '@/interfaces/booking';
 
 type Props = {
   user: User | Customer | any;
-  dataTypeRoom: TypeRoom | any;
-  dataRoom: Room | any;
-  dataBooking: Booking | any;
-  dataUser: User | any;
+  dataTypeRoom: TypeRoom[] | any;
+  dataRoom: Room[] | any;
+  dataBooking: Booking[] | any;
+  dataUser: User[] | any;
 };
 
 const StatsSection: FC<Props> = ({

@@ -11,7 +11,7 @@ import MainContentSection from './components/MainContent';
 import ReviewsSection from './components/Reviews';
 
 const ContainerDetailRoomType: FC = () => {
-  const [data, setData] = useState<TypeRoom>();
+  const [data, setData] = useState<TypeRoom[] | any>();
 
   const router = useRouter();
   const { slug } = router.query;
@@ -34,15 +34,7 @@ const ContainerDetailRoomType: FC = () => {
     }
 
     return () => {
-      setData({
-        id_tipe_kamar: 0,
-        nama_tipe_kamar: '',
-        slug: '',
-        harga: 0,
-        deskripsi: '',
-        foto: '',
-        kamar: [],
-      });
+      setData([]);
     };
   }, [router, slug]);
 

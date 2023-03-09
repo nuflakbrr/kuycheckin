@@ -66,6 +66,11 @@ const ContainerEditRoomType: FC = () => {
         harga: 0,
         deskripsi: '',
         foto: '',
+        kamar: [],
+        map() {
+          throw new Error('Function not implemented.');
+        },
+        length: 0,
       });
       setData({
         nama_tipe_kamar: '',

@@ -11,7 +11,7 @@ import { TypeRoom } from '@/interfaces/typeroom';
 
 const AllRoomTypeSection: FC = () => {
   const [dataLogin, setDataLogin] = useState<User>();
-  const [data, setData] = useState<TypeRoom | any>();
+  const [data, setData] = useState<TypeRoom[]>();
 
   useEffect(() => {
     if (localStorage.getItem('admin')) {
@@ -36,6 +36,10 @@ const AllRoomTypeSection: FC = () => {
     };
 
     Promise.all([getData()]);
+
+    return () => {
+      setData([]);
+    };
   }, []);
 
   const handleDelete = async (id: any) => {

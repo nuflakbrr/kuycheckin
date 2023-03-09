@@ -18,9 +18,9 @@ import SidebarCustomer from '@/components/Common/SidebarCustomer';
 
 const ContainerEditBooking: FC = () => {
   const [user, setUser] = useState<User | Customer>();
-  const [data, setData] = useState<Booking | any>();
-  const [dataRoom, setDataRoom] = useState<Room | any>();
-  const [dataUser, setDataUser] = useState<User | any>();
+  const [data, setData] = useState<Booking[] | any>();
+  const [dataRoom, setDataRoom] = useState<Room[]>();
+  const [dataUser, setDataUser] = useState<User[]>();
   const [dataUpdate, setDataUpdate] = useState<string | any>({
     status_pemesanan: 'default',
     id_user: 'default',
@@ -88,6 +88,42 @@ const ContainerEditBooking: FC = () => {
       };
 
       Promise.all([getData(), getDataById(), getDataUser()]);
+
+      return () => {
+        setUser({
+          id_user: 0,
+          id_pelanggan: 0,
+          nama_user: '',
+          nama: '',
+          foto: '',
+          slug: '',
+          email: '',
+          password: '',
+          role: '',
+          map(arg0) {
+            throw new Error('Function not implemented.');
+          },
+          length: 0,
+        });
+        setData({
+          id_pemesanan: 0,
+          id_pelanggan: 0,
+          id_user: 0,
+          id_tipe_kamar: 0,
+          nomor_pemesanan: '',
+          tgl_pemesanan: '',
+          tgl_check_in: '',
+          tgl_check_out: '',
+          nama_tamu: '',
+          jumlah_kamar: 0,
+          status_pemesanan: '',
+          pelanggan: [],
+          tipe_kamar: [],
+          user: [],
+        });
+        setDataRoom([]);
+        setDataUser([]);
+      };
     }
   }, [id]);
 

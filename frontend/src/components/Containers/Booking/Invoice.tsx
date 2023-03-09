@@ -22,8 +22,8 @@ import SidebarCustomer from '@/components/Common/SidebarCustomer';
 
 const ContainerInvoice: FC = () => {
   const [user, setUser] = useState<User>();
-  const [data, setData] = useState<Booking | any>();
-  const [dataRoom, setDataRoom] = useState<Room | any>();
+  const [data, setData] = useState<Booking[] | any>();
+  const [dataRoom, setDataRoom] = useState<Room[]>();
 
   const router = useRouter();
   const { id } = router.query;
@@ -71,6 +71,39 @@ const ContainerInvoice: FC = () => {
       };
 
       Promise.all([getData(), getDataById()]);
+
+      return () => {
+        setUser({
+          id_user: 0,
+          nama_user: '',
+          foto: '',
+          slug: '',
+          email: '',
+          password: '',
+          role: '',
+          map(arg0) {
+            throw new Error('Function not implemented.');
+          },
+          length: 0,
+        });
+        setData({
+          id_pemesanan: 0,
+          id_pelanggan: 0,
+          id_user: 0,
+          id_tipe_kamar: 0,
+          nomor_pemesanan: '',
+          tgl_pemesanan: '',
+          tgl_check_in: '',
+          tgl_check_out: '',
+          nama_tamu: '',
+          jumlah_kamar: 0,
+          status_pemesanan: '',
+          pelanggan: [],
+          tipe_kamar: [],
+          user: [],
+        });
+        setDataRoom([]);
+      };
     }
   }, [id]);
 
@@ -164,36 +197,15 @@ const ContainerInvoice: FC = () => {
                               <p className="text-sm font-light text-slate-500">
                                 {data?.nomor_pemesanan || 'Tidak Diketahui'}
                               </p>
+                            </div>
 
+                            <div className="col-span-4 lg:col-span-1 print:col-span-1">
                               <p className="mt-2 text-sm font-normal text-slate-700">
                                 Tanggal Pemesanan
                               </p>
 
                               <p className="text-sm font-light text-slate-500">
                                 {formatLocalTime(data?.tgl_pemesanan) ||
-                                  'Tidak Diketahui'}
-                              </p>
-                            </div>
-
-                            <div className="col-span-4 lg:col-span-1 print:col-span-1">
-                              <p className="text-sm font-normal text-slate-700">
-                                Ketentuan
-                              </p>
-
-                              <p className="text-sm font-light text-slate-500">
-                                {diffDays(
-                                  data?.tgl_check_in,
-                                  data?.tgl_check_out
-                                ) || 'Tidak Diketahui'}{' '}
-                                Hari
-                              </p>
-
-                              <p className="mt-2 text-sm font-normal text-slate-700">
-                                Valid Hingga
-                              </p>
-
-                              <p className="text-sm font-light text-slate-500">
-                                {formatLocalTime(data?.tgl_check_out) ||
                                   'Tidak Diketahui'}
                               </p>
                             </div>

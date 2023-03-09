@@ -11,7 +11,7 @@ import { Room } from '@/interfaces/room';
 
 const AllRoomsSection: FC = () => {
   const [dataLogin, setDataLogin] = useState<User | Customer>();
-  const [data, setData] = useState<Room | any>();
+  const [data, setData] = useState<Room[]>();
 
   useEffect(() => {
     if (localStorage.getItem('admin')) {
@@ -38,19 +38,7 @@ const AllRoomsSection: FC = () => {
     Promise.all([getData()]);
 
     return () => {
-      setData({
-        id_kamar: 0,
-        id_tipe_kamar: 0,
-        nomor_kamar: '',
-        tipe_kamar: {
-          id_tipe_kamar: 0,
-          nama_tipe_kamar: '',
-          slug: '',
-          harga: 0,
-          deskripsi: '',
-          foto: '',
-        },
-      });
+      setData([]);
     };
   }, []);
 

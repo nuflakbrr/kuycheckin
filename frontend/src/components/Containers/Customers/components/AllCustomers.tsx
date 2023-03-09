@@ -11,7 +11,7 @@ import { Customer } from '@/interfaces/customer';
 
 const AllCustomersSection: FC = () => {
   const [dataLogin, setDataLogin] = useState<User>();
-  const [data, setData] = useState<Customer | any>();
+  const [data, setData] = useState<Customer[]>();
 
   useEffect(() => {
     if (localStorage.getItem('admin')) {
@@ -38,15 +38,7 @@ const AllCustomersSection: FC = () => {
     Promise.all([getData()]);
 
     return () => {
-      setData({
-        id_pelanggan: 0,
-        nama: '',
-        foto: '',
-        slug: '',
-        email: '',
-        password: '',
-        role: '',
-      });
+      setData([]);
     };
   }, []);
 
@@ -149,7 +141,7 @@ const AllCustomersSection: FC = () => {
               </td>
             </tr>
           ) : (
-            data.map((a: any, i: any) => (
+            data?.map((a: any, i: any) => (
               <tr key={i}>
                 <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
                   <div className="flex items-center">

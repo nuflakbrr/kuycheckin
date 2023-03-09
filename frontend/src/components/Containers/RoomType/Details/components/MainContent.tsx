@@ -7,7 +7,7 @@ import { TypeRoom } from '@/interfaces/typeroom';
 import SideMainContent from './SideMainContent';
 
 type Props = {
-  data: TypeRoom | any;
+  data: TypeRoom[] | any;
 };
 
 const MainContentSection: FC<Props> = ({ data }) => {

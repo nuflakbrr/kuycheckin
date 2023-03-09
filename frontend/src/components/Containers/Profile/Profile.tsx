@@ -39,6 +39,10 @@ const ContainerProfile: FC = () => {
         email: '',
         password: '',
         role: '',
+        map(arg0) {
+          throw new Error('Function not implemented.');
+        },
+        length: 0,
       });
     };
   }, []);
