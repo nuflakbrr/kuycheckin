@@ -3,6 +3,8 @@ import { Customer } from './customer';
 import { TypeRoom } from './typeroom';
 
 export interface Booking {
+  map(arg0: (a: any, i: any) => JSX.Element): import('react').ReactNode;
+  length: number;
   id_pemesanan: number;
   id_pelanggan: number;
   id_user: number;
