@@ -16,7 +16,16 @@ const app = express();
  * @apiDescription Get all booking data
  */
 app.get('/', auth, async (req, res) => {
-  await pemesanan.findAll({ include: ['user', 'pelanggan', 'tipe_kamar'] })
+  let status = req.query.status || '';
+  
+  await pemesanan.findAll({ 
+    where: {
+      [Op.or]: [{
+        status_pemesanan: { [Op.like]: `%${status}%` } 
+      }]
+    },
+    include: ['user', 'pelanggan', 'tipe_kamar']
+  })
   .then(result => res.json({ data: result }))
   .catch(error => res.json({ message: error.message }))
 });
