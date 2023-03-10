@@ -27,6 +27,7 @@ const SideMainContent: FC<Props> = ({ data }) => {
     status_pemesanan: '',
     id_user: '',
   });
+  const [dataLength, setDataLength] = useState<any>([]);
   const [dataCustomer, setDataCustomer] = useState<string | any>();
 
   const router = useRouter();
@@ -35,6 +36,8 @@ const SideMainContent: FC<Props> = ({ data }) => {
     // Get date check-in & check-out from localStorage
     const tgl_check_in = localStorage.getItem('tgl_check_in');
     const tgl_check_out = localStorage.getItem('tgl_check_out');
+
+    const token = localStorage.getItem('access');
 
     if (tgl_check_in && tgl_check_out) {
       setDataDate({
@@ -48,7 +51,24 @@ const SideMainContent: FC<Props> = ({ data }) => {
     if (customer) {
       setDataCustomer(JSON.parse(customer));
     }
-  }, []);
+
+    const getDataLength = async () => {
+      await axios
+        .get(
+          `/filter/${data?.id_tipe_kamar}?tgl_check_in=${dataDate?.tgl_check_in}&tgl_check_out=${dataDate?.tgl_check_out}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => setDataLength(res?.data?.data))
+        .catch((err) => console.log(err));
+    };
+
+    Promise.all([getDataLength()]);
+  }, [data?.id_tipe_kamar, dataDate?.tgl_check_in, dataDate?.tgl_check_out]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -173,7 +193,7 @@ const SideMainContent: FC<Props> = ({ data }) => {
               placeholder="Masukkan Jumlah Kamar"
               required
               min={0}
-              max={data?.kamar?.length}
+              max={dataLength[0]?.kamar?.length}
               value={bookingData.jumlah_kamar}
               onChange={(e) => bindingState(e, setBookingData, 'jumlah_kamar')}
             />
