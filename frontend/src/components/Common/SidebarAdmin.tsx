@@ -14,7 +14,6 @@ import {
 } from 'react-icons/fa';
 
 import { logout } from '@/lib/logout';
-import { blockAccess } from '@/lib/blockAccess';
 import { classNames } from '@/lib/classNames';
 import { User } from '@/interfaces/user';
 
@@ -102,9 +101,6 @@ const SidebarAdmin: FC = () => {
       });
     };
   }, []);
-
-  // Block Access if Login level is not Admin
-  blockAccess('admin', router);
 
   return (
     <>

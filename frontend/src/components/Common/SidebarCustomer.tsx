@@ -5,7 +5,6 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { FaHome, FaUserAlt, FaSignOutAlt, FaGlobe } from 'react-icons/fa';
 
 import { logout } from '@/lib/logout';
-import { blockAccess } from '@/lib/blockAccess';
 import { classNames } from '@/lib/classNames';
 import { Customer } from '@/interfaces/customer';
 
@@ -73,9 +72,6 @@ const SidebarCustomer: FC = () => {
       });
     };
   }, []);
-
-  // Block Access if Login level is not Customer
-  blockAccess('pelanggan', router);
 
   return (
     <>
