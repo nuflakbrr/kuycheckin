@@ -29,7 +29,7 @@ const ContainerDetailRoomType: FC = () => {
     } else {
       errorToast('Data tidak ditemukan!');
       setTimeout(() => {
-        router.push('/');
+        router.push('/search-room');
       }, 1500);
     }
 
