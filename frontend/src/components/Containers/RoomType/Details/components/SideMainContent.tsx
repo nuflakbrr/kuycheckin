@@ -75,67 +75,71 @@ const SideMainContent: FC<Props> = ({ data }) => {
 
     const token = localStorage.getItem('access');
 
-    const sendData = {
-      ...bookingData,
-      id_pelanggan: dataCustomer.id_pelanggan,
-      tgl_check_in: dataDate.tgl_check_in,
-      tgl_check_out: dataDate.tgl_check_out,
-      nama_tamu: dataCustomer.nama,
-      id_tipe_kamar: data.id_tipe_kamar,
-      status_pemesanan: 'baru',
-      id_user: null,
-    };
+    if (localStorage.getItem('pelanggan') !== null) {
+      const sendData = {
+        ...bookingData,
+        id_pelanggan: dataCustomer.id_pelanggan,
+        tgl_check_in: dataDate.tgl_check_in,
+        tgl_check_out: dataDate.tgl_check_out,
+        nama_tamu: dataCustomer.nama,
+        id_tipe_kamar: data.id_tipe_kamar,
+        status_pemesanan: 'baru',
+        id_user: null,
+      };
 
-    await axios
-      .post('/booking', sendData, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        if (res.data.success === 1) {
-          successToast(
-            'Pemesanan berhasil dibuat! Silahkan lakukan pembayaran.'
-          );
+      await axios
+        .post('/booking', sendData, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          if (res.data.success === 1) {
+            successToast(
+              'Pemesanan berhasil dibuat! Silahkan lakukan pembayaran.'
+            );
 
-          localStorage.setItem(
-            'tipe_kamar',
-            JSON.stringify(data.nama_tipe_kamar)
-          );
-          localStorage.setItem(
-            'jumlah_kamar',
-            JSON.stringify(bookingData.jumlah_kamar)
-          );
-          localStorage.setItem(
-            'total_hari',
-            JSON.stringify(
-              diffDays(dataDate.tgl_check_in, dataDate.tgl_check_out)
-            )
-          );
-          localStorage.setItem(
-            'total_harga',
-            JSON.stringify(
-              totalPrice(
-                dataDate.tgl_check_in,
-                dataDate.tgl_check_out,
-                bookingData.jumlah_kamar,
-                data.harga
+            localStorage.setItem(
+              'tipe_kamar',
+              JSON.stringify(data.nama_tipe_kamar)
+            );
+            localStorage.setItem(
+              'jumlah_kamar',
+              JSON.stringify(bookingData.jumlah_kamar)
+            );
+            localStorage.setItem(
+              'total_hari',
+              JSON.stringify(
+                diffDays(dataDate.tgl_check_in, dataDate.tgl_check_out)
               )
-            )
-          );
+            );
+            localStorage.setItem(
+              'total_harga',
+              JSON.stringify(
+                totalPrice(
+                  dataDate.tgl_check_in,
+                  dataDate.tgl_check_out,
+                  bookingData.jumlah_kamar,
+                  data.harga
+                )
+              )
+            );
 
-          setTimeout(() => {
-            router.push('/payment');
-          }, 1800);
-        } else {
+            setTimeout(() => {
+              router.push('/payment');
+            }, 1800);
+          } else {
+            errorToast('Gagal membuat pemesanan, silahkan coba lagi nanti!');
+          }
+        })
+        .catch((err) => {
           errorToast('Gagal membuat pemesanan, silahkan coba lagi nanti!');
-        }
-      })
-      .catch((err) => {
-        errorToast('Gagal membuat pemesanan, silahkan coba lagi nanti!');
-        console.log(err);
-      });
+          console.log(err);
+        });
+    } else {
+      errorToast('Transaksi hanya bisa dilakukan oleh pelanggan!');
+    }
   };
 
   return (

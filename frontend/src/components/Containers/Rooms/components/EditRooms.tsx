@@ -53,11 +53,6 @@ const ContainerEditRooms: FC = () => {
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      errorToast('Data tidak ditemukan!');
-      setTimeout(() => {
-        router.push('/admin/user');
-      }, 1500);
     }
 
     return () => {

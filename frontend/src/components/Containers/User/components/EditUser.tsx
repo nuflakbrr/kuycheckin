@@ -35,11 +35,6 @@ const ContainerEditUser: FC = () => {
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      errorToast('User tidak ditemukan!');
-      setTimeout(() => {
-        router.push('/admin/user');
-      }, 1500);
     }
 
     return () => {

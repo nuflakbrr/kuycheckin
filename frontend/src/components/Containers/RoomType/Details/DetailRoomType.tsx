@@ -26,11 +26,6 @@ const ContainerDetailRoomType: FC = () => {
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      errorToast('Data tidak ditemukan!');
-      setTimeout(() => {
-        router.push('/search-room');
-      }, 1500);
     }
 
     return () => {
