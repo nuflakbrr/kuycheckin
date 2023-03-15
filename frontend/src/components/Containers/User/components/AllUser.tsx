@@ -24,10 +24,7 @@ const AllUserSection: FC = () => {
     const getData = async () => {
       await axios
         .get('/user', headerConfig())
-        .then((res) => {
-          infoToast('Memuat data 📦...');
-          setData(res.data.data);
-        })
+        .then((res) => setData(res.data.data))
         .catch((err) => {
           errorToast('Terjadi kesalahan saat memuat data!');
           console.log(err);
@@ -208,7 +205,11 @@ const AllUserSection: FC = () => {
                 <td className="px-5 py-5 border-b border-gray-200 bg-gray-100 text-sm">
                   {dataLogin?.email === a.email ? (
                     <Link
-                      href="/admin/profile"
+                      href={
+                        dataLogin?.role === 'admin'
+                          ? '/admin/profile'
+                          : '/receptionist/profile'
+                      }
                       className="w-lg flex items-center justify-center bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide"
                     >
                       <FaUser className="mr-2" /> Profil Saya

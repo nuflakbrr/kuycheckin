@@ -25,10 +25,7 @@ const AllCustomersSection: FC = () => {
     const getData = async () => {
       await axios
         .get('/customer', headerConfig())
-        .then((res) => {
-          infoToast('Memuat data 📦...');
-          setData(res.data.data);
-        })
+        .then((res) => setData(res.data.data))
         .catch((err) => {
           errorToast('Terjadi kesalahan saat memuat data!');
           console.log(err);
