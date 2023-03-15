@@ -14,8 +14,8 @@ const app = express();
  */
 app.get('/', auth, async (req, res) => {
   await kamar.findAll({ include: ['tipe_kamar'] })
-  .then(result => res.json({ data: result }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ data: result }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -28,8 +28,8 @@ app.get('/:id', auth, async (req, res) => {
   let params = { id_kamar: req.params.id };
 
   await kamar.findOne({ where: params, include: ['tipe_kamar'] })
-  .then(result => res.json({ data: result }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ data: result }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -45,8 +45,8 @@ app.post('/', auth, async (req, res) => {
   }
 
   await kamar.create(data)
-  .then(result => res.json({ success: 1, message: "Data has been inserted", data: result }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ success: 1, message: "Data has been inserted", data: result }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -63,8 +63,8 @@ app.put('/', auth, async (req, res) => {
   }
 
   await kamar.update(data, { where: params })
-  .then(result => res.json({ success: 1, message: "Data has been updated" }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ success: 1, message: "Data has been updated" }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -77,8 +77,8 @@ app.delete('/:id', auth, async (req, res) => {
   let params = { id_kamar: req.params.id };
 
   await kamar.destroy({ where: params })
-  .then(result => res.json({ success: 1, message: "Data has been deleted" }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ success: 1, message: "Data has been deleted" }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 module.exports = app;

@@ -9,10 +9,10 @@ const auth = (req, res, next) => {
         algorithm: "HS256"
     };
 
-    if (token == null) return res.sendStatus(401).json({ message : "Unauthorized" });
+    if (token == null) return res.sendStatus(401).json({ message: "Unauthorized" });
 
     jwt.verify(token, SECRET_KEY, jwtHeader, (err, usr) => {
-        if (err) return res.sendStatus(401).json({ message : "Invalid Token" });
+        if (err) return res.sendStatus(401).json({ message: "Invalid Token" });
 
         req.user = usr;
         console.log(req.user);

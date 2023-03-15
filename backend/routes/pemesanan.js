@@ -17,17 +17,17 @@ const app = express();
  */
 app.get('/', auth, async (req, res) => {
   let status = req.query.status || '';
-  
-  await pemesanan.findAll({ 
+
+  await pemesanan.findAll({
     where: {
       [Op.or]: [{
-        status_pemesanan: { [Op.like]: `%${status}%` } 
+        status_pemesanan: { [Op.like]: `%${status}%` }
       }]
     },
     include: ['user', 'pelanggan', 'tipe_kamar']
   })
-  .then(result => res.json({ data: result }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ data: result }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -40,8 +40,8 @@ app.get('/:id', auth, async (req, res) => {
   let params = { id_pemesanan: req.params.id };
 
   await pemesanan.findOne({ where: params, include: ['user', 'pelanggan', 'tipe_kamar'] })
-  .then(result => res.json({ data: result }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ data: result }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -54,8 +54,8 @@ app.get('/customer/:id', auth, async (req, res) => {
   let params = { id_pelanggan: req.params.id };
 
   await pemesanan.findAll({ where: params, include: ['user', 'pelanggan', 'tipe_kamar'] })
-  .then(result => res.json({ data: result }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ data: result }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -66,7 +66,7 @@ app.get('/customer/:id', auth, async (req, res) => {
  */
 app.post('/', auth, async (req, res) => {
   let dt = Date.now();
-  let receiptNum = Math.floor(Math.random() * (1000000000- 99999999) + 99999999);
+  let receiptNum = Math.floor(Math.random() * (1000000000 - 99999999) + 99999999);
 
   let data = {
     nomor_pemesanan: `WH-${receiptNum}`,
@@ -88,16 +88,16 @@ app.post('/', auth, async (req, res) => {
   let dataTipeKamar = await tipe_kamar.findOne({ where: { id_tipe_kamar: data.id_tipe_kamar } });
 
   // data pesan
-  let dataPemesanan = await tipe_kamar.findAll({ 
+  let dataPemesanan = await tipe_kamar.findAll({
     attributes: ["id_tipe_kamar", "nama_tipe_kamar"],
     where: { id_tipe_kamar: data.id_tipe_kamar },
     include: [
-      { 
+      {
         model: kamar,
         as: "kamar",
         attributes: ["id_kamar", "id_tipe_kamar"],
         include: [
-          { 
+          {
             model: detail_pemesanan,
             as: "detail_pemesanan",
             attributes: ["tgl_akses"],
@@ -110,7 +110,7 @@ app.post('/', auth, async (req, res) => {
         ]
       },
     ]
-   });
+  });
 
   //  cari kamar yang ada
   let pesanKamarId = dataPemesanan[0].kamar.map((room) => room.id_kamar);
@@ -128,25 +128,25 @@ app.post('/', auth, async (req, res) => {
     return res.json({ message: "Kamar tidak tersedia" });
   } else {
     await pemesanan.create(data)
-    .then(async (result) => {
-      for (let i = 0; i < totalHari; i++) {
-        for(let j = 0; j < pilihDataKamar.length; j++) {
-          let tgl_akses = new Date(checkIn);
-          tgl_akses.setDate(tgl_akses.getDate() + i);
-          
-          let reqDataDetail = {
-            id_pemesanan: result.id_pemesanan,
-            id_kamar: pilihDataKamar[j].id_kamar,
-            tgl_akses: tgl_akses,
-            harga: dataTipeKamar.harga,
-          };
+      .then(async (result) => {
+        for (let i = 0; i < totalHari; i++) {
+          for (let j = 0; j < pilihDataKamar.length; j++) {
+            let tgl_akses = new Date(checkIn);
+            tgl_akses.setDate(tgl_akses.getDate() + i);
 
-          await detail_pemesanan.create(reqDataDetail);
+            let reqDataDetail = {
+              id_pemesanan: result.id_pemesanan,
+              id_kamar: pilihDataKamar[j].id_kamar,
+              tgl_akses: tgl_akses,
+              harga: dataTipeKamar.harga,
+            };
+
+            await detail_pemesanan.create(reqDataDetail);
+          }
         }
-      }
-      res.json({ success: 1, message: "Berhasil pesan kamar", data: result })
-    })
-    .catch(err => res.json({ message: err.message }))
+        res.json({ success: 1, message: "Berhasil pesan kamar", data: result })
+      })
+      .catch(err => res.json({ message: err.message }))
   };
 });
 
@@ -165,8 +165,8 @@ app.put('/:id', auth, async (req, res) => {
   };
 
   await pemesanan.update(data, { where: params })
-  .then(result => res.json({ success: 1, message: 'Data has been updated!' }))
-  .catch(err => res.json({ message: err.message }))
+    .then(result => res.json({ success: 1, message: 'Data has been updated!' }))
+    .catch(err => res.json({ message: err.message }))
 });
 
 /**
@@ -180,14 +180,14 @@ app.delete('/:id', auth, async (req, res) => {
     let params = { id_pemesanan: req.params.id };
 
     detail_pemesanan.destroy({ where: params })
-    .then(result => {
-      if(result !== null) {
-        pemesanan.destroy({ where: params })
-        .then(results => res.json({ success: 1, message: 'Data has been deleted!' }))
-        .catch(err => res.json({ message: err.message }))
-      }
-    })
-    .catch(err => res.json({ message: err.message }))
+      .then(result => {
+        if (result !== null) {
+          pemesanan.destroy({ where: params })
+            .then(results => res.json({ success: 1, message: 'Data has been deleted!' }))
+            .catch(err => res.json({ message: err.message }))
+        }
+      })
+      .catch(err => res.json({ message: err.message }))
   } catch (err) {
     res.json({ message: err.message })
   }

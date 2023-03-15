@@ -18,7 +18,7 @@ app.post('/', auth, async (req, res) => {
     let checkInDate = req.body.tgl_check_in;
     let checkOutDate = req.body.tgl_check_out;
 
-    let roomData = await tipe_kamar.findAll({ include: [ { model: kamar, as: "kamar"} ] });
+    let roomData = await tipe_kamar.findAll({ include: [{ model: kamar, as: "kamar" }] });
 
     let roomBookedData = await tipe_kamar.findAll({
         attributes: ["id_tipe_kamar", "nama_tipe_kamar"],
@@ -80,7 +80,7 @@ app.post('/', auth, async (req, res) => {
         }
     }
 
-    return res.json({  kamar : availableByType });
+    return res.json({ kamar: availableByType });
 });
 
 /**
@@ -99,7 +99,7 @@ app.get('/:id', auth, async (req, res) => {
         where: {
             id_tipe_kamar: req.params.id,
         },
-        include: [ { model: kamar, as: "kamar"} ],
+        include: [{ model: kamar, as: "kamar" }],
     });
 
     let roomBookedData = await tipe_kamar.findAll({
@@ -162,7 +162,7 @@ app.get('/:id', auth, async (req, res) => {
         }
     }
 
-    return res.json({  data : availableByType });
+    return res.json({ data: availableByType });
 });
 
 module.exports = app

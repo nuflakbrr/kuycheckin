@@ -26,8 +26,8 @@ const slugOptions = {
  */
 app.get('/', async (req, res) => {
   await tipe_kamar.findAll({ include: ['kamar'] })
-  .then(result => res.json({ data: result }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ data: result }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -40,8 +40,8 @@ app.get('/:slug', async (req, res) => {
   let params = { slug: req.params.slug };
 
   await tipe_kamar.findOne({ where: params, include: ['kamar'] })
-  .then(result => res.json({ data: result }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ data: result }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -51,7 +51,7 @@ app.get('/:slug', async (req, res) => {
  * @apiDescription Insert type room data
  */
 app.post('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
-  if(!req.file) return res.json({ message: "No file uploaded" })
+  if (!req.file) return res.json({ message: "No file uploaded" })
 
   let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + req.file.filename;
 
@@ -64,8 +64,8 @@ app.post('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
   }
 
   await tipe_kamar.create(data)
-  .then(result => res.json({ success: 1, message: "Data has been inserted", data: result }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ success: 1, message: "Data has been inserted", data: result }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -75,7 +75,7 @@ app.post('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
  * @apiDescription Update type room data
  */
 app.put('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
-  if(!req.file) return res.json({ message: "No file uploaded" })
+  if (!req.file) return res.json({ message: "No file uploaded" })
 
   let params = { id_tipe_kamar: req.body.id_tipe_kamar };
   let data = {
@@ -85,10 +85,10 @@ app.put('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
     deskripsi: req.body.deskripsi
   }
 
-  if(req.file) {
+  if (req.file) {
     let delImg = await tipe_kamar.findOne({ where: params });
 
-    if(delImg) {
+    if (delImg) {
       let oldImg = await tipe_kamar.findOne({ where: params });
       let oldImgName = oldImg.foto.replace(req.protocol + '://' + req.get('host') + '/img/', '');
 
@@ -101,8 +101,8 @@ app.put('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
   }
 
   await tipe_kamar.update(data, { where: params })
-  .then(result => res.json({ success: 1, message: "Data has been updated" }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ success: 1, message: "Data has been updated" }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -115,15 +115,15 @@ app.delete('/:id', auth, async (req, res) => {
   let params = { id_tipe_kamar: req.params.id };
 
   let delImg = await tipe_kamar.findOne({ where: params });
-  if(delImg) {
+  if (delImg) {
     let delImgName = delImg.foto.replace(req.protocol + '://' + req.get('host') + '/img/', '');
     let loc = path.join(__dirname, '../public/img/', delImgName);
     fs.unlink(loc, (err) => console.log(err));
   }
 
   await tipe_kamar.destroy({ where: params })
-  .then(result => res.json({ success: 1, message: "Data has been deleted" }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ success: 1, message: "Data has been deleted" }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 module.exports = app;

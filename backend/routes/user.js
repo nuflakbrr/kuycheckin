@@ -28,8 +28,8 @@ const slugOptions = {
  */
 app.get('/', auth, async (req, res) => {
   await user.findAll()
-  .then(result => res.json({ data: result }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ data: result }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -42,8 +42,8 @@ app.get('/:slug', auth, async (req, res) => {
   let params = { slug: req.params.slug };
 
   await user.findOne({ where: params })
-  .then(result => res.json({ data: result }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ data: result }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -53,7 +53,7 @@ app.get('/:slug', auth, async (req, res) => {
  * @apiDescription Insert user data
  */
 app.post('/', uploadUser.single('foto'), async (req, res) => {
-  if(!req.file) return res.json({ message: "No file uploaded" })
+  if (!req.file) return res.json({ message: "No file uploaded" })
 
   let finalImageURL = req.protocol + '://' + req.get('host') + '/usr/' + req.file.filename;
 
@@ -67,8 +67,8 @@ app.post('/', uploadUser.single('foto'), async (req, res) => {
   }
 
   await user.create(data)
-  .then(result => res.json({ success: 1, message: "Data has been inserted", data: result }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ success: 1, message: "Data has been inserted", data: result }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -78,7 +78,7 @@ app.post('/', uploadUser.single('foto'), async (req, res) => {
  * @apiDescription Update user data
  */
 app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
-  if(!req.file) return res.json({ message: "No file uploaded" })
+  if (!req.file) return res.json({ message: "No file uploaded" })
 
   let params = { id_user: req.body.id_user }
   let data = {
@@ -89,7 +89,7 @@ app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
     role: req.body.role
   }
 
-  if(req.file) {
+  if (req.file) {
     let oldImg = await user.findOne({ where: params });
     let oldImgName = oldImg.foto.replace(req.protocol + '://' + req.get('host') + '/usr/', '');
 
@@ -101,8 +101,8 @@ app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
   }
 
   await user.update(data, { where: params })
-  .then(result => res.json({ success: 1, message: "Data has been updated" }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ success: 1, message: "Data has been updated" }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -115,15 +115,15 @@ app.delete('/:id', auth, async (req, res) => {
   let params = { id_user: req.params.id }
 
   let delImg = await user.findOne({ where: params });
-  if(delImg) {
+  if (delImg) {
     let delImgName = delImg.foto.replace(req.protocol + '://' + req.get('host') + '/usr/', '');
     let loc = path.join(__dirname, '../public/usr/', delImgName);
     fs.unlink(loc, (err) => console.log(err));
   }
 
   await user.destroy({ where: params })
-  .then(result => res.json({ success: 1, message: "Data has been deleted" }))
-  .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ success: 1, message: "Data has been deleted" }))
+    .catch(error => res.json({ message: error.message }))
 });
 
 /**
@@ -139,16 +139,16 @@ app.post('/login', async (req, res) => {
   }
 
   await user.findOne({ where: params })
-  .then(result => {
-    if(result) {
-      let payload = JSON.stringify(result);
-      let token = jwt.sign(payload, SECRET_KEY);
-      res.json({ success: 1, message: "Login success, welcome back!", data: result, token: token })
-    } else {
-      res.json({ success: 0, message: "Invalid email or password!" })
-    }
-  })
-  .catch(error => res.json({ message: error.message }))
+    .then(result => {
+      if (result) {
+        let payload = JSON.stringify(result);
+        let token = jwt.sign(payload, SECRET_KEY);
+        res.json({ success: 1, message: "Login success, welcome back!", data: result, token: token })
+      } else {
+        res.json({ success: 0, message: "Invalid email or password!" })
+      }
+    })
+    .catch(error => res.json({ message: error.message }))
 });
 
 module.exports = app;
