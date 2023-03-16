@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op } = require('sequelize');
 
-const auth = require('../middleware/auth');
+const { mustLogin, mustAdmin } = require('../middleware/auth');
 const pemesanan = require('../models/index').pemesanan;
 const detail_pemesanan = require('../models/index').detail_pemesanan;
 const kamar = require('../models/index').kamar;
@@ -15,7 +15,7 @@ const app = express();
  * @apiGroup Booking
  * @apiDescription Get all booking data
  */
-app.get('/', auth, async (req, res) => {
+app.get('/', mustLogin, async (req, res) => {
   let status = req.query.status || '';
 
   await pemesanan.findAll({
@@ -36,7 +36,7 @@ app.get('/', auth, async (req, res) => {
  * @apiGroup Booking
  * @apiDescription Get booking data by id
  */
-app.get('/:id', auth, async (req, res) => {
+app.get('/:id', mustLogin, async (req, res) => {
   let params = { id_pemesanan: req.params.id };
 
   await pemesanan.findOne({ where: params, include: ['user', 'pelanggan', 'tipe_kamar'] })
@@ -50,7 +50,7 @@ app.get('/:id', auth, async (req, res) => {
  * @apiGroup Booking
  * @apiDescription Get booking data by customer id
  */
-app.get('/customer/:id', auth, async (req, res) => {
+app.get('/customer/:id', mustLogin, async (req, res) => {
   let params = { id_pelanggan: req.params.id };
 
   await pemesanan.findAll({ where: params, include: ['user', 'pelanggan', 'tipe_kamar'] })
@@ -64,7 +64,7 @@ app.get('/customer/:id', auth, async (req, res) => {
  * @apiGroup Booking
  * @apiDescription Insert booking data
  */
-app.post('/', auth, async (req, res) => {
+app.post('/', mustLogin, async (req, res) => {
   let dt = Date.now();
   let receiptNum = Math.floor(Math.random() * (1000000000 - 99999999) + 99999999);
 
@@ -156,7 +156,7 @@ app.post('/', auth, async (req, res) => {
  * @apiGroup Booking
  * @apiDescription Update booking data
  */
-app.put('/:id', auth, async (req, res) => {
+app.put('/:id', mustLogin, async (req, res) => {
   let params = { id_pemesanan: req.params.id };
 
   let data = {
@@ -175,7 +175,7 @@ app.put('/:id', auth, async (req, res) => {
  * @apiGroup Booking
  * @apiDescription Delete booking data
  */
-app.delete('/:id', auth, async (req, res) => {
+app.delete('/:id', mustLogin, mustAdmin, async (req, res) => {
   try {
     let params = { id_pemesanan: req.params.id };
 

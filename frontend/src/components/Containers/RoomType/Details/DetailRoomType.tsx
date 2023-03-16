@@ -9,6 +9,7 @@ import Navbar from '@/components/Common/Navbar/Navbar';
 import Footer from '@/components/Common/Footer';
 import MainContentSection from './components/MainContent';
 import ReviewsSection from './components/Reviews';
+import { headerConfig } from '@/lib/headerConfig';
 
 const ContainerDetailRoomType: FC = () => {
   const [data, setData] = useState<TypeRoom[] | any>();
@@ -17,12 +18,12 @@ const ContainerDetailRoomType: FC = () => {
   const { slug } = router.query;
 
   useEffect(() => {
+    const token = localStorage.getItem('access');
+
     if (slug) {
       axios
-        .get(`/room-type/${slug}`)
-        .then((res) => {
-          setData(res.data.data);
-        })
+        .get(`/room-type/${slug}`, headerConfig())
+        .then((res) => setData(res.data.data))
         .catch((err) => {
           console.log(err);
         });

@@ -25,11 +25,13 @@ const AddUserSection: FC = () => {
     e.preventDefault();
 
     const sendData = { ...data };
+    const token = localStorage.getItem('access');
 
     axios
       .post('/user', sendData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {

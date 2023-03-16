@@ -3,10 +3,9 @@ const slugify = require('slugify');
 const path = require('path');
 const fs = require('fs');
 
-const auth = require('../middleware/auth');
+const { auth, mustLogin, mustAdmin } = require('../middleware/auth');
 const { uploadTypeRoom } = require('../middleware/uploadImage');
 const tipe_kamar = require('../models/index').tipe_kamar;
-const kamar = require('../models/index').kamar;
 
 const app = express();
 
@@ -36,7 +35,7 @@ app.get('/', async (req, res) => {
  * @apiGroup TypeRoom
  * @apiDescription Get type room data by slug
  */
-app.get('/:slug', async (req, res) => {
+app.get('/:slug', mustLogin, async (req, res) => {
   let params = { slug: req.params.slug };
 
   await tipe_kamar.findOne({ where: params, include: ['kamar'] })
@@ -50,7 +49,7 @@ app.get('/:slug', async (req, res) => {
  * @apiGroup TypeRoom
  * @apiDescription Insert type room data
  */
-app.post('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
+app.post('/', mustLogin, mustAdmin, uploadTypeRoom.single('foto'), async (req, res) => {
   if (!req.file) return res.json({ message: "No file uploaded" })
 
   let finalImageURL = req.protocol + '://' + req.get('host') + '/img/' + req.file.filename;
@@ -74,7 +73,7 @@ app.post('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
  * @apiGroup TypeRoom
  * @apiDescription Update type room data
  */
-app.put('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
+app.put('/', mustLogin, mustAdmin, uploadTypeRoom.single('foto'), async (req, res) => {
   if (!req.file) return res.json({ message: "No file uploaded" })
 
   let params = { id_tipe_kamar: req.body.id_tipe_kamar };
@@ -111,7 +110,7 @@ app.put('/', uploadTypeRoom.single('foto'), auth, async (req, res) => {
  * @apiGroup TypeRoom
  * @apiDescription Delete type room data
  */
-app.delete('/:id', auth, async (req, res) => {
+app.delete('/:id', mustLogin, mustAdmin, async (req, res) => {
   let params = { id_tipe_kamar: req.params.id };
 
   let delImg = await tipe_kamar.findOne({ where: params });

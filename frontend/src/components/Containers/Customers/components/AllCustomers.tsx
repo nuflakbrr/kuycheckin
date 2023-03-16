@@ -43,7 +43,7 @@ const AllCustomersSection: FC = () => {
     alert('Apakah anda yakin ingin menghapus data ini?');
 
     await axios
-      .delete(`/user/${id}`, headerConfig())
+      .delete(`/customer/${id}`, headerConfig())
       .then((res) => {
         res.data.success === 1
           ? successToast('Data berhasil dihapus!')

@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op } = require('sequelize');
 
-const auth = require('../middleware/auth');
+const { mustLogin } = require('../middleware/auth');
 const tipe_kamar = require('../models/index').tipe_kamar;
 const kamar = require('../models/index').kamar;
 const detail_pemesanan = require('../models/index').detail_pemesanan;
@@ -14,7 +14,7 @@ const app = express();
  * @apiGroup Filter
  * @apiDescription Filter room by date
  */
-app.post('/', auth, async (req, res) => {
+app.post('/', mustLogin, async (req, res) => {
     let checkInDate = req.body.tgl_check_in;
     let checkOutDate = req.body.tgl_check_out;
 
@@ -89,11 +89,9 @@ app.post('/', auth, async (req, res) => {
  * @apiGroup Filter
  * @apiDescription Filter room by date and room type
  */
-app.get('/:id', auth, async (req, res) => {
+app.get('/:id', mustLogin, async (req, res) => {
     let checkInDate = req.query.tgl_check_in;
     let checkOutDate = req.query.tgl_check_out;
-
-    console.log(req.query)
 
     let roomData = await tipe_kamar.findAll({
         where: {

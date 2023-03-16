@@ -1,7 +1,6 @@
 const express = require('express');
 
-const auth = require('../middleware/auth');
-const tipe_kamar = require('../models/index').tipe_kamar;
+const { mustLogin, mustAdmin } = require('../middleware/auth');
 const kamar = require('../models/index').kamar;
 
 const app = express();
@@ -12,7 +11,7 @@ const app = express();
  * @apiGroup Room
  * @apiDescription Get all room data
  */
-app.get('/', auth, async (req, res) => {
+app.get('/', mustLogin, async (req, res) => {
   await kamar.findAll({ include: ['tipe_kamar'] })
     .then(result => res.json({ data: result }))
     .catch(error => res.json({ message: error.message }))
@@ -24,7 +23,7 @@ app.get('/', auth, async (req, res) => {
  * @apiGroup Room
  * @apiDescription Get room data by id
  */
-app.get('/:id', auth, async (req, res) => {
+app.get('/:id', mustLogin, mustAdmin, async (req, res) => {
   let params = { id_kamar: req.params.id };
 
   await kamar.findOne({ where: params, include: ['tipe_kamar'] })
@@ -38,7 +37,7 @@ app.get('/:id', auth, async (req, res) => {
  * @apiGroup Room
  * @apiDescription Insert room data
  */
-app.post('/', auth, async (req, res) => {
+app.post('/', mustLogin, mustAdmin, async (req, res) => {
   let data = {
     nomor_kamar: req.body.nomor_kamar,
     id_tipe_kamar: req.body.id_tipe_kamar,
@@ -55,7 +54,7 @@ app.post('/', auth, async (req, res) => {
  * @apiGroup Room
  * @apiDescription Update room data
  */
-app.put('/', auth, async (req, res) => {
+app.put('/', mustLogin, mustAdmin, async (req, res) => {
   let params = { id_kamar: req.body.id_kamar };
   let data = {
     nomor_kamar: req.body.nomor_kamar,
@@ -73,7 +72,7 @@ app.put('/', auth, async (req, res) => {
  * @apiGroup Room
  * @apiDescription Delete room data
  */
-app.delete('/:id', auth, async (req, res) => {
+app.delete('/:id', mustLogin, mustAdmin, async (req, res) => {
   let params = { id_kamar: req.params.id };
 
   await kamar.destroy({ where: params })

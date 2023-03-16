@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs');
 const SECRET_KEY = process.env.SECRET_KEY;
 
-const auth = require('../middleware/auth');
+const { mustLogin, mustAdmin } = require('../middleware/auth');
 const { uploadUser } = require('../middleware/uploadImage');
 const user = require('../models/index').user;
 
@@ -26,10 +26,10 @@ const slugOptions = {
  * @apiGroup User
  * @apiDescription Get all user data
  */
-app.get('/', auth, async (req, res) => {
+app.get('/', mustLogin, async (req, res) => {
   await user.findAll()
-    .then(result => res.json({ data: result }))
-    .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ success: 1, data: result }))
+    .catch(error => res.json({ success: 0, message: error.message }))
 });
 
 /**
@@ -38,12 +38,12 @@ app.get('/', auth, async (req, res) => {
  * @apiGroup User
  * @apiDescription Get user data by slug
  */
-app.get('/:slug', auth, async (req, res) => {
+app.get('/:slug', mustLogin, mustAdmin, async (req, res) => {
   let params = { slug: req.params.slug };
 
   await user.findOne({ where: params })
-    .then(result => res.json({ data: result }))
-    .catch(error => res.json({ message: error.message }))
+    .then(result => res.json({ success: 1, data: result }))
+    .catch(error => res.json({ success: 0, message: error.message }))
 });
 
 /**
@@ -52,7 +52,7 @@ app.get('/:slug', auth, async (req, res) => {
  * @apiGroup User
  * @apiDescription Insert user data
  */
-app.post('/', uploadUser.single('foto'), async (req, res) => {
+app.post('/', mustLogin, mustAdmin, uploadUser.single('foto'), async (req, res) => {
   if (!req.file) return res.json({ message: "No file uploaded" })
 
   let finalImageURL = req.protocol + '://' + req.get('host') + '/usr/' + req.file.filename;
@@ -68,7 +68,7 @@ app.post('/', uploadUser.single('foto'), async (req, res) => {
 
   await user.create(data)
     .then(result => res.json({ success: 1, message: "Data has been inserted", data: result }))
-    .catch(error => res.json({ message: error.message }))
+    .catch(error => res.json({ success: 0, message: error.message }))
 });
 
 /**
@@ -77,7 +77,7 @@ app.post('/', uploadUser.single('foto'), async (req, res) => {
  * @apiGroup User
  * @apiDescription Update user data
  */
-app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
+app.put('/', mustLogin, mustAdmin, uploadUser.single('foto'), async (req, res) => {
   if (!req.file) return res.json({ message: "No file uploaded" })
 
   let params = { id_user: req.body.id_user }
@@ -102,7 +102,7 @@ app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
 
   await user.update(data, { where: params })
     .then(result => res.json({ success: 1, message: "Data has been updated" }))
-    .catch(error => res.json({ message: error.message }))
+    .catch(error => res.json({ success: 0, message: error.message }))
 });
 
 /**
@@ -111,7 +111,7 @@ app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
  * @apiGroup User
  * @apiDescription Delete user data
  */
-app.delete('/:id', auth, async (req, res) => {
+app.delete('/:id', mustLogin, mustAdmin, async (req, res) => {
   let params = { id_user: req.params.id }
 
   let delImg = await user.findOne({ where: params });
@@ -123,7 +123,7 @@ app.delete('/:id', auth, async (req, res) => {
 
   await user.destroy({ where: params })
     .then(result => res.json({ success: 1, message: "Data has been deleted" }))
-    .catch(error => res.json({ message: error.message }))
+    .catch(error => res.json({ success: 0, message: error.message }))
 });
 
 /**

@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs');
 const SECRET_KEY = process.env.SECRET_KEY;
 
-const auth = require('../middleware/auth');
+const { mustLogin, mustAdmin } = require('../middleware/auth');
 const { uploadUser } = require('../middleware/uploadImage');
 const pelanggan = require('../models/index').pelanggan;
 
@@ -26,7 +26,7 @@ const slugOptions = {
  * @apiGroup Customer
  * @apiDescription Get all customer data
  */
-app.get('/', auth, async (req, res) => {
+app.get('/', mustLogin, async (req, res) => {
   await pelanggan.findAll()
     .then(result => res.json({ data: result }))
     .catch(error => res.json({ message: error.message }))
@@ -38,7 +38,7 @@ app.get('/', auth, async (req, res) => {
  * @apiGroup Customer
  * @apiDescription Get customer data by slug
  */
-app.get('/:slug', auth, async (req, res) => {
+app.get('/:slug', mustLogin, mustAdmin, async (req, res) => {
   let params = { slug: req.params.slug };
 
   await pelanggan.findOne({ where: params })
@@ -77,7 +77,7 @@ app.post('/', uploadUser.single('foto'), async (req, res) => {
  * @apiGroup Customer
  * @apiDescription Update customer data
  */
-app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
+app.put('/', mustLogin, uploadUser.single('foto'), async (req, res) => {
   if (!req.file) return res.json({ message: "No file uploaded" })
 
   let params = { id_pelanggan: req.body.id_pelanggan }
@@ -110,7 +110,7 @@ app.put('/', uploadUser.single('foto'), auth, async (req, res) => {
  * @apiGroup Customer
  * @apiDescription Delete customer data
  */
-app.delete('/:id', auth, async (req, res) => {
+app.delete('/:id', mustLogin, mustAdmin, async (req, res) => {
   let params = { id_pelanggan: req.params.id }
 
   let delImg = await pelanggan.findOne({ where: params });

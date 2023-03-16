@@ -29,12 +29,8 @@ const ContainerEditUser: FC = () => {
     if (slug) {
       axios
         .get(`/user/${slug}`, headerConfig())
-        .then((res) => {
-          setOldData(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((res) => setOldData(res.data.data))
+        .catch((err) => console.log(err));
     }
 
     return () => {
