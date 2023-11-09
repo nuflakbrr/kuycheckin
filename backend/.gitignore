@@ -8,5 +8,5 @@ npm-debug.log*
 .env
 
 # public
-/public/img/*
-/public/usr/*
+# /public/img/*
+# /public/usr/*
